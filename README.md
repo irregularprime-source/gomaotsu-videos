@@ -60,6 +60,14 @@ push が他の更新と競合して弾かれた場合は `git pull --rebase` で
 - `gomaOnly: true` … そのチャンネルの動画をキーワード判定なしで全てゴ魔乙として収集
 - `gomaOnly: false` … ゴ魔乙判定語を含む動画のみ収集
 
+## アクセス解析
+
+公開サイトの PV と流入元（何から来たか＝リファラー）を把握するため、[GoatCounter](https://www.goatcounter.com/) を導入している。`docs/index.html` の `</body>` 直前に計測タグを1行埋め込むだけで、既存機能への影響はない。
+
+- **Cookie を使わないため、同意バナー・プライバシーポリシーは不要**（この点を最優先に選定。GA4 は Cookie 同意が必要になるため不採用）
+- 管理画面: https://irregular-prime.goatcounter.com/ （**Paths** で PV、**Referrals** で流入元を確認）
+- 管理ツール `tools/admin.html` は非公開かつ自分専用のため計測タグを入れていない（数字を汚さないため）
+
 ## タグの仕組み
 
 タグは 2 種類に分かれる。
