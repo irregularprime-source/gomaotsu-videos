@@ -298,6 +298,14 @@ const fmtDate = (iso) => {
   return isNaN(d) ? "----/--/--"
     : `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,"0")}/${String(d.getDate()).padStart(2,"0")}`;
 };
+// 公開日時を JST（日本に固定。DSTなしのため常に+9時間）で「YYYY/MM/DD HH:MM」表示する
+const fmtDateTime = (iso) => {
+  const d = new Date(iso);
+  if (isNaN(d)) return "----/--/-- --:--";
+  const j = new Date(d.getTime() + (9 * 60 + d.getTimezoneOffset()) * 60000);
+  const p = (n) => String(n).padStart(2, "0");
+  return `${j.getFullYear()}/${p(j.getMonth()+1)}/${p(j.getDate())} ${p(j.getHours())}:${p(j.getMinutes())}`;
+};
 
 async function loadTags() {
   try {
@@ -404,7 +412,7 @@ function card(v) {
   ch.textContent = v.channel;
   const dt = document.createElement("span");
   dt.className = "date";
-  dt.textContent = fmtDate(v.publishedAt);
+  dt.textContent = fmtDateTime(v.publishedAt);
   meta.append(ch, dt);
 
   const tags = document.createElement("div");
