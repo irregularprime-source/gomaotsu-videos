@@ -1,0 +1,67 @@
+# PROJECT_STATE
+
+このファイルは「ゴ魔乙 動画索引」プロジェクトの作業状態・設計判断・次の予定を記録した引き継ぎ用ドキュメント。
+複数のAIアシスタント（Claude Code / Web版Claude / ChatGPT 等）や本人が現状を把握するための共有メモ。
+リポジトリ全体の使い方・仕様は [README.md](README.md) を参照。
+
+最終更新: 2026-07-20 18:00 (JST)
+
+## 1. 元の依頼（原文に近い形で保持。書き換え禁止）
+> 次に、サンプルデータを削除と、チャンネル・動画登録用のフォームを作って。フォームは当面私だけ使えればよい。あと、作業用に未確認の動画などを確認して、手動でタグの追加とかしたりできるように。それに関して、表示用のタグは多分今後も増えていくので、それに耐えうる作りにしていきたい。
+
+追加合意:
+> 段階描画での対応をお願い。それと提案通り進めて。あと、公開日のFROM TOで期間絞って検索する機能も追加でお願い。
+
+## 2. スコープ外・やらないこと ← 最重要
+- Issueフォーム手動登録（Phase2指示書の項目3）は**後回し**（ユーザー指示）
+- GitHub API 直接コミット方式は**不採用**（ローカル編集+手動commit方式に決定）
+- JSON分割（年別等）は Phase 3（過去動画一括登録）まで**やらない**
+- スクロール自動読み込みは不採用（ボタン式「もっと見る」に決定）
+- 回数タグのフィルタチップ化・専用フィールド化はしない（検索+カテゴリタグ併用で要件充足、チップは表示のみ）
+- 過剰な抽象化・防御的コード禁止（発注者方針。外部入力のみバリデーション）
+
+## 3. 確定した設計判断
+| 判断 | 理由 | 決定日時 |
+|---|---|---|
+| タグ定義を docs/tags.json に外出し | タグ追加=データ編集のみで済む拡張耐性 | 07-20 |
+| 未定義タグ（第○回等）は名前ハッシュ→HSLで自動採色、フィルタチップに出さない | 約500種になり得るためチップは破綻 | 07-20 |
+| 管理ツールは tools/admin.html（docs外=Pages非公開）、ローカルサーバーで開く | 静的サイトのため直接書込不可。トークン不要で安全 | 07-20 |
+| 管理ツールのメタ取得はYouTube APIキー（環境変数優先→無ければlocalStorage、コミットしない） | URL貼付だけで登録できる。forHandleでハンドル解決 | 07-20 |
+| 保存=更新後JSONダウンロード/コピー→ユーザーがcommit/push | ユーザー選択（ローカル+手動commit） | 07-20 |
+| 段階描画: PAGE_SIZE=100、ボタン式「もっと見る」 | 老眼気味の利用者に位置が分かりやすい | 07-20 |
+| 期間絞込はJST日単位（`T00:00:00+09:00`基準、TOは翌日0時未満） | publishedAtはTZ付きISOなのでDate比較で正確 | 07-20 |
+| 回数チップ（第580回）はカードに残す | ユーザー指示 | 07-20 |
+| バックフィルは scripts/reclassify.py で再利用可能に（確認済み・手動は保護） | 今後も分類ルール変更のたび発生するとの指摘 | 07-20 |
+| 週末スコア判定に「回スコア大会」を追加 | 「第580回スコア大会」形式が未分類になっていた | 07-20 |
+| collect.yml に concurrency + push失敗時 pull --rebase リトライを追加 | cron/手動/手動push が重なり `[rejected]` でpush失敗していた | 07-20 |
+| この作業状態ファイルを PROJECT_STATE.md としてリポジトリ直下に公開コミット | Web版Claude/ChatGPTからも参照できるように（旧: TASK_STATE.md gitignore） | 07-20 |
+
+## 4. 現在の状態（すべてコミット済み・origin/main 反映済み）
+- Phase2実装（collect.py/collect.yml）、実チャンネル設定、回数・イベント名タグ+フォント特大化（19e8f4f）
+- **Phase A（53d2e9f）**: tags.json外出し・自動採色・段階描画・期間絞込・サンプル削除 → ユーザー実機確認OK
+- **Phase B（5095838）**: `tools/admin.html`（管理ツール本体・4タブ+保存バー）+ `scripts/serve_admin.py`（環境変数YOUTUBE_API_KEYを127.0.0.1限定 /api/key で渡す起動用サーバー）
+- 収集対象チャンネルを 1→11件 に拡張（6722aea、管理ツールで追加した実績）
+- **collect.yml 同時実行対策（b04a037）**: Web版Claudeが作成した修正を検証のうえデプロイ
+- 手動収集を1回実行し取りこぼしを回収（a02471d「動画404件を追加」）→ **動画は合計429件**
+- README を現状に全面更新（009ccb3）
+- 検証状況: 静的チェック（ID突合・data-tab↔panel対応・括弧バランス）通過、serve_admin.py 全エンドポイント200確認。**admin.htmlのブラウザ実機動作はユーザー確認に委譲**（Claude Code環境にnode/Chrome拡張なし）
+
+## 5. 次のステップ（具体的に1〜3個）
+1. ユーザーが admin.html を実機で一通り確認（未確認レビューでタグ編集→確認済み、動画/チャンネル登録、タグ管理、保存バーのコピー/DL）
+2. 動画429件になったのでサイトの段階描画（100件ずつ「もっと見る」）の体感確認
+3. 今後の拡張候補: Phase 3=過去動画の一括登録（JSON分割の要否をここで再検討）、Phase 4=使用キャラ・編成タグ等の拡張
+
+## 6. ファイル境界
+- 変更してよい: docs/（index.html, videos.json, tags.json）, data/channels.json, tools/, scripts/, .github/workflows/collect.yml, .gitignore, README.md, PROJECT_STATE.md
+- 変更禁止（非公開・gitignore維持）: phase2_implementation_guide.md（内部向け実装指示書）
+
+## 7. 注意事項・ハマりどころ
+- リポジトリ: https://github.com/irregularprime-source/gomaotsu-videos （public, gh認証=irregularprime-source, Pages=main /docs）
+- 公開URL: https://irregularprime-source.github.io/gomaotsu-videos/
+- コミットメッセージはWhyを書く+末尾に `Co-Authored-By: Claude`（全コミットで実施済み）
+- Claude Code環境は node無し・Chrome拡張未接続 → JS検証はpythonでの静的チェック（ID突合・括弧バランス）で代替
+- JSON書込は `json.dumps(ensure_ascii=False, indent=2)` + 末尾改行（collect.py と同一書式。admin.htmlのJS直列化も同形式で揃え、git差分を最小化）
+- 自動収集の同時実行対策済みだが、**手動でローカルpushする際は Actions の実行と重ならないよう注意**（重なっても直列化+リトライで復帰はする）
+- ローカル確認: `python scripts/serve_admin.py` でサイト（/docs/index.html）も管理ツール（/tools/admin.html）も配信可
+- YOUTUBE_API_KEY は Actions の Secret とローカル環境変数の両方に設定。**コードには絶対に含めない**
+- ユーザーの承認を得てから作業開始（グローバルCLAUDE.mdの最重要ルール）。ファイル作成・編集・削除、状態変更コマンドは要承認／調査・読み取りは承認不要
