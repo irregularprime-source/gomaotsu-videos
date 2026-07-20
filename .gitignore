@@ -1,5 +1,6 @@
-# 内部向けの実装指示書はリポジトリに含めない
+# 内部向けの実装指示書・作業状態ファイルはリポジトリに含めない
 phase2_implementation_guide.md
+TASK_STATE.md
 
 __pycache__/
 *.pyc

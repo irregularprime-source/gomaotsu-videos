@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
+  color-scheme:dark; /* 日付入力等のネイティブUIをダーク配色にする */
   --bg:#131020;
   --surface:#1c172e;
   --surface2:#241d3a;
@@ -119,6 +120,24 @@ select,.sort-btn{
   background:none;border:none;color:var(--muted);
   font-size:0.75rem;text-decoration:underline;
 }
+.date-range{
+  display:flex;align-items:center;gap:6px;
+  font-size:0.75rem;color:var(--muted);white-space:nowrap;
+}
+.date-range input{
+  background:var(--surface2);
+  border:1px solid var(--line-soft);
+  border-radius:8px;color:var(--text);
+  padding:7px 10px;font-size:0.8125rem;font-family:inherit;
+}
+.more-btn{
+  display:block;margin:28px auto 0;
+  background:var(--surface2);
+  border:1px solid var(--line);
+  border-radius:999px;color:var(--text);
+  padding:12px 40px;font-size:0.875rem;font-weight:700;
+}
+.more-btn:hover{background:var(--gold-soft)}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 
 /* ---------- results ---------- */
@@ -206,15 +225,21 @@ footer{
         <option value="自動分類">未確認（自動分類のみ）</option>
         <option value="確認済み">確認済みのみ</option>
       </select>
+      <span class="date-range">公開日
+        <input type="date" id="date-from" aria-label="公開日の開始">
+        〜
+        <input type="date" id="date-to" aria-label="公開日の終了">
+      </span>
       <button class="sort-btn" id="sort-btn" aria-label="並び順を切り替える">公開日 ↓ 新しい順</button>
       <button class="clear-btn" id="clear-btn">条件をクリア</button>
     </div>
   </section>
 
-  <p class="result-count"><b id="hit-count">0</b> 件を表示中</p>
+  <p class="result-count"><b id="hit-count">0</b> 件が該当（<span id="shown-count">0</span> 件を表示中）</p>
   <div id="error-area"></div>
   <main class="grid" id="video-grid"></main>
   <div class="empty" id="empty-msg" hidden>条件に一致する動画がありません。絞り込み条件を変えてみてください。</div>
+  <button class="more-btn" id="more-btn" hidden>もっと見る</button>
 
   <footer>GOTHIC WA MAHOU OTOME — VIDEO INDEX（非公式ファンサイト）</footer>
 </div>
@@ -222,8 +247,9 @@ footer{
 <script>
 "use strict";
 
-/* タグ定義：表示順とステンドグラス配色 */
-const TAGS = [
+/* タグ定義は docs/tags.json から読み込む（タグ追加はデータ編集だけで済む）。
+   読めない環境向けのフォールバック定義のみここに残す。 */
+const DEFAULT_TAGS = [
   ["スコア大会(週末)",   "#d9a441"],
   ["スコア大会(イベント)","#d4566a"],
   ["エーテルスコア大会", "#4fb8a8"],
@@ -234,7 +260,16 @@ const TAGS = [
   ["キワメタワー",       "#c76a2e"],
   ["未分類",             "#8a8598"],
 ];
-const TAG_COLOR = Object.fromEntries(TAGS);
+let TAGS = DEFAULT_TAGS;
+let TAG_COLOR = Object.fromEntries(DEFAULT_TAGS);
+
+/* tags.json に無いタグ（第○回・イベント名など）はタグ名から決定的に採色する */
+function tagColor(name) {
+  if (TAG_COLOR[name]) return TAG_COLOR[name];
+  let h = 0;
+  for (const c of name) h = (h * 31 + c.codePointAt(0)) % 360;
+  return `hsl(${h} 45% 62%)`;
+}
 
 /* videos.json が読めない環境（プレビュー等）用のフォールバック */
 const FALLBACK = {updated:"", videos:[
@@ -243,12 +278,17 @@ const FALLBACK = {updated:"", videos:[
   {videoId:"SAMPLE00003",title:"【サンプル】複数タグの例（ギルドバトル＋アリーナ）",channel:"（フォールバック表示）",description:"",publishedAt:"2026-07-10T19:30:00+09:00",registeredAt:"2026-07-20T00:00:00+09:00",source:"auto",tags:["ギルドバトル","アリーナ"],status:"自動分類",note:""},
 ]};
 
+const PAGE_SIZE = 100; // 段階描画：一度に描画するカード数
+
 const state = {
   videos: [],
   selectedTags: new Set(),
   query: "",
   status: "",
   sortDesc: true,
+  dateFrom: null,    // Date（この日を含む）
+  dateToEnd: null,   // Date（翌日0時＝この日を含む上限）
+  visibleCount: PAGE_SIZE,
 };
 
 const $ = (id) => document.getElementById(id);
@@ -258,6 +298,17 @@ const fmtDate = (iso) => {
   return isNaN(d) ? "----/--/--"
     : `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,"0")}/${String(d.getDate()).padStart(2,"0")}`;
 };
+
+async function loadTags() {
+  try {
+    const res = await fetch("tags.json", {cache:"no-cache"});
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (Array.isArray(data.tags) && data.tags.length)
+      return data.tags.map(t => [t.name, t.color]);
+  } catch (e) { /* フォールバック定義で続行 */ }
+  return DEFAULT_TAGS;
+}
 
 async function loadData() {
   try {
@@ -304,6 +355,12 @@ function filtered() {
     if (state.selectedTags.size &&
         !(v.tags || []).some(t => state.selectedTags.has(t))) return false;
     if (state.status && v.status !== state.status) return false;
+    if (state.dateFrom || state.dateToEnd) {
+      const d = new Date(v.publishedAt);
+      if (isNaN(d)) return false;
+      if (state.dateFrom && d < state.dateFrom) return false;
+      if (state.dateToEnd && d >= state.dateToEnd) return false;
+    }
     if (q) {
       const hay = norm(`${v.title} ${v.channel} ${v.description} ${v.note}`);
       if (!hay.includes(q)) return false;
@@ -355,7 +412,7 @@ function card(v) {
   for (const t of v.tags || []) {
     const s = document.createElement("span");
     s.className = "tag";
-    s.style.setProperty("--c", TAG_COLOR[t] || "#8a8598");
+    s.style.setProperty("--c", tagColor(t));
     s.textContent = t;
     tags.appendChild(s);
   }
@@ -371,13 +428,20 @@ function card(v) {
   return a;
 }
 
-function renderList() {
+function renderList(keepCount = false) {
+  // 絞り込み条件が変わったら先頭から描画し直す。「もっと見る」のときだけ件数を維持して伸ばす。
+  if (!keepCount) state.visibleCount = PAGE_SIZE;
   const list = filtered();
+  const shown = list.slice(0, state.visibleCount);
   const grid = $("video-grid");
   grid.innerHTML = "";
-  for (const v of list) grid.appendChild(card(v));
+  for (const v of shown) grid.appendChild(card(v));
   $("hit-count").textContent = list.length;
+  $("shown-count").textContent = shown.length;
   $("empty-msg").hidden = list.length > 0;
+  const more = $("more-btn");
+  more.hidden = list.length <= state.visibleCount;
+  if (!more.hidden) more.textContent = `もっと見る（残り ${list.length - state.visibleCount} 件）`;
 }
 
 function bindControls() {
@@ -394,19 +458,40 @@ function bindControls() {
     $("sort-btn").textContent = state.sortDesc ? "公開日 ↓ 新しい順" : "公開日 ↑ 古い順";
     renderList();
   });
+  // 日付は JST の日単位で比較する（publishedAt はタイムゾーン付き ISO のため Date 同士で比較できる）
+  $("date-from").addEventListener("change", e => {
+    state.dateFrom = e.target.value ? new Date(`${e.target.value}T00:00:00+09:00`) : null;
+    renderList();
+  });
+  $("date-to").addEventListener("change", e => {
+    state.dateToEnd = e.target.value
+      ? new Date(new Date(`${e.target.value}T00:00:00+09:00`).getTime() + 86400000)
+      : null;
+    renderList();
+  });
+  $("more-btn").addEventListener("click", () => {
+    state.visibleCount += PAGE_SIZE;
+    renderList(true);
+  });
   $("clear-btn").addEventListener("click", () => {
     state.selectedTags.clear();
     state.query = "";
     state.status = "";
+    state.dateFrom = null;
+    state.dateToEnd = null;
     $("search-box").value = "";
     $("status-filter").value = "";
+    $("date-from").value = "";
+    $("date-to").value = "";
     renderChips();
     renderList();
   });
 }
 
 (async function init() {
-  const data = await loadData();
+  const [data, tags] = await Promise.all([loadData(), loadTags()]);
+  TAGS = tags;
+  TAG_COLOR = Object.fromEntries(TAGS);
   state.videos = data.videos || [];
   $("total-count").textContent = state.videos.length;
   $("last-updated").textContent = data.updated ? fmtDate(data.updated) : "-";
