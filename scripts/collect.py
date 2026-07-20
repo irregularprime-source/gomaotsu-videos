@@ -25,18 +25,20 @@ JST = timezone(timedelta(hours=9))
 # ゴ魔乙動画の判定語（gomaOnly: false のチャンネル向け）。運用しながら追加しやすいよう定数化。
 GOMA_KEYWORDS = ["ゴ魔乙", "ごまおつ", "ゴシックは魔法乙女"]
 
-# タグ自動分類のキーワード表。dict の順序が付与タグの順序になる（index.html の表示順に合わせてある）。
+# --- タグ自動分類の語彙 ---
 # Why not「降臨」「復刻」: 発注者の指示によりイベントステージ判定には使わない。
-TAG_KEYWORDS = {
-    # 「回スコア大会」= 番号付きの定期スコア大会（＝週末）。エーテル/イベントとは語が衝突しない。
-    "スコア大会(週末)": ["土曜スコア", "週末スコア", "全国スコア大会", "回スコア大会"],
-    "スコア大会(イベント)": ["イベントスコア"],
-    "エーテルスコア大会": ["エーテルスコア"],
+# スコア大会系を示す語（略語含む）。ドヨアタ＝土曜アタック＝週末スコア大会。
+SCORE_MARKERS = ["スコア大会", "スコアタ", "ドヨアタ", "どよあた"]
+# スコア大会の週末/イベント振り分け語。いずれかを含めばイベント、含まなければ週末。
+EVENT_WORDS = ["限定", "記念", "コラボ", "周年", "xmas", "クリスマス"]
+# 単純な部分一致で付ける独立カテゴリ（dict の順序＝付与順）。
+SIMPLE_KEYWORDS = {
     "アリーナ": ["アリーナ"],
-    "ギルドバトル": ["ギルドバトル", "ギルバト"],
     "イベントステージ": ["イベントステージ"],
     "メインストーリー": ["メインストーリー"],
     "キワメタワー": ["キワメタワー", "キワメ", "極タワー"],
+    "ゴシック道": ["ゴシック道"],
+    "ガチャ": ["ガチャ"],
 }
 
 
@@ -49,28 +51,73 @@ def is_gomaotsu(normalized_text):
     return any(norm(k) in normalized_text for k in GOMA_KEYWORDS)
 
 
-# 回数「第○回」。表示用タグ（第580回）として付ける。
-ROUND_RE = re.compile(r"第(\d+)回")
+# 回数抽出パターン。スコア数値（M/億/万等の単位付き）を回数と誤認しないよう、
+# 「回/かい」やスコア大会系の語に隣接した数字だけを回数とみなす。上から順に最初の一致を採用。
+ROUND_PATTERNS = [
+    re.compile(r"第(\d+)回"),
+    re.compile(r"(\d+)\s*回"),
+    re.compile(r"(\d+)\s*かい"),
+    re.compile(r"(?:ドヨアタ|どよあた)\s*(\d+)"),
+    re.compile(r"(\d+)(?=スコアタ|ドヨアタ|どよあた)"),
+]
 # イベント名の簡易抽出：「○○限定」形式のみ拾う。
 # Why not: タイトル書式が不揃いで、これ以外の形（接頭辞なしのイベント名等）は誤抽出が多いため対象外。
 EVENT_RE = re.compile(r"([一-鿿ぁ-んァ-ヿー々〆]+)限定")
 
 
-def classify(normalized_text):
-    """タイトル＋説明文（正規化済み）からカテゴリタグ一覧を返す。該当なしは ['未分類']。"""
-    tags = [tag for tag, kws in TAG_KEYWORDS.items()
-            if any(norm(k) in normalized_text for k in kws)]
+def classify(ntitle, has_round=False):
+    """正規化タイトルからカテゴリタグ一覧を返す。該当なしは ['未分類']。
+    週末/イベントの判別は、説明文の別動画への言及を拾わないようタイトルのみで行う。
+    has_round=True（回数「第○回」が取れた）はそれ自体を週末スコア大会の判定材料にする
+    （「第579回 9,903万」のようにスコアタ表記が無くても回数付きは定期スコア大会のため）。"""
+    tags = []
+
+    # スコア大会ファミリー：親「スコア大会」＋下位1つ（週末/イベント/エーテル/リアル）
+    is_ether = norm("エーテルスコア") in ntitle
+    is_real = norm("団体戦") in ntitle            # リアルスコア大会（現状は団体戦のみ）
+    is_score = is_ether or is_real or has_round or any(norm(m) in ntitle for m in SCORE_MARKERS)
+    if is_score:
+        tags.append("スコア大会")
+        if is_ether:
+            tags.append("エーテルスコア大会")
+        elif is_real:
+            tags.append("リアルスコア大会")
+        elif any(norm(w) in ntitle for w in EVENT_WORDS):
+            tags.append("スコア大会(イベント)")
+        else:
+            tags.append("スコア大会(週末)")
+
+    # ギルドバトル：ギルイベ（イベント）を通常より優先
+    if norm("ギルイベ") in ntitle:
+        tags.append("ギルドバトル(イベント)")
+    elif any(norm(k) in ntitle for k in ["ギルドバトル", "ギルバト"]):
+        tags.append("ギルドバトル(通常)")
+
+    # 独立カテゴリ
+    for tag, kws in SIMPLE_KEYWORDS.items():
+        if any(norm(k) in ntitle for k in kws):
+            tags.append(tag)
+
     return tags or ["未分類"]
 
 
+def extract_round(ntitle):
+    """タイトルから回数（整数）を1つ返す。無ければ None。"""
+    for pat in ROUND_PATTERNS:
+        m = pat.search(ntitle)
+        if m:
+            return int(m.group(1))
+    return None
+
+
 def make_tags(title, description):
-    """1動画に付ける全タグ（カテゴリ＋回数＋イベント名）を返す。build_entry と reclassify で共用。"""
-    tags = classify(norm(title + "\n" + description))
-    # 回数・イベント名はタイトルからのみ抽出する（説明文の別動画への言及を拾わないため）。
+    """1動画に付ける全タグ（カテゴリ＋回数＋イベント名）を返す。build_entry と reclassify で共用。
+    分類はタイトル基準（description は収集判定 is_gomaotsu でのみ使う）。"""
     ntitle = norm(title)
-    m = ROUND_RE.search(ntitle)
-    if m:
-        tags.append(f"第{m.group(1)}回")
+    r = extract_round(ntitle)
+    tags = classify(ntitle, has_round=r is not None)
+    if r is not None:
+        tags.append(f"第{r}回")
     e = EVENT_RE.search(ntitle)
     if e:
         tags.append(e.group(1))
