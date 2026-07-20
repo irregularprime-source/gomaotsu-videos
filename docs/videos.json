@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-20T00:00:00+09:00",
+  "updated": "2026-07-20T13:27:27+09:00",
   "videos": [
     {
       "videoId": "SAMPLE00001",
@@ -9,7 +9,9 @@
       "publishedAt": "2026-07-18T21:00:00+09:00",
       "registeredAt": "2026-07-20T00:00:00+09:00",
       "source": "manual",
-      "tags": ["スコア大会(週末)"],
+      "tags": [
+        "スコア大会(週末)"
+      ],
       "status": "確認済み",
       "note": "サンプル"
     },
@@ -21,7 +23,9 @@
       "publishedAt": "2026-07-15T12:00:00+09:00",
       "registeredAt": "2026-07-20T00:00:00+09:00",
       "source": "auto",
-      "tags": ["エーテルスコア大会"],
+      "tags": [
+        "エーテルスコア大会"
+      ],
       "status": "自動分類",
       "note": "サンプル"
     },
@@ -33,7 +37,10 @@
       "publishedAt": "2026-07-10T19:30:00+09:00",
       "registeredAt": "2026-07-20T00:00:00+09:00",
       "source": "auto",
-      "tags": ["ギルドバトル", "アリーナ"],
+      "tags": [
+        "ギルドバトル",
+        "アリーナ"
+      ],
       "status": "自動分類",
       "note": "サンプル"
     },
@@ -45,7 +52,9 @@
       "publishedAt": "2026-07-05T08:00:00+09:00",
       "registeredAt": "2026-07-20T00:00:00+09:00",
       "source": "auto",
-      "tags": ["キワメタワー"],
+      "tags": [
+        "キワメタワー"
+      ],
       "status": "確認済み",
       "note": "サンプル"
     },
@@ -57,9 +66,361 @@
       "publishedAt": "2026-06-28T23:00:00+09:00",
       "registeredAt": "2026-07-20T00:00:00+09:00",
       "source": "auto",
-      "tags": ["未分類"],
+      "tags": [
+        "未分類"
+      ],
       "status": "自動分類",
       "note": "サンプル"
+    },
+    {
+      "videoId": "JRmP7NZvn-g",
+      "title": "【ゴ魔乙 プレイ動画】第580回スコア大会 hard 291.2M 闇HYCA/ｱｽﾄﾗﾙｹﾞｰﾄ オサ範",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2026-07-17T05:51:43Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "Ek0iC4BcK1M",
+      "title": "【ゴ魔乙 プレイ動画】第574回スコア大会 normal 73.1M mk2/NEOいんへ 範オ特",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2026-06-05T04:18:34Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "QdrsVNkPS88",
+      "title": "【ゴ魔乙 プレイ動画】第572回スコア大会hard 82.0M 闇HYCA/ｱｽﾄﾗﾙｹﾞｰﾄ(未開花) 爆範全",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2026-05-22T08:15:54Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "7LNIIy05yKw",
+      "title": "【ゴ魔乙 プレイ動画】第571回スコア大会 hard 256.1M 闇パレ/アストラルゲート Hダﾊﾞﾘ",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2026-05-14T13:09:28Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "WrXEGpfBNsg",
+      "title": "【ゴ魔乙 プレイ動画】煩悶限定ｽｺｱﾀ闇 2112M バラバ",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2026-05-13T21:45:06Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "HH1jfm2bLOg",
+      "title": "【ゴ魔乙 プレイ動画】第568回スコア大会 TSA hard 闇HYCレーザーA単騎 ラ砂波",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2026-04-23T06:57:53Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "coKRSPVgCBQ",
+      "title": "【ゴ魔乙 プレイ動画】優勝！！第567回スコア大会 death 3154M ｸﾞﾝｸﾞﾆﾙ/ジーナ 砂ラ砂",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2026-04-18T18:52:27Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "sFbIdG6syB8",
+      "title": "【ゴ魔乙 プレイ動画】第567回スコア大会 death 2523.2M 闇ｸﾞﾝｸﾞﾆﾙ/ジーナ 砂ラ砂",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2026-04-15T08:57:07Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "gz3SC6N3-W0",
+      "title": "【ゴ魔乙 プレイ動画】第566回スコア大会 hard 301.7M 闇mk2/NEOインフェ 範Hﾊﾞﾘ",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2026-04-09T10:39:47Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "Q85dzTppvVU",
+      "title": "【ゴ魔乙 プレイ動画】第566回スコア大会 hard  290.2M 闇mk2/NEOインフェ 範Hﾊﾞﾘ",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2026-04-08T02:58:57Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "1zspBKNfG84",
+      "title": "【ゴ魔乙 プレイ動画】第565回スコア大会 hard 301.3M 闇mk2/NEOインフェ 範砂ﾊﾞﾘ",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2026-04-03T04:10:01Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "uOOrFhZ014I",
+      "title": "【ゴ魔乙 プレイ動画】第565回スコア大会 hard 281.1M 妖怪ﾚｰｻﾞｰ単騎 範砂ﾊﾞﾘ",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2026-04-02T11:19:55Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "vcNNcVVosaA",
+      "title": "【ゴ魔乙 プレイ動画】第551回スコア大会 hard 201.8M 闇ヒバチ/NEO 範砂ﾊﾞﾘ",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2025-12-27T21:56:00Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "HJFCNjExbcA",
+      "title": "【ゴ魔乙 プレイ動画】第534回スコア大会 hard 272.3M 闇ｸﾞﾝｸﾞﾆﾙ/NEO レ範レ",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2025-08-27T13:31:08Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "yCKMoyq_Wi4",
+      "title": "【ゴ魔乙 プレイ動画】第533回スコア大会 hard 184.7M 闇mk2/NEO オボ範",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2025-08-21T13:08:54Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "o2yxOIYU12g",
+      "title": "【ゴ魔乙 プレイ動画】第530回スコア大会 hard 167.3M 闇mk2/NEO オレ範",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2025-07-30T11:33:49Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "pPOwahVWS9g",
+      "title": "【ゴ魔乙 プレイ動画】第528回スコア大会 弩death 4748M 未生の光単騎 砂砂砂",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2025-07-15T22:54:33Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "iiUHdAiYpCo",
+      "title": "【ゴ魔乙 プレイ動画】第526回スコア大会 death 1421M 闇オービター/Δ改 バラバ",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2025-07-03T08:02:48Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "yZXp3K0-i60",
+      "title": "【ゴ魔乙 プレイ動画】初優勝！第525回スコア大会 hard 313.7M 闇妖怪ﾚｰｻﾞｰ単騎 レ範オ",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2025-06-28T15:05:22Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "-2HPnRhht8s",
+      "title": "【ゴ魔乙 プレイ動画】第525回スコア大会 hard 254.9M 闇妖怪ﾚｰｻﾞｰ単騎 追範オ",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2025-06-25T05:43:26Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "vS0wxAdWHnQ",
+      "title": "【ゴ魔乙 プレイ動画】第524回スコア大会 hard 245.6M 闇ハイパレ/NEOインフェ 砂砂H",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2025-06-18T02:54:25Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "jnambRNx9pc",
+      "title": "【ゴ魔乙 プレイ動画】第523回スコア大会 death 2802M ｸﾞﾝｸﾞﾆﾙ単騎 バラバ",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2025-06-13T05:34:52Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "cXO6w-I8f5A",
+      "title": "【ゴ魔乙 プレイ動画】第522回スコア大会 hard 251.0M 闇NEO単騎 爆ラ追",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2025-06-04T08:35:16Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "hD6Engw2vJg",
+      "title": "【ゴ魔乙 プレイ動画】第521回スコア大会 hard 191.6M 闇mk2/NEO 範ボボ",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2025-05-31T08:25:38Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "Q8XnToVbk3A",
+      "title": "【ゴ魔乙 プレイ動画】第521回スコア大会 hard 187.1M 闇mk2/NEO 範ボボ",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2025-05-28T07:45:15Z",
+      "registeredAt": "2026-07-20T13:27:27+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
     }
   ]
 }
