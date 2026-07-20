@@ -87,11 +87,17 @@ push が他の更新と競合して弾かれた場合は `git pull --rebase` で
 
 ### 起動
 
+いちばん簡単なのは、リポジトリ直下の **`管理ツールを開く.bat` をダブルクリック**する方法。
+最新データの取得（git pull）→ サーバー起動 → ブラウザで管理ツールを自動オープン、までまとめて行う。
+
+コマンドで起動する場合：
+
 ```
-python scripts/serve_admin.py
+python scripts/serve_admin.py         # サーバーのみ
+python scripts/serve_admin.py --open  # ブラウザも自動で開く
 ```
 
-表示される `http://127.0.0.1:8000/tools/admin.html` をブラウザで開く（127.0.0.1 限定）。
+いずれも `http://127.0.0.1:8000/tools/admin.html` をブラウザで開く（127.0.0.1 限定）。
 環境変数 `YOUTUBE_API_KEY` があれば自動で読み込む（`/api/key` 経由。ディスクにも git にも保存しない）。
 無い場合はツール上部にキーを貼り付ける（この端末のブラウザの localStorage にのみ保存）。
 

@@ -8,9 +8,11 @@ APIキーを手入力せずに YouTube Data API を叩けるようにする。
   python scripts/serve_admin.py
   → 表示された URL（http://127.0.0.1:8000/tools/admin.html）をブラウザで開く
 """
+import argparse
 import functools
 import json
 import os
+import webbrowser
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
@@ -37,6 +39,11 @@ class Handler(SimpleHTTPRequestHandler):
 
 
 def main():
+    parser = argparse.ArgumentParser(description="管理ツール(tools/admin.html)のローカル起動用サーバー")
+    parser.add_argument("--open", action="store_true",
+                        help="起動時に既定のブラウザで管理ツールを自動で開く")
+    args = parser.parse_args()
+
     handler = functools.partial(Handler, directory=str(ROOT))
     with ThreadingHTTPServer((HOST, PORT), handler) as httpd:
         url = f"http://{HOST}:{PORT}/tools/admin.html"
@@ -46,6 +53,9 @@ def main():
         print(f"  {url}")
         print(f"環境変数 YOUTUBE_API_KEY: {key_state}")
         print("停止するには Ctrl+C。")
+        if args.open:
+            # ソケットは既にbind+listen済みなので、この時点で開いて問題ない。
+            webbrowser.open(url)
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
