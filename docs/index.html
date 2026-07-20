@@ -21,7 +21,8 @@
   --gold-soft:rgba(201,164,92,.14);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{background:var(--bg)}
+/* 基準フォントサイズ（老眼配慮の特大＝既定16pxの1.25倍）。全体を一括で拡大／縮小するにはここだけ変更する。 */
+html{background:var(--bg);font-size:20px}
 body{
   font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN",sans-serif;
   color:var(--text);
@@ -49,18 +50,18 @@ header{padding:36px 0 20px;text-align:center}
   -webkit-text-fill-color:transparent;color:var(--gold);
 }
 .site-sub{
-  margin-top:6px;color:var(--muted);font-size:13px;letter-spacing:.14em;
+  margin-top:6px;color:var(--muted);font-size:0.8125rem;letter-spacing:.14em;
 }
 .ornament{
   display:flex;align-items:center;gap:12px;justify-content:center;
-  margin-top:16px;color:var(--gold);font-size:11px;
+  margin-top:16px;color:var(--gold);font-size:0.6875rem;
 }
 .ornament::before,.ornament::after{
   content:"";height:1px;width:min(160px,26vw);
   background:linear-gradient(90deg,transparent,var(--gold));
 }
 .ornament::after{background:linear-gradient(90deg,var(--gold),transparent)}
-.meta-line{margin-top:10px;font-size:12px;color:var(--muted)}
+.meta-line{margin-top:10px;font-size:0.75rem;color:var(--muted)}
 .meta-line b{color:var(--text);font-weight:700}
 
 /* ---------- filter panel ---------- */
@@ -74,7 +75,7 @@ header{padding:36px 0 20px;text-align:center}
 }
 .panel-label{
   font-family:"Shippori Mincho B1",serif;
-  font-size:12px;letter-spacing:.22em;color:var(--gold);
+  font-size:0.75rem;letter-spacing:.22em;color:var(--gold);
   margin-bottom:8px;
 }
 .chips{display:flex;flex-wrap:wrap;gap:8px}
@@ -85,10 +86,10 @@ header{padding:36px 0 20px;text-align:center}
   color:color-mix(in srgb,var(--c) 72%,white);
   border-radius:999px;
   padding:5px 12px;
-  font-size:13px;font-weight:500;
+  font-size:0.8125rem;font-weight:500;
   transition:background .15s,box-shadow .15s;
 }
-.chip .cnt{opacity:.65;font-size:11px;margin-left:4px}
+.chip .cnt{opacity:.65;font-size:0.6875rem;margin-left:4px}
 .chip:hover{background:color-mix(in srgb,var(--c) 20%,transparent)}
 .chip[aria-pressed="true"]{
   background:color-mix(in srgb,var(--c) 34%,transparent);
@@ -104,25 +105,25 @@ header{padding:36px 0 20px;text-align:center}
   border:1px solid var(--line-soft);
   border-radius:8px;
   color:var(--text);
-  padding:8px 12px;font-size:14px;
+  padding:8px 12px;font-size:0.875rem;
 }
 .search::placeholder{color:var(--muted)}
 select,.sort-btn{
   background:var(--surface2);
   border:1px solid var(--line-soft);
   border-radius:8px;color:var(--text);
-  padding:8px 10px;font-size:13px;
+  padding:8px 10px;font-size:0.8125rem;
 }
 .sort-btn:hover{border-color:var(--line)}
 .clear-btn{
   background:none;border:none;color:var(--muted);
-  font-size:12px;text-decoration:underline;
+  font-size:0.75rem;text-decoration:underline;
 }
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 
 /* ---------- results ---------- */
-.result-count{font-size:13px;color:var(--muted);margin-bottom:12px}
-.result-count b{color:var(--gold);font-weight:700;font-size:15px}
+.result-count{font-size:0.8125rem;color:var(--muted);margin-bottom:12px}
+.result-count b{color:var(--gold);font-weight:700;font-size:0.9375rem}
 .grid{
   display:grid;gap:16px;
   grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
@@ -144,24 +145,24 @@ select,.sort-btn{
 }
 .card-body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;flex:1}
 .card-title{
-  font-size:14px;font-weight:700;line-height:1.45;
+  font-size:0.875rem;font-weight:700;line-height:1.45;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
 }
 .card-meta{
   display:flex;justify-content:space-between;gap:8px;
-  font-size:12px;color:var(--muted);
+  font-size:0.75rem;color:var(--muted);
 }
 .card-meta .date{font-variant-numeric:tabular-nums;white-space:nowrap}
 .card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
 .tag{
   --c:#8a8598;
-  font-size:11px;padding:2px 9px;border-radius:999px;
+  font-size:0.6875rem;padding:2px 9px;border-radius:999px;
   border:1px solid color-mix(in srgb,var(--c) 50%,transparent);
   color:color-mix(in srgb,var(--c) 75%,white);
   background:color-mix(in srgb,var(--c) 12%,transparent);
 }
 .badge-unchecked{
-  font-size:10px;padding:2px 7px;border-radius:4px;
+  font-size:0.625rem;padding:2px 7px;border-radius:4px;
   color:var(--gold);border:1px solid var(--line);
   white-space:nowrap;align-self:center;
 }
@@ -171,11 +172,11 @@ select,.sort-btn{
 }
 .error-box{
   background:var(--surface);border:1px solid #a5556a;border-radius:12px;
-  padding:20px;color:var(--text);font-size:14px;margin-bottom:20px;
+  padding:20px;color:var(--text);font-size:0.875rem;margin-bottom:20px;
 }
 footer{
   margin-top:48px;text-align:center;color:var(--muted);
-  font-size:11px;letter-spacing:.1em;
+  font-size:0.6875rem;letter-spacing:.1em;
 }
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important}

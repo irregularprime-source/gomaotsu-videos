@@ -7,6 +7,7 @@ data/channels.json の各チャンネルのアップロード動画から、docs
 import argparse
 import json
 import os
+import re
 import sys
 import unicodedata
 from datetime import datetime, timezone, timedelta
@@ -27,7 +28,8 @@ GOMA_KEYWORDS = ["ゴ魔乙", "ごまおつ", "ゴシックは魔法乙女"]
 # タグ自動分類のキーワード表。dict の順序が付与タグの順序になる（index.html の表示順に合わせてある）。
 # Why not「降臨」「復刻」: 発注者の指示によりイベントステージ判定には使わない。
 TAG_KEYWORDS = {
-    "スコア大会(週末)": ["土曜スコア", "週末スコア", "全国スコア大会"],
+    # 「回スコア大会」= 番号付きの定期スコア大会（＝週末）。エーテル/イベントとは語が衝突しない。
+    "スコア大会(週末)": ["土曜スコア", "週末スコア", "全国スコア大会", "回スコア大会"],
     "スコア大会(イベント)": ["イベントスコア"],
     "エーテルスコア大会": ["エーテルスコア"],
     "アリーナ": ["アリーナ"],
@@ -47,11 +49,32 @@ def is_gomaotsu(normalized_text):
     return any(norm(k) in normalized_text for k in GOMA_KEYWORDS)
 
 
+# 回数「第○回」。表示用タグ（第580回）として付ける。
+ROUND_RE = re.compile(r"第(\d+)回")
+# イベント名の簡易抽出：「○○限定」形式のみ拾う。
+# Why not: タイトル書式が不揃いで、これ以外の形（接頭辞なしのイベント名等）は誤抽出が多いため対象外。
+EVENT_RE = re.compile(r"([一-鿿ぁ-んァ-ヿー々〆]+)限定")
+
+
 def classify(normalized_text):
-    """タイトル＋説明文（正規化済み）からタグ一覧を返す。該当なしは ['未分類']。"""
+    """タイトル＋説明文（正規化済み）からカテゴリタグ一覧を返す。該当なしは ['未分類']。"""
     tags = [tag for tag, kws in TAG_KEYWORDS.items()
             if any(norm(k) in normalized_text for k in kws)]
     return tags or ["未分類"]
+
+
+def make_tags(title, description):
+    """1動画に付ける全タグ（カテゴリ＋回数＋イベント名）を返す。build_entry と reclassify で共用。"""
+    tags = classify(norm(title + "\n" + description))
+    # 回数・イベント名はタイトルからのみ抽出する（説明文の別動画への言及を拾わないため）。
+    ntitle = norm(title)
+    m = ROUND_RE.search(ntitle)
+    if m:
+        tags.append(f"第{m.group(1)}回")
+    e = EVENT_RE.search(ntitle)
+    if e:
+        tags.append(e.group(1))
+    return tags
 
 
 def load_channels():
@@ -97,7 +120,6 @@ def build_entry(item, channel_name, now_iso):
     # contentDetails.videoPublishedAt が実際の公開日時。無ければ playlist 追加日時で代替。
     published = item.get("contentDetails", {}).get("videoPublishedAt") or snip.get("publishedAt")
 
-    text = norm(title + "\n" + description)
     return {
         "videoId": video_id,
         "title": title,
@@ -106,10 +128,10 @@ def build_entry(item, channel_name, now_iso):
         "publishedAt": published,
         "registeredAt": now_iso,
         "source": "auto",
-        "tags": classify(text),
+        "tags": make_tags(title, description),
         "status": "自動分類",
         "note": "",
-    }, text
+    }
 
 
 def collect(dry_run):
@@ -135,9 +157,10 @@ def collect(dry_run):
             continue
 
         for item in items:
-            entry, text = build_entry(item, ch["name"], now_iso)
+            entry = build_entry(item, ch["name"], now_iso)
             if not entry["videoId"] or entry["videoId"] in existing_ids:
                 continue  # 既存 videoId は手動修正保護のためスキップ
+            text = norm(entry["title"] + "\n" + entry["description"])
             if not (ch.get("gomaOnly") or is_gomaotsu(text)):
                 continue
             existing_ids.add(entry["videoId"])
