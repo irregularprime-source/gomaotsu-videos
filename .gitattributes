@@ -1,0 +1,4 @@
+# .bat は CP932(Shift-JIS)+CRLF のまま配布する。
+# cmd.exe は日本語Windowsでバッチを Shift-JIS として解釈するため、UTF-8 や LF だと
+# 文字化け・改行崩れでコマンドが誤実行される。binary 指定で git のエンコード/改行変換を止める。
+*.bat binary
