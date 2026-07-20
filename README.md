@@ -122,6 +122,10 @@ python scripts/serve_admin.py --open  # ブラウザも自動で開く
 | `channels.json` | `data/channels.json` |
 | `tags.json` | `docs/tags.json` |
 
+置き場所に反映したら、リポジトリ直下の **`変更を保存する.bat` をダブルクリック**すると、
+上記3つのJSONの変更を commit → `git pull --rebase` → push まで自動で行いサイトへ反映する
+（自動収集が同時に更新していても取りこぼさないよう rebase を挟む）。コマンド操作は不要。
+
 ## 収集ルールを変えたとき（再分類）
 
 `collect.py` のキーワード表や抽出ルールを更新したら、収集済みの自動分類データに新ルールを
