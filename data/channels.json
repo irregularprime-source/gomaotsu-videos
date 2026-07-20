@@ -1,0 +1,15 @@
+{
+  "_comment": "自動収集の対象チャンネルリスト（Phase 2で使用）。channelId は YouTube のチャンネルID（UCで始まる24文字）。gomaOnly を true にすると、そのチャンネルの動画はキーワード判定なしで全てゴ魔乙動画として扱います。",
+  "channels": [
+    {
+      "channelId": "UCxxxxxxxxxxxxxxxxxxxxxx",
+      "name": "サンプルチャンネルA（実データに置き換えてください）",
+      "gomaOnly": true
+    },
+    {
+      "channelId": "UCyyyyyyyyyyyyyyyyyyyyyy",
+      "name": "サンプルチャンネルB（ゴ魔乙以外も投稿するチャンネルの例）",
+      "gomaOnly": false
+    }
+  ]
+}

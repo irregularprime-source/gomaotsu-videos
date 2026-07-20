@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ゴ魔乙 動画索引</title>
+<meta name="description" content="ゴシックは魔法乙女（ゴ魔乙）のYouTubeプレイ動画をカテゴリ別に検索できる一覧サイト">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#131020;
+  --surface:#1c172e;
+  --surface2:#241d3a;
+  --line:rgba(201,164,92,.22);
+  --line-soft:rgba(200,180,255,.10);
+  --text:#ece6f6;
+  --muted:#9d92ba;
+  --gold:#c9a45c;
+  --gold-soft:rgba(201,164,92,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg)}
+body{
+  font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN",sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(1100px 500px at 80% -10%, rgba(120,80,180,.14), transparent 60%),
+    radial-gradient(900px 400px at 10% 0%, rgba(201,164,92,.07), transparent 55%),
+    var(--bg);
+  min-height:100vh;
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px 64px}
+
+/* ---------- header ---------- */
+header{padding:36px 0 20px;text-align:center}
+.site-title{
+  font-family:"Shippori Mincho B1",serif;
+  font-weight:800;
+  font-size:clamp(26px,5vw,40px);
+  letter-spacing:.08em;
+  background:linear-gradient(180deg,#f0e3c0 20%,var(--gold) 75%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:var(--gold);
+}
+.site-sub{
+  margin-top:6px;color:var(--muted);font-size:13px;letter-spacing:.14em;
+}
+.ornament{
+  display:flex;align-items:center;gap:12px;justify-content:center;
+  margin-top:16px;color:var(--gold);font-size:11px;
+}
+.ornament::before,.ornament::after{
+  content:"";height:1px;width:min(160px,26vw);
+  background:linear-gradient(90deg,transparent,var(--gold));
+}
+.ornament::after{background:linear-gradient(90deg,var(--gold),transparent)}
+.meta-line{margin-top:10px;font-size:12px;color:var(--muted)}
+.meta-line b{color:var(--text);font-weight:700}
+
+/* ---------- filter panel ---------- */
+.panel{
+  background:var(--surface);
+  border:1px solid var(--line-soft);
+  border-top:1px solid var(--line);
+  border-radius:12px;
+  padding:16px;
+  margin:8px 0 24px;
+}
+.panel-label{
+  font-family:"Shippori Mincho B1",serif;
+  font-size:12px;letter-spacing:.22em;color:var(--gold);
+  margin-bottom:8px;
+}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  --c:#8a8598;
+  border:1px solid color-mix(in srgb,var(--c) 55%,transparent);
+  background:color-mix(in srgb,var(--c) 10%,transparent);
+  color:color-mix(in srgb,var(--c) 72%,white);
+  border-radius:999px;
+  padding:5px 12px;
+  font-size:13px;font-weight:500;
+  transition:background .15s,box-shadow .15s;
+}
+.chip .cnt{opacity:.65;font-size:11px;margin-left:4px}
+.chip:hover{background:color-mix(in srgb,var(--c) 20%,transparent)}
+.chip[aria-pressed="true"]{
+  background:color-mix(in srgb,var(--c) 34%,transparent);
+  box-shadow:0 0 10px color-mix(in srgb,var(--c) 45%,transparent);
+  color:#fff;
+}
+.controls{
+  display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;align-items:center;
+}
+.search{
+  flex:1 1 220px;
+  background:var(--surface2);
+  border:1px solid var(--line-soft);
+  border-radius:8px;
+  color:var(--text);
+  padding:8px 12px;font-size:14px;
+}
+.search::placeholder{color:var(--muted)}
+select,.sort-btn{
+  background:var(--surface2);
+  border:1px solid var(--line-soft);
+  border-radius:8px;color:var(--text);
+  padding:8px 10px;font-size:13px;
+}
+.sort-btn:hover{border-color:var(--line)}
+.clear-btn{
+  background:none;border:none;color:var(--muted);
+  font-size:12px;text-decoration:underline;
+}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+/* ---------- results ---------- */
+.result-count{font-size:13px;color:var(--muted);margin-bottom:12px}
+.result-count b{color:var(--gold);font-weight:700;font-size:15px}
+.grid{
+  display:grid;gap:16px;
+  grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
+}
+.card{
+  display:flex;flex-direction:column;
+  background:var(--surface);
+  border:1px solid var(--line-soft);
+  border-radius:12px;overflow:hidden;
+  transition:transform .15s,border-color .15s;
+}
+.card:hover{transform:translateY(-2px);border-color:var(--line)}
+.thumb{position:relative;aspect-ratio:16/9;background:var(--surface2)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb .ph{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  color:var(--gold);font-size:28px;
+  background:radial-gradient(circle at 50% 40%,rgba(201,164,92,.12),transparent 70%);
+}
+.card-body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card-title{
+  font-size:14px;font-weight:700;line-height:1.45;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.card-meta{
+  display:flex;justify-content:space-between;gap:8px;
+  font-size:12px;color:var(--muted);
+}
+.card-meta .date{font-variant-numeric:tabular-nums;white-space:nowrap}
+.card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
+.tag{
+  --c:#8a8598;
+  font-size:11px;padding:2px 9px;border-radius:999px;
+  border:1px solid color-mix(in srgb,var(--c) 50%,transparent);
+  color:color-mix(in srgb,var(--c) 75%,white);
+  background:color-mix(in srgb,var(--c) 12%,transparent);
+}
+.badge-unchecked{
+  font-size:10px;padding:2px 7px;border-radius:4px;
+  color:var(--gold);border:1px solid var(--line);
+  white-space:nowrap;align-self:center;
+}
+.empty{
+  text-align:center;padding:60px 20px;color:var(--muted);
+  border:1px dashed var(--line-soft);border-radius:12px;
+}
+.error-box{
+  background:var(--surface);border:1px solid #a5556a;border-radius:12px;
+  padding:20px;color:var(--text);font-size:14px;margin-bottom:20px;
+}
+footer{
+  margin-top:48px;text-align:center;color:var(--muted);
+  font-size:11px;letter-spacing:.1em;
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important}
+}
+@media (max-width:480px){
+  .grid{grid-template-columns:1fr}
+  header{padding-top:24px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 class="site-title">ゴ魔乙 動画索引</h1>
+    <p class="site-sub">ゴシックは魔法乙女　プレイ動画アーカイブ</p>
+    <div class="ornament">❖</div>
+    <p class="meta-line">登録 <b id="total-count">-</b> 件　／　最終更新 <span id="last-updated">-</span></p>
+  </header>
+
+  <section class="panel" aria-label="絞り込み">
+    <div class="panel-label">カテゴリで絞り込む（複数選択可・いずれかを含む動画を表示）</div>
+    <div class="chips" id="tag-chips"></div>
+    <div class="controls">
+      <input type="search" class="search" id="search-box" placeholder="タイトル・チャンネル名・説明文で検索">
+      <select id="status-filter" aria-label="確認状態で絞り込む">
+        <option value="">確認状態：すべて</option>
+        <option value="自動分類">未確認（自動分類のみ）</option>
+        <option value="確認済み">確認済みのみ</option>
+      </select>
+      <button class="sort-btn" id="sort-btn" aria-label="並び順を切り替える">公開日 ↓ 新しい順</button>
+      <button class="clear-btn" id="clear-btn">条件をクリア</button>
+    </div>
+  </section>
+
+  <p class="result-count"><b id="hit-count">0</b> 件を表示中</p>
+  <div id="error-area"></div>
+  <main class="grid" id="video-grid"></main>
+  <div class="empty" id="empty-msg" hidden>条件に一致する動画がありません。絞り込み条件を変えてみてください。</div>
+
+  <footer>GOTHIC WA MAHOU OTOME — VIDEO INDEX（非公式ファンサイト）</footer>
+</div>
+
+<script>
+"use strict";
+
+/* タグ定義：表示順とステンドグラス配色 */
+const TAGS = [
+  ["スコア大会(週末)",   "#d9a441"],
+  ["スコア大会(イベント)","#d4566a"],
+  ["エーテルスコア大会", "#4fb8a8"],
+  ["アリーナ",           "#5b8dd9"],
+  ["ギルドバトル",       "#cf5b4f"],
+  ["イベントステージ",   "#58b368"],
+  ["メインストーリー",   "#9b6fd4"],
+  ["キワメタワー",       "#c76a2e"],
+  ["未分類",             "#8a8598"],
+];
+const TAG_COLOR = Object.fromEntries(TAGS);
+
+/* videos.json が読めない環境（プレビュー等）用のフォールバック */
+const FALLBACK = {updated:"", videos:[
+  {videoId:"SAMPLE00001",title:"【サンプル】videos.json を読み込めなかったため内蔵サンプルを表示しています",channel:"（フォールバック表示）",description:"GitHub Pages 上では docs/videos.json が自動的に読み込まれます。",publishedAt:"2026-07-18T21:00:00+09:00",registeredAt:"2026-07-20T00:00:00+09:00",source:"manual",tags:["スコア大会(週末)"],status:"確認済み",note:""},
+  {videoId:"SAMPLE00002",title:"【サンプル】エーテルスコア大会の例",channel:"（フォールバック表示）",description:"",publishedAt:"2026-07-15T12:00:00+09:00",registeredAt:"2026-07-20T00:00:00+09:00",source:"auto",tags:["エーテルスコア大会"],status:"自動分類",note:""},
+  {videoId:"SAMPLE00003",title:"【サンプル】複数タグの例（ギルドバトル＋アリーナ）",channel:"（フォールバック表示）",description:"",publishedAt:"2026-07-10T19:30:00+09:00",registeredAt:"2026-07-20T00:00:00+09:00",source:"auto",tags:["ギルドバトル","アリーナ"],status:"自動分類",note:""},
+]};
+
+const state = {
+  videos: [],
+  selectedTags: new Set(),
+  query: "",
+  status: "",
+  sortDesc: true,
+};
+
+const $ = (id) => document.getElementById(id);
+const norm = (s) => (s || "").normalize("NFKC").toLowerCase();
+const fmtDate = (iso) => {
+  const d = new Date(iso);
+  return isNaN(d) ? "----/--/--"
+    : `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,"0")}/${String(d.getDate()).padStart(2,"0")}`;
+};
+
+async function loadData() {
+  try {
+    const res = await fetch("videos.json", {cache:"no-cache"});
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } catch (e) {
+    $("error-area").innerHTML =
+      `<div class="error-box">videos.json を読み込めませんでした（${e.message}）。` +
+      `ローカルで開いている場合は簡易サーバー経由（例：python -m http.server）で表示してください。` +
+      `以下は内蔵サンプルの表示です。</div>`;
+    return FALLBACK;
+  }
+}
+
+function tagCounts() {
+  const c = {};
+  for (const v of state.videos)
+    for (const t of v.tags || []) c[t] = (c[t] || 0) + 1;
+  return c;
+}
+
+function renderChips() {
+  const counts = tagCounts();
+  $("tag-chips").innerHTML = "";
+  for (const [name] of TAGS) {
+    const b = document.createElement("button");
+    b.className = "chip";
+    b.style.setProperty("--c", TAG_COLOR[name]);
+    b.setAttribute("aria-pressed", state.selectedTags.has(name));
+    b.innerHTML = `${name}<span class="cnt">${counts[name] || 0}</span>`;
+    b.addEventListener("click", () => {
+      state.selectedTags.has(name) ? state.selectedTags.delete(name) : state.selectedTags.add(name);
+      b.setAttribute("aria-pressed", state.selectedTags.has(name));
+      renderList();
+    });
+    $("tag-chips").appendChild(b);
+  }
+}
+
+function filtered() {
+  const q = norm(state.query);
+  return state.videos.filter(v => {
+    if (state.selectedTags.size &&
+        !(v.tags || []).some(t => state.selectedTags.has(t))) return false;
+    if (state.status && v.status !== state.status) return false;
+    if (q) {
+      const hay = norm(`${v.title} ${v.channel} ${v.description} ${v.note}`);
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  }).sort((a, b) => {
+    const d = new Date(a.publishedAt) - new Date(b.publishedAt);
+    return state.sortDesc ? -d : d;
+  });
+}
+
+function card(v) {
+  const a = document.createElement("a");
+  a.className = "card";
+  a.href = `https://www.youtube.com/watch?v=${encodeURIComponent(v.videoId)}`;
+  a.target = "_blank";
+  a.rel = "noopener";
+
+  const thumb = document.createElement("div");
+  thumb.className = "thumb";
+  const img = document.createElement("img");
+  img.loading = "lazy";
+  img.alt = "";
+  img.src = `https://i.ytimg.com/vi/${encodeURIComponent(v.videoId)}/mqdefault.jpg`;
+  img.addEventListener("error", () => {
+    img.remove();
+    thumb.insertAdjacentHTML("beforeend", `<div class="ph">❖</div>`);
+  });
+  thumb.appendChild(img);
+
+  const body = document.createElement("div");
+  body.className = "card-body";
+
+  const title = document.createElement("div");
+  title.className = "card-title";
+  title.textContent = v.title;
+
+  const meta = document.createElement("div");
+  meta.className = "card-meta";
+  const ch = document.createElement("span");
+  ch.textContent = v.channel;
+  const dt = document.createElement("span");
+  dt.className = "date";
+  dt.textContent = fmtDate(v.publishedAt);
+  meta.append(ch, dt);
+
+  const tags = document.createElement("div");
+  tags.className = "card-tags";
+  for (const t of v.tags || []) {
+    const s = document.createElement("span");
+    s.className = "tag";
+    s.style.setProperty("--c", TAG_COLOR[t] || "#8a8598");
+    s.textContent = t;
+    tags.appendChild(s);
+  }
+  if (v.status === "自動分類") {
+    const b = document.createElement("span");
+    b.className = "badge-unchecked";
+    b.textContent = "未確認";
+    tags.appendChild(b);
+  }
+
+  body.append(title, meta, tags);
+  a.append(thumb, body);
+  return a;
+}
+
+function renderList() {
+  const list = filtered();
+  const grid = $("video-grid");
+  grid.innerHTML = "";
+  for (const v of list) grid.appendChild(card(v));
+  $("hit-count").textContent = list.length;
+  $("empty-msg").hidden = list.length > 0;
+}
+
+function bindControls() {
+  $("search-box").addEventListener("input", e => {
+    state.query = e.target.value;
+    renderList();
+  });
+  $("status-filter").addEventListener("change", e => {
+    state.status = e.target.value;
+    renderList();
+  });
+  $("sort-btn").addEventListener("click", () => {
+    state.sortDesc = !state.sortDesc;
+    $("sort-btn").textContent = state.sortDesc ? "公開日 ↓ 新しい順" : "公開日 ↑ 古い順";
+    renderList();
+  });
+  $("clear-btn").addEventListener("click", () => {
+    state.selectedTags.clear();
+    state.query = "";
+    state.status = "";
+    $("search-box").value = "";
+    $("status-filter").value = "";
+    renderChips();
+    renderList();
+  });
+}
+
+(async function init() {
+  const data = await loadData();
+  state.videos = data.videos || [];
+  $("total-count").textContent = state.videos.length;
+  $("last-updated").textContent = data.updated ? fmtDate(data.updated) : "-";
+  renderChips();
+  bindControls();
+  renderList();
+})();
+</script>
+</body>
+</html>

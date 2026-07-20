@@ -1,0 +1,65 @@
+{
+  "updated": "2026-07-20T00:00:00+09:00",
+  "videos": [
+    {
+      "videoId": "SAMPLE00001",
+      "title": "【サンプル】土曜スコア大会 プレイ動画（実データに置き換えてください）",
+      "channel": "サンプルチャンネルA",
+      "description": "これはサンプルデータです。videos.json の videos 配列を編集して実際の動画を登録してください。",
+      "publishedAt": "2026-07-18T21:00:00+09:00",
+      "registeredAt": "2026-07-20T00:00:00+09:00",
+      "source": "manual",
+      "tags": ["スコア大会(週末)"],
+      "status": "確認済み",
+      "note": "サンプル"
+    },
+    {
+      "videoId": "SAMPLE00002",
+      "title": "【サンプル】エーテルスコア大会 バーナー",
+      "channel": "サンプルチャンネルB",
+      "description": "サンプルデータ（平日エーテルスコア大会の想定）",
+      "publishedAt": "2026-07-15T12:00:00+09:00",
+      "registeredAt": "2026-07-20T00:00:00+09:00",
+      "source": "auto",
+      "tags": ["エーテルスコア大会"],
+      "status": "自動分類",
+      "note": "サンプル"
+    },
+    {
+      "videoId": "SAMPLE00003",
+      "title": "【サンプル】ギルバト＋アリーナ 複数タグの例",
+      "channel": "サンプルチャンネルA",
+      "description": "1本の動画に複数タグを付けた場合の表示確認用サンプル",
+      "publishedAt": "2026-07-10T19:30:00+09:00",
+      "registeredAt": "2026-07-20T00:00:00+09:00",
+      "source": "auto",
+      "tags": ["ギルドバトル", "アリーナ"],
+      "status": "自動分類",
+      "note": "サンプル"
+    },
+    {
+      "videoId": "SAMPLE00004",
+      "title": "【サンプル】キワメタワー 攻略",
+      "channel": "サンプルチャンネルC",
+      "description": "サンプルデータ",
+      "publishedAt": "2026-07-05T08:00:00+09:00",
+      "registeredAt": "2026-07-20T00:00:00+09:00",
+      "source": "auto",
+      "tags": ["キワメタワー"],
+      "status": "確認済み",
+      "note": "サンプル"
+    },
+    {
+      "videoId": "SAMPLE00005",
+      "title": "【サンプル】分類できなかった動画の例",
+      "channel": "サンプルチャンネルC",
+      "description": "キーワードに該当しなかった動画は「未分類」タグが付きます。目視確認の対象です。",
+      "publishedAt": "2026-06-28T23:00:00+09:00",
+      "registeredAt": "2026-07-20T00:00:00+09:00",
+      "source": "auto",
+      "tags": ["未分類"],
+      "status": "自動分類",
+      "note": "サンプル"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+# 内部向けの実装指示書はリポジトリに含めない
+phase2_implementation_guide.md
+
+__pycache__/
+*.pyc
