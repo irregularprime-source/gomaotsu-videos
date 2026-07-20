@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ゴ魔乙 動画索引 — 管理ツール（ローカル専用）</title>
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#131020; --surface:#1c172e; --surface2:#241d3a;
+  --line:rgba(201,164,92,.22); --line-soft:rgba(200,180,255,.10);
+  --text:#ece6f6; --muted:#9d92ba; --gold:#c9a45c; --gold-soft:rgba(201,164,92,.14);
+  --ok:#58b368; --warn:#d4566a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg);font-size:18px}
+body{
+  font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN",sans-serif;
+  color:var(--text);background:var(--bg);min-height:100vh;line-height:1.6;
+  padding-bottom:120px;
+}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:inherit;cursor:pointer}
+input,textarea,select{font-family:inherit}
+.wrap{max-width:1000px;margin:0 auto;padding:0 16px}
+
+header{padding:22px 0 10px}
+h1{font-size:1.15rem;letter-spacing:.04em}
+h1 .tag{font-size:.7rem;color:var(--warn);border:1px solid var(--warn);border-radius:5px;padding:2px 7px;margin-left:8px;vertical-align:middle}
+.lead{color:var(--muted);font-size:.8rem;margin-top:4px}
+
+/* ---- api key bar ---- */
+.keybar{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  background:var(--surface);border:1px solid var(--line-soft);border-radius:10px;
+  padding:10px 14px;margin:12px 0;font-size:.8rem;
+}
+.keybar .dot{width:9px;height:9px;border-radius:999px;background:var(--muted);flex:none}
+.keybar.ok .dot{background:var(--ok)}
+.keybar.no .dot{background:var(--warn)}
+.keybar input{flex:1 1 260px;background:var(--surface2);border:1px solid var(--line-soft);
+  border-radius:7px;color:var(--text);padding:7px 10px;font-size:.8rem}
+
+/* ---- tabs ---- */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 18px;border-bottom:1px solid var(--line-soft)}
+.tab{
+  background:none;border:none;color:var(--muted);
+  padding:10px 16px;font-size:.85rem;font-weight:700;
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+}
+.tab:hover{color:var(--text)}
+.tab[aria-selected="true"]{color:var(--gold);border-bottom-color:var(--gold)}
+.panel{display:none}
+.panel.active{display:block}
+
+/* ---- generic ---- */
+.section-note{color:var(--muted);font-size:.78rem;margin-bottom:14px}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:.78rem;color:var(--muted);margin-bottom:5px}
+.field input[type=text],.field textarea{
+  width:100%;background:var(--surface2);border:1px solid var(--line-soft);
+  border-radius:8px;color:var(--text);padding:9px 12px;font-size:.85rem;
+}
+.field textarea{min-height:60px;resize:vertical}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{
+  background:var(--surface2);border:1px solid var(--line);border-radius:8px;
+  color:var(--text);padding:9px 18px;font-size:.82rem;font-weight:700;
+}
+.btn:hover{background:var(--gold-soft)}
+.btn.primary{background:var(--gold-soft);border-color:var(--gold);color:var(--gold)}
+.btn.small{padding:5px 12px;font-size:.75rem;font-weight:500}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.msg{font-size:.8rem;margin-top:8px}
+.msg.ok{color:var(--ok)} .msg.err{color:var(--warn)}
+
+/* ---- cards (review) ---- */
+.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.count{font-size:.85rem;color:var(--muted)}
+.count b{color:var(--gold);font-size:1rem}
+.a-card{
+  display:flex;gap:14px;background:var(--surface);border:1px solid var(--line-soft);
+  border-radius:12px;padding:14px;margin-bottom:14px;
+}
+.a-thumb{width:140px;flex:none;aspect-ratio:16/9;background:var(--surface2);
+  border-radius:8px;overflow:hidden}
+.a-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.a-main{flex:1;min-width:0}
+.a-title{font-size:.9rem;font-weight:700;line-height:1.4}
+.a-meta{font-size:.75rem;color:var(--muted);margin:3px 0 10px}
+.a-tageditor{margin:8px 0}
+.a-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.a-chip{
+  --c:#8a8598;display:inline-flex;align-items:center;gap:5px;
+  font-size:.72rem;padding:3px 6px 3px 10px;border-radius:999px;
+  border:1px solid color-mix(in srgb,var(--c) 50%,transparent);
+  color:color-mix(in srgb,var(--c) 78%,white);
+  background:color-mix(in srgb,var(--c) 14%,transparent);
+}
+.a-chip-x{background:none;border:none;color:inherit;font-size:.95rem;line-height:1;opacity:.7;padding:0}
+.a-chip-x:hover{opacity:1}
+.a-adds{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.a-addbtn{
+  background:var(--surface2);border:1px dashed var(--line-soft);border-radius:999px;
+  color:var(--muted);font-size:.72rem;padding:3px 10px;
+}
+.a-addbtn:hover{color:var(--text);border-color:var(--line)}
+.a-free{background:var(--surface2);border:1px solid var(--line-soft);border-radius:999px;
+  color:var(--text);font-size:.72rem;padding:4px 11px;width:130px}
+.a-note{width:100%;margin-top:10px;background:var(--surface2);border:1px solid var(--line-soft);
+  border-radius:8px;color:var(--text);padding:7px 10px;font-size:.78rem;min-height:38px;resize:vertical}
+.a-actions{margin-top:10px;display:flex;gap:8px;align-items:center}
+
+/* ---- add-video / channel preview ---- */
+.preview{background:var(--surface);border:1px solid var(--line-soft);border-radius:12px;
+  padding:14px;margin-top:14px}
+.preview h3{font-size:.85rem;margin-bottom:8px}
+.preview .a-meta{margin:2px 0 8px}
+.kv{font-size:.78rem;color:var(--muted);margin:2px 0}
+.kv b{color:var(--text);font-weight:500}
+
+/* ---- tags manage ---- */
+.tag-row{display:flex;align-items:center;gap:10px;background:var(--surface);
+  border:1px solid var(--line-soft);border-radius:9px;padding:8px 12px;margin-bottom:8px}
+.tag-row .name{flex:1;font-size:.85rem;font-weight:700}
+.tag-row .use{font-size:.72rem;color:var(--muted)}
+.tag-row input[type=color]{width:34px;height:26px;border:none;background:none;padding:0;cursor:pointer}
+.tag-row .ord{display:flex;flex-direction:column;gap:1px}
+.tag-row .ord button{background:none;border:none;color:var(--muted);font-size:.7rem;line-height:1;padding:1px}
+.tag-row .ord button:hover{color:var(--gold)}
+.add-tag-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:14px;
+  border-top:1px solid var(--line-soft);padding-top:14px}
+.add-tag-row input[type=text]{background:var(--surface2);border:1px solid var(--line-soft);
+  border-radius:8px;color:var(--text);padding:8px 11px;font-size:.82rem;flex:1 1 200px}
+.add-tag-row input[type=color]{width:40px;height:34px;border:none;background:none;padding:0;cursor:pointer}
+
+/* ---- save bar ---- */
+.savebar{
+  position:fixed;left:0;right:0;bottom:0;z-index:20;
+  background:var(--surface);border-top:1px solid var(--line);
+  padding:12px 16px;
+}
+.savebar .inner{max-width:1000px;margin:0 auto;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.savebar .title{font-size:.78rem;color:var(--gold);font-weight:700}
+.save-item{display:flex;gap:6px;align-items:center;background:var(--surface2);
+  border:1px solid var(--line-soft);border-radius:8px;padding:6px 10px;font-size:.76rem}
+.save-item code{color:var(--text);font-family:ui-monospace,monospace}
+.save-item.clean{opacity:.5}
+.mini{background:none;border:1px solid var(--line-soft);border-radius:6px;color:var(--text);
+  font-size:.72rem;padding:3px 9px}
+.mini:hover{background:var(--gold-soft)}
+.savehint{font-size:.72rem;color:var(--muted);flex-basis:100%}
+.empty{color:var(--muted);font-size:.85rem;padding:30px 0;text-align:center}
+.load-err{background:var(--surface);border:1px solid var(--warn);border-radius:10px;
+  padding:16px;color:var(--text);font-size:.82rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>ゴ魔乙 動画索引 — 管理ツール<span class="tag">LOCAL ONLY</span></h1>
+    <p class="lead">このツールは公開されません（docs/ の外）。編集後、下部の保存バーから各JSONをコピー／ダウンロードして手動でコミットしてください。</p>
+  </header>
+
+  <div class="keybar" id="keybar">
+    <span class="dot"></span>
+    <span id="key-status">APIキーを確認中…</span>
+    <input type="text" id="key-input" placeholder="YouTube API キーを貼り付け（環境変数が未設定のとき）" hidden>
+    <button class="btn small" id="key-save" hidden>保存</button>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true"  data-tab="review">① 未確認レビュー</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="addvideo">② 動画登録</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="addchannel">③ チャンネル登録</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="tags">④ タグ管理</button>
+  </div>
+
+  <div id="load-error"></div>
+
+  <!-- ① 未確認レビュー -->
+  <section class="panel active" id="panel-review">
+    <div class="toolbar">
+      <span class="count"><b id="review-count">0</b> 件が未確認（自動分類）</span>
+      <button class="btn small" id="bulk-confirm">表示中をすべて確認済みにする</button>
+    </div>
+    <div id="review-list"></div>
+  </section>
+
+  <!-- ② 動画登録 -->
+  <section class="panel" id="panel-addvideo">
+    <p class="section-note">自動収集の対象外の動画を手動で追加します（source: manual / status: 確認済み）。URLかIDを入れて「取得」。</p>
+    <div class="field">
+      <label>YouTube URL または 動画ID</label>
+      <div class="row">
+        <input type="text" id="video-url" placeholder="https://www.youtube.com/watch?v=... など" style="flex:1 1 300px">
+        <button class="btn" id="video-fetch">取得</button>
+      </div>
+      <div class="msg err" id="video-msg"></div>
+    </div>
+    <div id="video-preview"></div>
+  </section>
+
+  <!-- ③ チャンネル登録 -->
+  <section class="panel" id="panel-addchannel">
+    <p class="section-note">自動収集の対象チャンネルを追加します（data/channels.json）。URL・@ハンドル・チャンネルIDのいずれでも可。</p>
+    <div class="field">
+      <label>チャンネル URL / @ハンドル / チャンネルID</label>
+      <div class="row">
+        <input type="text" id="channel-url" placeholder="https://www.youtube.com/@handle など" style="flex:1 1 300px">
+        <button class="btn" id="channel-fetch">取得</button>
+      </div>
+      <div class="msg err" id="channel-msg"></div>
+    </div>
+    <div id="channel-preview"></div>
+  </section>
+
+  <!-- ④ タグ管理 -->
+  <section class="panel" id="panel-tags">
+    <p class="section-note">フィルタチップに表示するタグの定義（docs/tags.json）。並び順がそのまま表示順です。ここに無いタグ（第○回・イベント名など）はカード上に自動採色で出るため登録不要です。</p>
+    <div id="tag-list"></div>
+    <div class="add-tag-row">
+      <input type="text" id="new-tag-name" placeholder="新しいタグ名">
+      <input type="color" id="new-tag-color" value="#8a8598">
+      <button class="btn" id="new-tag-add">追加</button>
+    </div>
+    <div class="msg err" id="tag-msg"></div>
+  </section>
+</div>
+
+<!-- 保存バー -->
+<div class="savebar">
+  <div class="inner" id="savebar-inner">
+    <span class="title">保存</span>
+    <span class="empty" style="padding:0" id="save-empty">変更はまだありません</span>
+    <div id="save-items" style="display:flex;gap:10px;flex-wrap:wrap"></div>
+    <span class="savehint">コピー＝内容をクリップボードへ（エディタに貼り付けて保存）／ ダウンロード＝該当ファイルとして保存。反映にはあなたによる commit / push が必要です。</span>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* ===== 状態 ===== */
+let apiKey = "";
+let videosDoc = null, channelsDoc = null, tagsDoc = null;
+const dirty = { videos:false, channels:false, tags:false };
+
+const FILES = {
+  videos:   { label:"docs/videos.json",   name:"videos.json",   get:()=>videosDoc },
+  channels: { label:"data/channels.json", name:"channels.json", get:()=>channelsDoc },
+  tags:     { label:"docs/tags.json",     name:"tags.json",     get:()=>tagsDoc },
+};
+
+const $ = (id)=>document.getElementById(id);
+function el(tag, cls, text){ const e=document.createElement(tag); if(cls)e.className=cls; if(text!=null)e.textContent=text; return e; }
+
+/* Python の json.dumps(ensure_ascii=False, indent=2)+改行 と一致させ、git差分を最小化する */
+function serialize(doc){ return JSON.stringify(doc, null, 2) + "\n"; }
+
+/* JST の ISO 文字列（例 2026-07-20T14:30:00+09:00） */
+function nowJstIso(){
+  const d = new Date();
+  const j = new Date(d.getTime() + (9*60 + d.getTimezoneOffset())*60000);
+  const p = n => String(n).padStart(2,"0");
+  return `${j.getFullYear()}-${p(j.getMonth()+1)}-${p(j.getDate())}T${p(j.getHours())}:${p(j.getMinutes())}:${p(j.getSeconds())}+09:00`;
+}
+function fmtDate(iso){
+  const d = new Date(iso);
+  return isNaN(d) ? "----/--/--"
+    : `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,"0")}/${String(d.getDate()).padStart(2,"0")}`;
+}
+
+function knownTags(){ return (tagsDoc?.tags) || []; }
+function knownTagNames(){ return knownTags().map(t=>t.name); }
+function tagColor(name){
+  const hit = knownTags().find(t=>t.name===name);
+  if(hit) return hit.color;
+  let h=0; for(const c of name) h=(h*31 + c.codePointAt(0))%360;
+  return `hsl(${h} 45% 62%)`;
+}
+
+function markDirty(kind){
+  dirty[kind] = true;
+  if(kind==="videos" && videosDoc) videosDoc.updated = nowJstIso();
+  renderSaveBar();
+}
+
+/* ===== 共通タグエディタ（レビュー・動画登録で共用） ===== */
+function makeTagEditor(initial, onChange){
+  const tags = (initial||[]).slice();
+  const wrap = el("div","a-tageditor");
+  const chips = el("div","a-chips");
+  const adds  = el("div","a-adds");
+  function fire(){ if(onChange) onChange(tags.slice()); }
+  function render(){
+    chips.innerHTML="";
+    tags.forEach(t=>{
+      const chip = el("span","a-chip"); chip.style.setProperty("--c", tagColor(t));
+      chip.appendChild(el("span",null,t));
+      const x = el("button","a-chip-x","×");
+      x.title="削除";
+      x.onclick=()=>{ const i=tags.indexOf(t); if(i>=0){ tags.splice(i,1); render(); fire(); } };
+      chip.appendChild(x);
+      chips.appendChild(chip);
+    });
+    adds.innerHTML="";
+    knownTagNames().filter(n=>!tags.includes(n)).forEach(n=>{
+      const b = el("button","a-addbtn","+ "+n);
+      b.onclick=()=>{ tags.push(n); render(); fire(); };
+      adds.appendChild(b);
+    });
+    const inp = el("input","a-free"); inp.type="text"; inp.placeholder="自由タグ";
+    const go = ()=>{ const t=inp.value.trim(); if(t && !tags.includes(t)){ tags.push(t); render(); fire(); } };
+    inp.onkeydown=e=>{ if(e.key==="Enter"){ e.preventDefault(); go(); } };
+    const add = el("button","a-addbtn","追加");
+    add.onclick=go;
+    adds.append(inp, add);
+  }
+  render();
+  wrap.append(chips, adds);
+  return { wrap, getTags:()=>tags.slice() };
+}
+
+/* ===== ① 未確認レビュー ===== */
+function reviewVideos(){ return (videosDoc?.videos||[]).filter(v=>v.status==="自動分類"); }
+
+function renderReview(){
+  const list = $("review-list");
+  list.innerHTML="";
+  const vids = reviewVideos();
+  $("review-count").textContent = vids.length;
+  if(!vids.length){ list.appendChild(el("div","empty","未確認の動画はありません。")); return; }
+  for(const v of vids) list.appendChild(reviewCard(v));
+}
+
+function reviewCard(v){
+  const card = el("div","a-card");
+  const thumb = el("div","a-thumb");
+  const img = el("img"); img.loading="lazy"; img.alt="";
+  img.src=`https://i.ytimg.com/vi/${encodeURIComponent(v.videoId)}/mqdefault.jpg`;
+  thumb.appendChild(img);
+
+  const main = el("div","a-main");
+  const title = el("div","a-title");
+  const a = el("a", null, v.title); a.href=`https://www.youtube.com/watch?v=${encodeURIComponent(v.videoId)}`;
+  a.target="_blank"; a.rel="noopener";
+  title.appendChild(a);
+  const meta = el("div","a-meta", `${v.channel}　/　公開 ${fmtDate(v.publishedAt)}　/　${v.videoId}`);
+
+  const editor = makeTagEditor(v.tags, (t)=>{ v.tags=t; markDirty("videos"); });
+
+  const note = el("textarea","a-note"); note.placeholder="メモ（任意）"; note.value=v.note||"";
+  note.oninput=()=>{ v.note=note.value; markDirty("videos"); };
+
+  const actions = el("div","a-actions");
+  const done = el("button","btn primary small","確認済みにする");
+  done.onclick=()=>{ v.status="確認済み"; markDirty("videos"); card.remove(); $("review-count").textContent=reviewVideos().length;
+    if(!reviewVideos().length) renderReview(); };
+  actions.appendChild(done);
+
+  main.append(title, meta, editor.wrap, note, actions);
+  card.append(thumb, main);
+  return card;
+}
+
+$("bulk-confirm").onclick=()=>{
+  const vids = reviewVideos();
+  if(!vids.length) return;
+  for(const v of vids) v.status="確認済み";
+  markDirty("videos");
+  renderReview();
+};
+
+/* ===== ② 動画登録 ===== */
+function parseVideoId(input){
+  input=(input||"").trim();
+  if(/^[\w-]{11}$/.test(input)) return input;
+  let m;
+  if((m=input.match(/[?&]v=([\w-]{11})/))) return m[1];
+  if((m=input.match(/youtu\.be\/([\w-]{11})/))) return m[1];
+  if((m=input.match(/\/shorts\/([\w-]{11})/))) return m[1];
+  if((m=input.match(/\/embed\/([\w-]{11})/))) return m[1];
+  if((m=input.match(/\/live\/([\w-]{11})/))) return m[1];
+  return null;
+}
+
+async function ytFetch(url){
+  const res = await fetch(url);
+  const data = await res.json().catch(()=>({}));
+  if(!res.ok || data.error){
+    const msg = data.error?.message || `HTTP ${res.status}`;
+    throw new Error(msg);
+  }
+  return data;
+}
+
+$("video-fetch").onclick=async ()=>{
+  const msg=$("video-msg"); msg.textContent=""; $("video-preview").innerHTML="";
+  if(!apiKey){ msg.textContent="APIキーが未設定です。上部のキー欄を確認してください。"; return; }
+  const id = parseVideoId($("video-url").value);
+  if(!id){ msg.textContent="URLまたは11文字の動画IDを認識できませんでした。"; return; }
+  if((videosDoc.videos||[]).some(v=>v.videoId===id)){ msg.textContent=`この動画は既に登録済みです（${id}）。`; return; }
+  try{
+    const data = await ytFetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id}&key=${encodeURIComponent(apiKey)}`);
+    if(!data.items?.length){ msg.textContent="該当する動画が見つかりませんでした。"; return; }
+    showVideoPreview(id, data.items[0].snippet);
+  }catch(e){ msg.textContent="取得失敗: "+e.message; }
+};
+
+function showVideoPreview(id, snip){
+  const wrap = $("video-preview"); wrap.innerHTML="";
+  const box = el("div","preview");
+  box.appendChild(el("h3","", snip.title));
+  box.appendChild(el("div","a-meta", `${snip.channelTitle}　/　公開 ${fmtDate(snip.publishedAt)}　/　${id}`));
+
+  // 便宜上、タイトルから「第○回」だけ自動抽出（collect.py と同じ正規表現）。カテゴリタグは手動選択。
+  const start=[]; const m=(snip.title||"").normalize("NFKC").match(/第(\d+)回/);
+  if(m) start.push(`第${m[1]}回`);
+  const editor = makeTagEditor(start, null);
+  box.appendChild(el("div","kv","タグ（カテゴリは下のボタンから選択。第○回は自動抽出）:"));
+  box.appendChild(editor.wrap);
+
+  const actions = el("div","a-actions");
+  const add = el("button","btn primary","この内容で登録する");
+  const done = el("div","msg ok");
+  add.onclick=()=>{
+    const entry = {
+      videoId:id, title:snip.title||"", channel:snip.channelTitle||"",
+      description:snip.description||"", publishedAt:snip.publishedAt||"",
+      registeredAt:nowJstIso(), source:"manual", tags:editor.getTags(),
+      status:"確認済み", note:"",
+    };
+    videosDoc.videos.push(entry);
+    markDirty("videos");
+    add.disabled=true; done.textContent="登録しました。保存バーから videos.json を保存してください。";
+    $("video-url").value="";
+  };
+  actions.append(add, done);
+  box.appendChild(actions);
+  wrap.appendChild(box);
+}
+
+/* ===== ③ チャンネル登録 ===== */
+function parseChannel(input){
+  input=(input||"").trim();
+  let m;
+  if(/^UC[\w-]{22}$/.test(input)) return {type:"id", value:input};
+  if((m=input.match(/\/channel\/(UC[\w-]{22})/))) return {type:"id", value:m[1]};
+  if((m=input.match(/@([\w.\-]+)/))) return {type:"handle", value:"@"+m[1]};
+  if(input) return {type:"handle", value:(input.startsWith("@")?input:"@"+input)};
+  return null;
+}
+
+$("channel-fetch").onclick=async ()=>{
+  const msg=$("channel-msg"); msg.textContent=""; $("channel-preview").innerHTML="";
+  if(!apiKey){ msg.textContent="APIキーが未設定です。上部のキー欄を確認してください。"; return; }
+  const p = parseChannel($("channel-url").value);
+  if(!p){ msg.textContent="URL・ハンドル・チャンネルIDを認識できませんでした。"; return; }
+  const q = p.type==="id" ? `id=${p.value}` : `forHandle=${encodeURIComponent(p.value)}`;
+  try{
+    const data = await ytFetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet&${q}&key=${encodeURIComponent(apiKey)}`);
+    if(!data.items?.length){ msg.textContent="該当するチャンネルが見つかりませんでした。"; return; }
+    const it = data.items[0];
+    showChannelPreview(it.id, it.snippet.title);
+  }catch(e){ msg.textContent="取得失敗: "+e.message; }
+};
+
+function showChannelPreview(id, name){
+  const wrap=$("channel-preview"); wrap.innerHTML="";
+  const box = el("div","preview");
+  box.appendChild(el("h3","", name));
+  box.appendChild(el("div","kv", `チャンネルID: ${id}`));
+
+  const dup = (channelsDoc.channels||[]).some(c=>c.channelId===id);
+  const field = el("div","field");
+  field.appendChild(el("label","","gomaOnly（このチャンネルの動画をキーワード判定なしで全てゴ魔乙として扱う）"));
+  const sel = el("select");
+  sel.style.cssText="background:var(--surface2);border:1px solid var(--line-soft);border-radius:8px;color:var(--text);padding:8px 11px;font-size:.82rem";
+  const o1=el("option","","false（ゴ魔乙キーワードを含む動画のみ収集）"); o1.value="false";
+  const o2=el("option","","true（全動画をゴ魔乙として収集）"); o2.value="true";
+  sel.append(o1,o2);
+  field.appendChild(sel);
+  box.appendChild(field);
+
+  const actions = el("div","a-actions");
+  const add = el("button","btn primary","この内容で登録する");
+  const done = el("div","msg ok");
+  if(dup){ add.disabled=true; done.className="msg err"; done.textContent="このチャンネルは既に登録済みです。"; }
+  add.onclick=()=>{
+    channelsDoc.channels.push({ channelId:id, name:name, gomaOnly: sel.value==="true" });
+    markDirty("channels");
+    add.disabled=true; done.className="msg ok"; done.textContent="登録しました。保存バーから channels.json を保存してください。";
+    $("channel-url").value="";
+  };
+  actions.append(add, done);
+  box.appendChild(actions);
+  wrap.appendChild(box);
+}
+
+/* ===== ④ タグ管理 ===== */
+function tagUsage(name){ return (videosDoc?.videos||[]).filter(v=>(v.tags||[]).includes(name)).length; }
+
+function renderTags(){
+  const list=$("tag-list"); list.innerHTML="";
+  const tags = knownTags();
+  tags.forEach((t, i)=>{
+    const row = el("div","tag-row");
+    const color = el("input"); color.type="color"; color.value=t.color;
+    color.oninput=()=>{ t.color=color.value; markDirty("tags"); };
+    const name = el("span","name", t.name);
+    const use = el("span","use", `使用 ${tagUsage(t.name)} 件`);
+
+    const ord = el("div","ord");
+    const up=el("button",null,"▲"); up.title="上へ";
+    up.onclick=()=>{ if(i>0){ [tags[i-1],tags[i]]=[tags[i],tags[i-1]]; markDirty("tags"); renderTags(); } };
+    const dn=el("button",null,"▼"); dn.title="下へ";
+    dn.onclick=()=>{ if(i<tags.length-1){ [tags[i+1],tags[i]]=[tags[i],tags[i+1]]; markDirty("tags"); renderTags(); } };
+    ord.append(up,dn);
+
+    const del = el("button","mini","削除");
+    del.dataset.armed="0";
+    del.onclick=()=>{
+      const n = tagUsage(t.name);
+      if(n>0 && del.dataset.armed==="0"){ del.dataset.armed="1"; del.textContent=`使用${n}件・もう一度で削除`; return; }
+      tags.splice(i,1); markDirty("tags"); renderTags();
+    };
+    row.append(color, name, use, ord, del);
+    list.appendChild(row);
+  });
+}
+
+$("new-tag-add").onclick=()=>{
+  const msg=$("tag-msg"); msg.textContent="";
+  const name=$("new-tag-name").value.trim();
+  const color=$("new-tag-color").value;
+  if(!name){ msg.textContent="タグ名を入力してください。"; return; }
+  if(knownTagNames().includes(name)){ msg.textContent="同名のタグが既にあります。"; return; }
+  tagsDoc.tags.push({ name, color });
+  markDirty("tags");
+  $("new-tag-name").value="";
+  renderTags();
+};
+
+/* ===== 保存バー ===== */
+function renderSaveBar(){
+  const anyDirty = dirty.videos || dirty.channels || dirty.tags;
+  $("save-empty").hidden = anyDirty;
+  const box = $("save-items"); box.innerHTML="";
+  for(const kind of ["videos","channels","tags"]){
+    if(!dirty[kind]) continue;
+    const f = FILES[kind];
+    const item = el("div","save-item");
+    const code = el("code", null, f.label);
+    const copy = el("button","mini","コピー");
+    copy.onclick=async ()=>{
+      try{ await navigator.clipboard.writeText(serialize(f.get())); copy.textContent="コピー済"; setTimeout(()=>copy.textContent="コピー",1200); }
+      catch(e){ copy.textContent="失敗"; }
+    };
+    const dl = el("button","mini","ダウンロード");
+    dl.onclick=()=>{
+      const blob=new Blob([serialize(f.get())],{type:"application/json"});
+      const url=URL.createObjectURL(blob);
+      const a=el("a"); a.href=url; a.download=f.name; document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    };
+    item.append(code, copy, dl);
+    box.appendChild(item);
+  }
+}
+
+/* ===== タブ ===== */
+document.querySelectorAll(".tab").forEach(tab=>{
+  tab.onclick=()=>{
+    document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected", t===tab));
+    document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+    $("panel-"+tab.dataset.tab).classList.add("active");
+  };
+});
+
+/* ===== APIキー ===== */
+function setKeyStatus(){
+  const bar=$("keybar"), st=$("key-status"), inp=$("key-input"), sv=$("key-save");
+  if(apiKey){
+    bar.className="keybar ok"; st.textContent="APIキー有効（動画・チャンネル登録が使えます）";
+    inp.hidden=true; sv.hidden=true;
+  }else{
+    bar.className="keybar no";
+    st.textContent="APIキー未設定 — 環境変数が無い場合は貼り付けて保存（この端末のブラウザにのみ保存）";
+    inp.hidden=false; sv.hidden=false;
+  }
+}
+$("key-save").onclick=()=>{
+  const v=$("key-input").value.trim();
+  if(v){ apiKey=v; try{ localStorage.setItem("yt_api_key", v); }catch(e){} setKeyStatus(); }
+};
+
+async function loadKey(){
+  // まず環境変数（serve_admin.py 経由）。無ければ localStorage を試す。
+  try{
+    const res = await fetch("/api/key");
+    if(res.ok){ const d=await res.json(); if(d.key){ apiKey=d.key; return; } }
+  }catch(e){}
+  try{ const s=localStorage.getItem("yt_api_key"); if(s) apiKey=s; }catch(e){}
+}
+
+/* ===== 初期化 ===== */
+async function loadJson(path){
+  const res = await fetch(path, {cache:"no-cache"});
+  if(!res.ok) throw new Error(`${path}: HTTP ${res.status}`);
+  return res.json();
+}
+
+(async function init(){
+  try{
+    [videosDoc, channelsDoc, tagsDoc] = await Promise.all([
+      loadJson("../docs/videos.json"),
+      loadJson("../data/channels.json"),
+      loadJson("../docs/tags.json"),
+    ]);
+  }catch(e){
+    $("load-error").innerHTML =
+      `<div class="load-err">データファイルを読み込めませんでした（${e.message}）。<br>` +
+      `<b>python scripts/serve_admin.py</b> で起動し、表示された <b>/tools/admin.html</b> を開いてください` +
+      `（file:// で直接開くと動きません）。</div>`;
+    return;
+  }
+  await loadKey();
+  setKeyStatus();
+  renderReview();
+  renderTags();
+  renderSaveBar();
+})();
+</script>
+</body>
+</html>
