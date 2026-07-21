@@ -23,7 +23,7 @@ API_URL = "https://www.googleapis.com/youtube/v3/playlistItems"
 JST = timezone(timedelta(hours=9))
 
 # ゴ魔乙動画の判定語（gomaOnly: false のチャンネル向け）。運用しながら追加しやすいよう定数化。
-GOMA_KEYWORDS = ["ゴ魔乙", "ごまおつ", "ゴシックは魔法乙女"]
+GOMA_KEYWORDS = ["ゴ魔乙", "ごまおつ", "ゴシックは魔法乙女", "ゴマ乙"]
 
 # --- タグ自動分類の語彙 ---
 # Why not「降臨」「復刻」: 発注者の指示によりイベントステージ判定には使わない。
@@ -141,22 +141,33 @@ def load_videos():
     return json.loads(VIDEOS_PATH.read_text(encoding="utf-8"))
 
 
-def fetch_uploads(channel_id, api_key):
+def fetch_uploads(channel_id, api_key, all_pages=False):
     """チャンネルのアップロードプレイリスト最新50件を返す。
 
     アップロードプレイリストIDはチャンネルID先頭の UC を UU に置換したもの。
-    channels.list を挟まず playlistItems.list を直接叩ける（1回=1クォータ）。
+    channels.list を挟まず playlistItems.list を直接叩ける（1ページ=1クォータ）。
+    all_pages=True なら nextPageToken を辿って全アップロードを返す（Phase3 バックフィル用）。
     """
     playlist_id = "UU" + channel_id[2:]
-    params = {
-        "part": "snippet,contentDetails",
-        "playlistId": playlist_id,
-        "maxResults": 50,
-        "key": api_key,
-    }
-    resp = requests.get(API_URL, params=params, timeout=30)
-    resp.raise_for_status()
-    return resp.json().get("items", [])
+    items = []
+    page_token = None
+    while True:
+        params = {
+            "part": "snippet,contentDetails",
+            "playlistId": playlist_id,
+            "maxResults": 50,
+            "key": api_key,
+        }
+        if page_token:
+            params["pageToken"] = page_token
+        resp = requests.get(API_URL, params=params, timeout=30)
+        resp.raise_for_status()
+        data = resp.json()
+        items.extend(data.get("items", []))
+        page_token = data.get("nextPageToken")
+        if not all_pages or not page_token:
+            break
+    return items
 
 
 def build_entry(item, channel_name, now_iso):
@@ -181,7 +192,7 @@ def build_entry(item, channel_name, now_iso):
     }
 
 
-def collect(dry_run):
+def collect(dry_run, backfill=False):
     api_key = os.environ.get("YOUTUBE_API_KEY")
     if not api_key:
         print("環境変数 YOUTUBE_API_KEY が未設定です。", file=sys.stderr)
@@ -197,7 +208,7 @@ def collect(dry_run):
     new_entries = []
     for ch in channels:
         try:
-            items = fetch_uploads(ch["channelId"], api_key)
+            items = fetch_uploads(ch["channelId"], api_key, all_pages=backfill)
         except requests.RequestException as e:
             # あるチャンネルの取得失敗で全体を止めない。
             print(f"[error] {ch['name']} ({ch['channelId']}): {e}", file=sys.stderr)
@@ -237,8 +248,10 @@ def main():
     parser = argparse.ArgumentParser(description="ゴ魔乙動画の定期収集")
     parser.add_argument("--dry-run", action="store_true",
                         help="videos.json を書き換えず、追加予定の動画一覧を表示する")
+    parser.add_argument("--backfill", action="store_true",
+                        help="各チャンネルのアップロードを全件辿る（Phase3 過去動画一括登録・ローカル1回実行用）")
     args = parser.parse_args()
-    sys.exit(collect(args.dry_run))
+    sys.exit(collect(args.dry_run, args.backfill))
 
 
 if __name__ == "__main__":

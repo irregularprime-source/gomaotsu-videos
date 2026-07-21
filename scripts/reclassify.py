@@ -18,11 +18,13 @@ def reclassify(dry_run):
     doc = json.loads(VIDEOS_PATH.read_text(encoding="utf-8"))
     changed = 0
     for v in doc["videos"]:
-        # source:"auto" かつ status:"自動分類" のみ対象。手動登録・確認済みは保護する。
+        # 自動分類（未確認）のみ対象。手動登録・確認済みは保護する。
+        # source は "auto"（登録ch）と "search"（検索発見）の両方を再分類対象にする
+        # （どちらも自動分類なので分類ルール変更を反映すべき。確認済みになれば以後保護される）。
         # サンプル（運用者が削除する前提のダミー）は書き換えない。
         if v["videoId"].startswith("SAMPLE"):
             continue
-        if v.get("source") != "auto" or v.get("status") != "自動分類":
+        if v.get("source") not in ("auto", "search") or v.get("status") != "自動分類":
             continue
         new_tags = make_tags(v.get("title", ""), v.get("description", ""))
         if new_tags != v["tags"]:
