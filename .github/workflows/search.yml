@@ -1,0 +1,50 @@
+name: 検索収集
+on:
+  schedule:
+    - cron: "0 */3 * * *"   # 3時間ごと（直近分の常時スイープ）
+  workflow_dispatch:
+permissions:
+  contents: write
+
+concurrency:
+  group: video-collect        # collect.yml と同じグループにして videos.json への書き込みを直列化する
+  cancel-in-progress: false    # 実行中のジョブは待たせて、後から追いつかせる
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - name: 検索収集を実行
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python scripts/search_collect.py
+      - name: 差分があればコミット＆プッシュ
+        run: |
+          if git diff --quiet docs/videos.json; then
+            echo "変更なし"
+            exit 0
+          fi
+          added=$(git diff docs/videos.json | grep -c '^+ *"videoId"')
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/videos.json
+          git commit -m "検索収集: 動画${added}件を追加"
+
+          # push失敗時にpull --rebaseしてリトライ
+          for i in 1 2 3 4 5; do
+            if git push; then
+              echo "push成功"
+              break
+            fi
+            echo "push失敗、rebaseしてリトライ ($i回目)"
+            git pull --rebase origin main
+            if [ "$i" -eq 5 ]; then
+              echo "5回試行しても失敗しました"
+              exit 1
+            fi
+          done
