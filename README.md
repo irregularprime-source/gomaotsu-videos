@@ -17,18 +17,20 @@
 ```
 docs/                 … GitHub Pages で公開される領域
   index.html          … 一覧サイト本体
-  videos.json         … 動画データ（自動収集＋手動登録がここに溜まる）
+  videos.json         … 動画データ（自動収集[登録ch＋検索]＋手動登録がここに溜まる）
   tags.json           … フィルタチップに出すタグの定義（名前・色・表示順）
 data/
   channels.json       … 自動収集の対象チャンネルリスト
 scripts/
-  collect.py          … 定期収集スクリプト（Actions から実行）
+  collect.py          … 登録チャンネル収集スクリプト（Actions から実行）
+  search_collect.py   … 検索収集スクリプト（Actions から実行）
   reclassify.py       … 既存データのタグを最新ルールで再計算する保守ツール
   serve_admin.py      … 管理ツールをローカルで開くための起動用サーバー
 tools/
   admin.html          … ローカル専用の管理ツール（公開されない）
 .github/workflows/
-  collect.yml         … 自動収集のワークフロー
+  collect.yml         … 登録チャンネル収集のワークフロー（6時間ごと）
+  search.yml          … 検索収集のワークフロー（3時間ごと）
 requirements.txt      … collect.py の依存（requests のみ）
 ```
 
@@ -39,12 +41,23 @@ requirements.txt      … collect.py の依存（requests のみ）
 1. `data/channels.json` の各チャンネルのアップロード動画（最新50件）を取得
    - チャンネルID `UC…` の先頭を `UU` に置換したアップロードプレイリストを直接叩く（1回=1クォータ）
 2. `gomaOnly: true` のチャンネルは全動画、`false` のチャンネルはタイトル・説明文に
-   ゴ魔乙判定語（`ゴ魔乙` / `ごまおつ` / `ゴシックは魔法乙女`）を含む動画のみ対象
+   ゴ魔乙判定語（`ゴ魔乙` / `ごまおつ` / `ゴシックは魔法乙女` / `ゴマ乙`）を含む動画のみ対象
 3. タイトル・説明文からタグを自動分類し、`docs/videos.json` に**未登録の動画だけ**追記
    - 既存の `videoId` は手動修正を保護するためスキップ
 4. 差分があれば `github-actions[bot]` がコミット＆プッシュ
 
-**同時実行対策:** cron と手動が重なっても壊れないよう、`concurrency` で実行を直列化し、
+### 検索収集（search.yml）
+
+`.github/workflows/search.yml` が **3時間ごと（cron）** と **手動実行（Run workflow）** で `scripts/search_collect.py` を動かす。登録チャンネルに入っていない投稿者の動画も拾うのが目的。
+
+1. YouTube `search.list` でゴ魔乙判定語を横断検索（`type=video` / `order=date` / 既定は直近6時間）
+2. ヒットした動画を `videos.list` で本メタ取得し、**タイトル**にゴ魔乙判定語を含むものだけ対象（説明文だけ一致するFF14型ノイズを弾く）
+3. `docs/videos.json` の未登録 `videoId` だけを `source: "search"` / `status: "自動分類"` で追記（重複は videoId で排除。登録チャンネルもスキップしない）
+4. すべて未確認で入るため、管理ツールのレビューで取捨選択する
+
+過去分をさかのぼるときは `--after` / `--before` で公開期間を区切って少しずつ実行する（後述「過去動画の一括登録」）。
+
+**同時実行対策:** cron と手動が重なっても壊れないよう、collect.yml と search.yml は**同じ `concurrency` グループ**で実行を直列化し（`docs/videos.json` の書き込みが衝突しない）、
 push が他の更新と競合して弾かれた場合は `git pull --rebase` で最大5回リトライする。
 
 **APIキー:** リポジトリの Settings → Secrets → Actions に `YOUTUBE_API_KEY` を登録しておく（コードには一切含めない）。
@@ -59,6 +72,17 @@ push が他の更新と競合して弾かれた場合は `git pull --rebase` で
 
 - `gomaOnly: true` … そのチャンネルの動画をキーワード判定なしで全てゴ魔乙として収集
 - `gomaOnly: false` … ゴ魔乙判定語を含む動画のみ収集
+
+## 過去動画の一括登録（バックフィル）
+
+定期収集は最新分しか拾わないため、過去動画は次の2経路で少しずつ登録する（いずれも巨大な差分になるためローカル実行推奨）。
+
+- **登録チャンネルの過去分**: `python scripts/collect.py --backfill`
+  各チャンネルのアップロードを `nextPageToken` で全件たどり、未登録分を `source: "auto"` で追記する。
+- **検索でひっかかる過去分**（未登録投稿者を含む）: `python scripts/search_collect.py --after 2025-01-01 --before 2025-01-08`
+  公開期間を区切って（1週間・1か月など）窓をずらしながら少しずつ実行する。レビュー負荷・ノイズ・API コストを平準化するため。
+
+どちらも `--dry-run` で追加予定を確認してから実行する。件数が増えたら `docs/videos.json` のサイズを見て分割の要否を判断する。
 
 ## アクセス解析
 
@@ -178,7 +202,7 @@ python -m http.server 8000   # → http://localhost:8000
       "description": "説明文（任意）",
       "publishedAt": "2026-07-17T05:51:43Z",
       "registeredAt": "2026-07-20T13:27:27+09:00",
-      "source": "auto | manual",
+      "source": "auto | manual | search",
       "tags": ["スコア大会(週末)", "第580回"],
       "status": "自動分類 | 確認済み",
       "note": ""
@@ -188,7 +212,7 @@ python -m http.server 8000   # → http://localhost:8000
 ```
 
 - `publishedAt` … 動画の公開日時（一覧のソート・期間絞り込みの基準）
-- `source` … `auto`（自動収集）／`manual`（手動登録）
+- `source` … `auto`（登録チャンネル収集）／`search`（検索収集）／`manual`（手動登録）
 - `status` … `自動分類`（未確認）／`確認済み`。自動収集直後は `自動分類`
 
 ### data/channels.json
