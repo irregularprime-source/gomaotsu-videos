@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-21T23:54:58+09:00",
+  "updated": "2026-07-22T03:08:48+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -33570,6 +33570,38 @@
       "source": "search",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "LAVo_rrzDNQ",
+      "title": "第581回スコア大会 28億 HYCB メガロドリル ラオラ【ゴ魔乙 プレイ動画】",
+      "channel": "フライングエース",
+      "description": "",
+      "publishedAt": "2026-07-21T17:55:24Z",
+      "registeredAt": "2026-07-22T03:08:48+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第581回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "d-xaeq3G0G0",
+      "title": "【#ゴ魔乙 プレイ動画】581回スコア大会予習 光で37.8億 ソウルペイン/未生の光 砂丘変変",
+      "channel": "七瀬九鷹",
+      "description": "#ゲーム #ゴ魔乙 #ごまおつ #ごまビデオ \n自己ベストは上振れ時",
+      "publishedAt": "2026-07-21T17:18:17Z",
+      "registeredAt": "2026-07-22T03:08:48+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第581回"
       ],
       "status": "自動分類",
       "note": ""
