@@ -6,7 +6,7 @@ source:"search" / status:"自動分類" で追記する。登録チャンネル�
 拾えない未登録投稿者の動画を拾うのが目的。全件が未確認で入り、管理ツールの
 レビューを経て取捨選択する。
 
-  python scripts/search_collect.py                    # 直近6h（3hごとcronの常時スイープ）
+  python scripts/search_collect.py                    # 直近6h（1hごとcronの常時スイープ）
   python scripts/search_collect.py --since-hours 24   # 直近24h
   python scripts/search_collect.py --after 2025-01-01 --before 2025-01-08  # 期間区切りの過去分バックフィル
   python scripts/search_collect.py --dry-run          # 書き込まず追加予定を表示
@@ -161,7 +161,7 @@ def main():
     parser.add_argument("--dry-run", action="store_true",
                         help="videos.json を書き換えず、追加予定の動画一覧を表示する")
     parser.add_argument("--since-hours", type=int, default=6,
-                        help="直近この時間内に公開された動画を対象（既定6h。3hごと実行に対し取りこぼし防止でやや広め）")
+                        help="直近この時間内に公開された動画を対象（既定6h。1hごと実行に対し取りこぼし防止でやや広め）")
     parser.add_argument("--after",
                         help="この日付以降(YYYY-MM-DD, UTC基準)。過去分の期間区切りバックフィル用。指定時は --since-hours を無視")
     parser.add_argument("--before",

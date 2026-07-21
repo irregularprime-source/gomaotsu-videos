@@ -30,7 +30,7 @@ tools/
   admin.html          … ローカル専用の管理ツール（公開されない）
 .github/workflows/
   collect.yml         … 登録チャンネル収集のワークフロー（6時間ごと）
-  search.yml          … 検索収集のワークフロー（3時間ごと）
+  search.yml          … 検索収集のワークフロー（1時間ごと）
 requirements.txt      … collect.py の依存（requests のみ）
 ```
 
@@ -48,9 +48,9 @@ requirements.txt      … collect.py の依存（requests のみ）
 
 ### 検索収集（search.yml）
 
-`.github/workflows/search.yml` が **3時間ごと（cron）** と **手動実行（Run workflow）** で `scripts/search_collect.py` を動かす。登録チャンネルに入っていない投稿者の動画も拾うのが目的。
+`.github/workflows/search.yml` が **1時間ごと（cron）** と **手動実行（Run workflow）** で `scripts/search_collect.py` を動かす。登録チャンネルに入っていない投稿者の動画も拾うのが目的。
 
-1. YouTube `search.list` でゴ魔乙判定語を横断検索（`type=video` / `order=date` / 既定は直近6時間）
+1. YouTube `search.list` でゴ魔乙判定語を横断検索（`type=video` / `order=date` / 既定は直近6時間ぶん。実行間隔1hに対しウィンドウを広めに取り、cron遅延時の取りこぼしを防ぐ）
 2. ヒットした動画を `videos.list` で本メタ取得し、**タイトル**にゴ魔乙判定語を含むものだけ対象（説明文だけ一致するFF14型ノイズを弾く）
 3. `docs/videos.json` の未登録 `videoId` だけを `source: "search"` / `status: "自動分類"` で追記（重複は videoId で排除。登録チャンネルもスキップしない）
 4. すべて未確認で入るため、管理ツールのレビューで取捨選択する
