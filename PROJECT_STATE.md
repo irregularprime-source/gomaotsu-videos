@@ -90,11 +90,11 @@
 
 **仕組み（collect.py）**: `make_tags` が `match_event_tags(ntitle)` で辞書一致を集め、一致があれば `classify` に `has_event_dict=True` を渡して週末→イベントへ昇格。辞書タグは分類結果に「スコア大会」が含まれる動画にのみ付与（ガチャ/アリーナ等への季節名誤爆を抑止）。reclassify.py は collect.py の `make_tags` を import して共用するため、**改修は collect.py 側だけでよい**。
 
-**注意**: `data/event_tags.json` はゲーム内スクショ（`スコア大会（イベント）名称参考用/`・約210MB・個人実績付き）のOCRから作成。**元スクショは .gitignore でリポジトリ非同梱**。カタカナ固有名にOCR誤読が残り得るため、追加時は実タイトルとの一致で裏取りするのが確実（`ゴシパ`/`HYCレーザー`/`20thレコ` は既存動画一致で確認済み）。候補の全体像は [docs/event_names_candidates.md](docs/event_names_candidates.md)（Tier A/B/C）を参照。
+**注意**: `data/event_tags.json` はゲーム内スクショ（`_local/スコア大会（イベント）名称参考用/`・約210MB・個人実績付き）のOCRから作成。**元スクショは `_local/` 配下＝.gitignore でリポジトリ非同梱**。カタカナ固有名にOCR誤読が残り得るため、追加時は実タイトルとの一致で裏取りするのが確実（`ゴシパ`/`HYCレーザー`/`20thレコ` は既存動画一致で確認済み）。候補の全体像は [docs/event_names_candidates.md](docs/event_names_candidates.md)（Tier A/B/C）を参照。
 
 ## 6. ファイル境界
 - 変更してよい: docs/（index.html, videos.json, tags.json, event_names_candidates.md）, data/（channels.json, event_tags.json）, tools/, scripts/, .github/workflows/collect.yml, .gitignore, README.md, PROJECT_STATE.md
-- 変更禁止（非公開・gitignore維持）: phase2_implementation_guide.md（内部向け実装指示書）
+- 変更禁止（非公開・gitignore維持）: _local/ 配下（内部向け実装指示書 _local/phase2_implementation_guide.md、参考スクショ _local/スコア大会（イベント）名称参考用/ など。手元専用ファイルはここに置けば自動除外）
 
 ## 7. 注意事項・ハマりどころ
 - リポジトリ: https://github.com/irregularprime-source/gomaotsu-videos （public, gh認証=irregularprime-source, Pages=main /docs）
