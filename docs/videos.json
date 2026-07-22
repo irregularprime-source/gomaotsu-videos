@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-23T01:13:05+09:00",
+  "updated": "2026-07-23T03:01:15+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -33778,6 +33778,34 @@
         "スコア大会",
         "スコア大会(週末)",
         "第581回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "bP1SafiqFc4",
+      "title": "【ゴ魔乙 プレイ動画】 周回ステージ-3- death 260,323,866点",
+      "channel": "ahoahomanz",
+      "description": "",
+      "publishedAt": "2026-07-22T17:01:52Z",
+      "registeredAt": "2026-07-23T03:01:15+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "rNT5fKvMrrk",
+      "title": "【ゴ魔乙 プレイ動画】 周回ステージ-2- death 250,335,164点",
+      "channel": "ahoahomanz",
+      "description": "",
+      "publishedAt": "2026-07-22T16:29:34Z",
+      "registeredAt": "2026-07-23T03:01:15+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
       ],
       "status": "自動分類",
       "note": ""
