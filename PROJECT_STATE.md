@@ -4,7 +4,7 @@
 複数のAIアシスタント（Claude Code / Web版Claude / ChatGPT 等）や本人が現状を把握するための共有メモ。
 リポジトリ全体の使い方・仕様は [README.md](README.md) を参照。
 
-最終更新: 2026-07-21 (JST)
+最終更新: 2026-07-22 (JST)
 
 ## 1. 元の依頼（原文に近い形で保持。書き換え禁止）
 > 次に、サンプルデータを削除と、チャンネル・動画登録用のフォームを作って。フォームは当面私だけ使えればよい。あと、作業用に未確認の動画などを確認して、手動でタグの追加とかしたりできるように。それに関して、表示用のタグは多分今後も増えていくので、それに耐えうる作りにしていきたい。
@@ -46,6 +46,9 @@
 | 検索の重複は videoId で単純排除（登録ch優先なし・スキップなし） | 極力早く反映したい。重複は videoId で弾ける、というユーザー判断 | 07-21 |
 | 検索のゴ魔乙判定はタイトルのみ（説明文は見ない） | YouTube全体が母集団でノイズが桁違い。説明文一致のFF14型を登録前に弾く | 07-21 |
 | 過去分バックフィル: 登録chは collect.py --backfill、検索分は search_collect.py --after/--before で期間区切り | 過去分は一気に入れず段階的に。レビュー負荷・ノイズ・コストを平準化 | 07-21 |
+| タイトルに「ギルドイベント」を含む動画をギルドバトル(イベント)に分類（従来は「ギルイベ」のみ検出） | 実データで「ギルドイベント「○○」」表記が未分類/通常に落ちていた | 07-22 |
+| スコア大会(イベント)のイベント名を外部辞書 data/event_tags.json に外出し。一致で表示専用タグを付与し、週末→イベントへ昇格 | 「限定」を含まないイベント名（周年/特訓/コラボ/季節等）が週末に誤分類されていた。tags.json と同じデータ編集のみ拡張方針 | 07-22 |
+| 辞書は「○○限定」形式を含めない／辞書タグはスコア大会動画にのみ付与 | 限定形は既存 EVENT_RE が自動抽出済み（重複回避）。非スコア動画への季節名誤爆を抑止 | 07-22 |
 
 ## 4. 現在の状態（すべてコミット済み・origin/main 反映済み）
 - Phase2実装（collect.py/collect.yml）、実チャンネル設定、回数・イベント名タグ+フォント特大化（19e8f4f）
@@ -61,6 +64,7 @@
 - **アクセス解析(GoatCounter)導入（aef02e6）**: PV・流入元(何から来たか)計測。Cookie不使用＝同意バナー不要という条件で選定。`docs/index.html` の `</body>` 直前に計測タグ1行を追加のみ（既存機能への影響なし）。管理画面 https://irregular-prime.goatcounter.com/ （Paths=PV、Referrals=流入元）。GA4はCookie同意が必要になるため不採用
 - **検索収集の実装（07-21・push済み a9fb177 / 597ed1e / 8a298db）**: `scripts/search_collect.py`（search.list→videos.list、`source:"search"`/`status:"自動分類"`、重複はvideoIdで排除、判定はタイトルのみ）+ `.github/workflows/search.yml`（当初3時間ごと → 07-21に1時間ごとへ短縮、collect.ymlと同じconcurrencyグループ）。あわせて collect.py に `--backfill` 追加・GOMA_KEYWORDSに「ゴマ乙」追加、reclassify.py を `search` も対象化、channels.json のコンテンツ0件チャンネル1件を削除（→ **52ch**）
 - 検証状況: 静的チェック（ID突合・data-tab↔panel対応・括弧バランス）通過、serve_admin.py 全エンドポイント200確認、search_collect.py は py_compile / import解決 確認済み。**admin.htmlのブラウザ実機動作・検索収集のAPI実動作はユーザー確認に委譲**（Claude Code環境にnode/Chrome拡張なし、YOUTUBE_API_KEYも無し）
+- **タグ自動分類の改善（07-22・push済み 0fef21e）**: ①タイトル「ギルドイベント」→ギルドバトル(イベント) ②スコア大会(イベント)のイベント名辞書 `data/event_tags.json`（57件）を新規追加し collect.py が読込。一致でイベント名を表示専用タグ付与＋週末→イベント昇格（非スコア動画は対象外の誤爆抑止付き）。reclassify で既存 **81件** のタグを再計算。候補リスト `docs/event_names_candidates.md` を同梱、参考画像フォルダ（約210MB・個人実績付きスクショ）は `.gitignore` で除外（詳細は下記「イベント名辞書の運用」）
 
 ## 5. 次のステップ（具体的に1〜3個）
 1. **検索収集の実機確認**: Actions で「検索収集」を手動実行 → 追加動画が管理ツールの未確認レビュー（自動分類）に出るか確認
@@ -73,8 +77,23 @@
 - 残る誤差: イベント語の付かないイベントスコアタ（例「HYCレーザーAスコアタ」）は週末に寄る→管理ツールで手動修正前提
 - FF14動画は is_gomaotsu が説明文の「ゴ魔乙」に反応した誤"収集"（分類でなく収集判定の問題）。対処は当面手動削除のみ（収集ロジックは変更しない）
 
+### イベント名辞書（data/event_tags.json）の運用（07-22 追加）
+スコア大会(イベント)のイベント名タグは **コードではなくデータ（`data/event_tags.json`）で管理**する。イベントを増やしたいときの手順:
+
+1. `data/event_tags.json` の `events` 配列に1件追記する。書式は `{ "tag": "表示名", "keywords": ["検索語", ...] }`（`note` は任意メモでコードは無視）。
+   - `keywords` は NFKC正規化＋小文字化した**タイトルへの部分一致**で判定。いずれか1つ含めば一致。
+   - **短語・汎用語は誤爆に注意**。「スコアタ」を付ける等で限定一致させる（例: `"うまるスコアタ"`, `"Xmasスコアタ"`）。
+   - **「○○限定」形式は入れない**。既存 `EVENT_RE`（collect.py）が「○○」を自動抽出するため重複する。
+2. `cd scripts && python reclassify.py --dry-run` で既存動画への影響（付与/昇格の差分）を確認。
+3. 問題なければ `python reclassify.py` で本反映（`status:"確認済み"`・手動登録は保護される）。
+4. `変更を保存する.bat` 等で videos.json と event_tags.json を commit / push。
+
+**仕組み（collect.py）**: `make_tags` が `match_event_tags(ntitle)` で辞書一致を集め、一致があれば `classify` に `has_event_dict=True` を渡して週末→イベントへ昇格。辞書タグは分類結果に「スコア大会」が含まれる動画にのみ付与（ガチャ/アリーナ等への季節名誤爆を抑止）。reclassify.py は collect.py の `make_tags` を import して共用するため、**改修は collect.py 側だけでよい**。
+
+**注意**: `data/event_tags.json` はゲーム内スクショ（`スコア大会（イベント）名称参考用/`・約210MB・個人実績付き）のOCRから作成。**元スクショは .gitignore でリポジトリ非同梱**。カタカナ固有名にOCR誤読が残り得るため、追加時は実タイトルとの一致で裏取りするのが確実（`ゴシパ`/`HYCレーザー`/`20thレコ` は既存動画一致で確認済み）。候補の全体像は [docs/event_names_candidates.md](docs/event_names_candidates.md)（Tier A/B/C）を参照。
+
 ## 6. ファイル境界
-- 変更してよい: docs/（index.html, videos.json, tags.json）, data/channels.json, tools/, scripts/, .github/workflows/collect.yml, .gitignore, README.md, PROJECT_STATE.md
+- 変更してよい: docs/（index.html, videos.json, tags.json, event_names_candidates.md）, data/（channels.json, event_tags.json）, tools/, scripts/, .github/workflows/collect.yml, .gitignore, README.md, PROJECT_STATE.md
 - 変更禁止（非公開・gitignore維持）: phase2_implementation_guide.md（内部向け実装指示書）
 
 ## 7. 注意事項・ハマりどころ
