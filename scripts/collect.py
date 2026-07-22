@@ -18,6 +18,7 @@ import requests
 ROOT = Path(__file__).resolve().parent.parent
 CHANNELS_PATH = ROOT / "data" / "channels.json"
 VIDEOS_PATH = ROOT / "docs" / "videos.json"
+EVENT_TAGS_PATH = ROOT / "data" / "event_tags.json"
 
 API_URL = "https://www.googleapis.com/youtube/v3/playlistItems"
 JST = timezone(timedelta(hours=9))
@@ -65,7 +66,33 @@ ROUND_PATTERNS = [
 EVENT_RE = re.compile(r"([一-鿿ぁ-んァ-ヿー々〆]+)限定")
 
 
-def classify(ntitle, has_round=False):
+def load_event_tags():
+    """スコア大会(イベント)のイベント名辞書を [(tag, [正規化済みkeyword, ...]), ...] で返す。
+    『○○限定』形式は EVENT_RE が自動抽出するため辞書には入れない（重複回避）。"""
+    data = json.loads(EVENT_TAGS_PATH.read_text(encoding="utf-8"))
+    result = []
+    for ev in data.get("events", []):
+        tag = ev.get("tag")
+        kws = [norm(k) for k in ev.get("keywords", []) if k]
+        if tag and kws:
+            result.append((tag, kws))
+    return result
+
+
+# イベント名辞書（モジュール読込時に1回だけロード。reclassify も import 経由で共用）。
+EVENT_TAGS = load_event_tags()
+
+
+def match_event_tags(ntitle):
+    """正規化タイトルが辞書に一致したイベント名タグを、辞書順・重複排除で返す。"""
+    matched = []
+    for tag, kws in EVENT_TAGS:
+        if tag not in matched and any(k in ntitle for k in kws):
+            matched.append(tag)
+    return matched
+
+
+def classify(ntitle, has_round=False, has_event_dict=False):
     """正規化タイトルからカテゴリタグ一覧を返す。該当なしは ['未分類']。
     週末/イベントの判別は、説明文の別動画への言及を拾わないようタイトルのみで行う。
     has_round=True（回数「第○回」が取れた）はそれ自体を週末スコア大会の判定材料にする
@@ -82,13 +109,13 @@ def classify(ntitle, has_round=False):
             tags.append("エーテルスコア大会")
         elif is_real:
             tags.append("リアルスコア大会")
-        elif any(norm(w) in ntitle for w in EVENT_WORDS):
+        elif any(norm(w) in ntitle for w in EVENT_WORDS) or has_event_dict:
             tags.append("スコア大会(イベント)")
         else:
             tags.append("スコア大会(週末)")
 
-    # ギルドバトル：ギルイベ（イベント）を通常より優先
-    if norm("ギルイベ") in ntitle:
+    # ギルドバトル：イベント（ギルイベ / ギルドイベント）を通常より優先
+    if any(norm(k) in ntitle for k in ["ギルイベ", "ギルドイベント"]):
         tags.append("ギルドバトル(イベント)")
     elif any(norm(k) in ntitle for k in ["ギルドバトル", "ギルバト"]):
         tags.append("ギルドバトル(通常)")
@@ -115,12 +142,19 @@ def make_tags(title, description):
     分類はタイトル基準（description は収集判定 is_gomaotsu でのみ使う）。"""
     ntitle = norm(title)
     r = extract_round(ntitle)
-    tags = classify(ntitle, has_round=r is not None)
+    event_tags = match_event_tags(ntitle)
+    tags = classify(ntitle, has_round=r is not None, has_event_dict=bool(event_tags))
     if r is not None:
         tags.append(f"第{r}回")
     e = EVENT_RE.search(ntitle)
     if e:
         tags.append(e.group(1))
+    # 辞書由来のイベント名タグは「スコア大会」動画のときだけ付与する
+    # （ガチャ/アリーナ等に季節名が誤爆しないよう限定）。
+    if "スコア大会" in tags:
+        for t in event_tags:
+            if t not in tags:
+                tags.append(t)
     return tags
 
 
