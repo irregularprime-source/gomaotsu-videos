@@ -66,7 +66,7 @@
 - **検索収集の実装（07-21・push済み a9fb177 / 597ed1e / 8a298db）**: `scripts/search_collect.py`（search.list→videos.list、`source:"search"`/`status:"自動分類"`、重複はvideoIdで排除、判定はタイトルのみ）+ `.github/workflows/search.yml`（当初3時間ごと → 07-21に1時間ごとへ短縮、collect.ymlと同じconcurrencyグループ）。あわせて collect.py に `--backfill` 追加・GOMA_KEYWORDSに「ゴマ乙」追加、reclassify.py を `search` も対象化、channels.json のコンテンツ0件チャンネル1件を削除（→ **52ch**）
 - 検証状況: 静的チェック（ID突合・data-tab↔panel対応・括弧バランス）通過、serve_admin.py 全エンドポイント200確認、search_collect.py は py_compile / import解決 確認済み。**admin.htmlのブラウザ実機動作・検索収集のAPI実動作はユーザー確認に委譲**（Claude Code環境にnode/Chrome拡張なし、YOUTUBE_API_KEYも無し）
 - **タグ自動分類の改善（07-22・push済み 0fef21e）**: ①タイトル「ギルドイベント」→ギルドバトル(イベント) ②スコア大会(イベント)のイベント名辞書 `data/event_tags.json`（57件）を新規追加し collect.py が読込。一致でイベント名を表示専用タグ付与＋週末→イベント昇格（非スコア動画は対象外の誤爆抑止付き）。reclassify で既存 **81件** のタグを再計算。候補リスト `docs/event_names_candidates.md` を同梱、参考画像フォルダ（約210MB・個人実績付きスクショ）は `.gitignore` で除外（詳細は下記「イベント名辞書の運用」）
-- **ギルドバトル(通常)判定の拡充（07-23）**: `GUILD_NORMAL_MARKERS` を新設し、明示語（ギルドバトル/ギルバト）に加え属性有利ローテ名（旧/新/三 × 火水風光闇）＋闘技場マップ名でも(通常)判定。**スコア大会が付いた動画には付けない**ガード付き（「新火鉢」等の誤爆・併記を防止、「新火」だけ「新火有利」形）。reclassify で **102件**（すべて未分類→ギルドバトル(通常)）を再計算
+- **ギルドバトル(通常)判定の拡充（07-23・push済み 12f14c6）**: `GUILD_NORMAL_MARKERS` を新設し、明示語（ギルドバトル/ギルバト）に加え属性有利ローテ名（旧/新/三 × 火水風光闇）＋闘技場マップ名でも(通常)判定。**スコア大会が付いた動画には付けない**ガード付き（「新火鉢」等の誤爆・併記を防止、「新火」だけ「新火有利」形）。reclassify で **102件**（すべて未分類→ギルドバトル(通常)）を再計算
 
 ## 5. 次のステップ（具体的に1〜3個）
 1. **検索収集の実機確認**: Actions で「検索収集」を手動実行 → 追加動画が管理ツールの未確認レビュー（自動分類）に出るか確認
