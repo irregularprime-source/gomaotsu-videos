@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-23T21:24:04+09:00",
+  "updated": "2026-07-24T00:00:51+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -33915,6 +33915,20 @@
         "スコア大会",
         "スコア大会(週末)",
         "第581回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "fX8xf1E6drQ",
+      "title": "【ゴ魔乙 プレイ動画】 風の闘技場2 hard ブレイク 147,368ジュエル #ごまおつ #ゴ魔乙",
+      "channel": "MZの遊び場",
+      "description": "",
+      "publishedAt": "2026-07-23T13:56:11Z",
+      "registeredAt": "2026-07-24T00:00:51+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(通常)"
       ],
       "status": "自動分類",
       "note": ""
