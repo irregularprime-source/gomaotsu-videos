@@ -13,6 +13,9 @@
   --ok:#58b368; --warn:#d4566a;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+/* hidden 属性を常に効かせる。display を指定したセレクタ（#rv-more 等）が
+   ブラウザ標準の [hidden]{display:none} を打ち消して消えなくなるのを防ぐ。 */
+[hidden]{display:none!important}
 html{background:var(--bg);font-size:18px}
 body{
   font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN",sans-serif;
@@ -104,6 +107,17 @@ h1 .tag{font-size:.7rem;color:var(--warn);border:1px solid var(--warn);border-ra
 .count b{color:var(--gold);font-size:1rem}
 .badge-done{font-size:.68rem;color:var(--ok);border:1px solid var(--ok);border-radius:5px;
   padding:1px 6px;margin-left:8px;vertical-align:middle}
+.btn.danger{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 55%,transparent)}
+.btn.danger:hover{background:color-mix(in srgb,var(--warn) 16%,transparent)}
+
+/* ---- 存在チェック結果 ---- */
+.miss-row{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line-soft)}
+.miss-row:first-of-type{border-top:none}
+.miss-label{display:flex;gap:8px;align-items:flex-start;flex:1;min-width:0;cursor:pointer}
+.miss-label input{margin-top:3px;flex:none}
+.miss-title{display:block;font-size:.82rem;font-weight:700}
+.miss-meta{display:block;font-size:.72rem;color:var(--muted);margin-top:2px}
+.miss-row .open{font-size:.72rem;white-space:nowrap;flex:none}
 .a-card{
   display:flex;gap:14px;background:var(--surface);border:1px solid var(--line-soft);
   border-radius:12px;padding:14px;margin-bottom:14px;
@@ -228,8 +242,10 @@ h1 .tag{font-size:.7rem;color:var(--warn);border:1px solid var(--warn);border-ra
     <div class="toolbar">
       <span class="count"><b id="review-count">0</b> 件が該当（<span id="review-shown">0</span> 件を表示中）</span>
       <button class="btn small" id="bulk-confirm">絞り込み結果をすべて確認済みにする</button>
+      <button class="btn small" id="rv-check" title="絞り込み結果の動画がYouTubeに存在するか照会します（確認状態=すべてにすると全件が対象）">YouTube存在チェック</button>
       <span class="msg" id="bulk-msg"></span>
     </div>
+    <div id="rv-check-result"></div>
     <div id="review-list"></div>
     <button class="btn" id="rv-more" hidden>もっと見る</button>
   </section>
@@ -451,7 +467,7 @@ function refreshReviewCounts(){
 
 function renderReview(keepCount = false){
   // 絞り込み条件が変わったら先頭から描画し直す。「もっと見る」のときだけ件数を維持して伸ばす。
-  if(!keepCount) rv.shown = PAGE_SIZE;
+  if(!keepCount){ rv.shown = PAGE_SIZE; $("rv-check-result").innerHTML=""; }  // 条件が変われば存在チェック結果は無効
   const btn = $("bulk-confirm");
   btn.dataset.armed="0"; btn.textContent=BULK_LABEL;
   const all = reviewVideos();
@@ -504,7 +520,15 @@ function reviewCard(v){
     else syncStatus();
   };
   syncStatus();
-  actions.appendChild(toggle);
+  const del = el("button","btn danger small","一覧から削除");
+  del.title="videos.json からこの動画を消します（YouTube側には手を加えません）";
+  del.onclick=()=>{
+    if(del.dataset.armed!=="1"){ del.dataset.armed="1"; del.textContent="もう一度クリックで削除"; return; }
+    removeVideos([v]);
+    card.remove();
+    refreshReviewCounts();
+  };
+  actions.append(toggle, del);
 
   main.append(title, meta, editor.wrap, note, actions);
   card.append(thumb, main);
@@ -526,6 +550,102 @@ $("bulk-confirm").onclick=()=>{
   markDirty("videos");
   renderReview();
   msg.className="msg ok"; msg.textContent=`${targets.length} 件を確認済みにしました。`;
+};
+
+/* ===== 削除（YouTube側は触らない。videos.json から消すだけ） ===== */
+function removeVideos(list){
+  const ids = new Set(list.map(v=>v.videoId));
+  videosDoc.videos = videosDoc.videos.filter(v=>!ids.has(v.videoId));
+  markDirty("videos");
+}
+
+/* ===== YouTube 存在チェック ===== */
+/* videos.list は存在するIDだけを返す。返らなかった＝削除/非公開/アカウント削除（APIでは区別不可）。
+   限定公開は返るので誤検出しない。IDは50件までまとめられ、1リクエスト1ユニット。 */
+async function findMissing(vids, onProgress){
+  const missing = [];
+  for(let i=0; i<vids.length; i+=50){
+    const chunk = vids.slice(i, i+50);
+    const data = await ytFetch(
+      `https://www.googleapis.com/youtube/v3/videos?part=id&id=${chunk.map(v=>v.videoId).join(",")}&key=${encodeURIComponent(apiKey)}`);
+    const alive = new Set((data.items||[]).map(it=>it.id));
+    for(const v of chunk) if(!alive.has(v.videoId)) missing.push(v);
+    onProgress(Math.min(i+50, vids.length), vids.length, missing.length);
+  }
+  return missing;
+}
+
+const DEL_LABEL = "選択した動画を videos.json から削除する";
+
+function renderMissing(missing){
+  const box = $("rv-check-result"); box.innerHTML="";
+  if(!missing.length) return;
+  const panel = el("div","preview");
+  panel.appendChild(el("h3",null,`YouTubeで見つからない動画（${missing.length}件）`));
+  panel.appendChild(el("div","kv","削除・非公開・アカウント削除のいずれか（APIでは区別できません）。チェックした動画を videos.json から削除します。"));
+
+  const rows = [];
+  for(const v of missing){
+    const row = el("div","miss-row");
+    const label = el("label","miss-label");
+    const cb = el("input"); cb.type="checkbox"; cb.checked=true;
+    // 選択を変えたら「もう一度クリック」の待機状態と件数表示をリセットする
+    cb.onchange=()=>{ del.dataset.armed="0"; del.textContent=DEL_LABEL; };
+    const txt = el("span");
+    txt.appendChild(el("span","miss-title", v.title));
+    txt.appendChild(el("span","miss-meta", `${v.channel}　/　公開 ${fmtDate(v.publishedAt)}　/　${v.videoId}`));
+    label.append(cb, txt);
+    const open = el("a","open","YouTubeで確認");
+    open.href=`https://www.youtube.com/watch?v=${encodeURIComponent(v.videoId)}`;
+    open.target="_blank"; open.rel="noopener";
+    row.append(label, open);
+    panel.appendChild(row);
+    rows.push({v, cb});
+  }
+
+  const actions = el("div","a-actions");
+  const del = el("button","btn danger",DEL_LABEL);
+  const msg = el("div","msg");
+  del.onclick=()=>{
+    const sel = rows.filter(r=>r.cb.checked).map(r=>r.v);
+    if(!sel.length){ msg.className="msg err"; msg.textContent="削除する動画が選択されていません。"; return; }
+    if(del.dataset.armed!=="1"){
+      del.dataset.armed="1";
+      del.textContent=`${sel.length} 件を削除する（もう一度クリックで実行）`;
+      return;
+    }
+    removeVideos(sel);
+    box.innerHTML="";
+    renderReview();
+    const done=$("bulk-msg");
+    done.className="msg ok";
+    done.textContent=`${sel.length} 件を削除しました。保存バーから videos.json を保存してください。`;
+  };
+  actions.append(del, msg);
+  panel.appendChild(actions);
+  box.appendChild(panel);
+}
+
+$("rv-check").onclick = async ()=>{
+  const btn=$("rv-check"), msg=$("bulk-msg");
+  $("rv-check-result").innerHTML="";
+  msg.className="msg"; msg.textContent="";
+  if(!apiKey){ msg.className="msg err"; msg.textContent="APIキーが未設定です。上部のキー欄を確認してください。"; return; }
+  const targets = reviewVideos();
+  if(!targets.length){ msg.textContent="対象の動画がありません。"; return; }
+  btn.disabled=true;
+  try{
+    const missing = await findMissing(targets, (done,total,n)=>{
+      msg.textContent=`${done}/${total} 件を照会中…　見つからない動画 ${n} 件`;
+    });
+    msg.className = missing.length ? "msg err" : "msg ok";
+    msg.textContent = missing.length
+      ? `${targets.length} 件中 ${missing.length} 件が YouTube で見つかりませんでした。`
+      : `${targets.length} 件すべて YouTube に存在しました。`;
+    renderMissing(missing);
+  }catch(e){
+    msg.className="msg err"; msg.textContent="照会失敗: "+e.message;
+  }finally{ btn.disabled=false; }
 };
 
 /* 絞り込み操作 */

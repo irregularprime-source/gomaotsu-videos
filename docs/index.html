@@ -22,6 +22,9 @@
   --gold-soft:rgba(201,164,92,.14);
 }
 *{box-sizing:border-box;margin:0;padding:0}
+/* hidden 属性を常に効かせる。display を指定したクラス（.more-btn 等）が
+   ブラウザ標準の [hidden]{display:none} を打ち消して消えなくなるのを防ぐ。 */
+[hidden]{display:none!important}
 /* 基準フォントサイズ（老眼配慮の特大＝既定16pxの1.25倍）。全体を一括で拡大／縮小するにはここだけ変更する。 */
 html{background:var(--bg);font-size:20px}
 body{
