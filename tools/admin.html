@@ -75,10 +75,35 @@ h1 .tag{font-size:.7rem;color:var(--warn);border:1px solid var(--warn);border-ra
 .msg{font-size:.8rem;margin-top:8px}
 .msg.ok{color:var(--ok)} .msg.err{color:var(--warn)}
 
+/* ---- review filter ---- */
+.filterbar{background:var(--surface);border:1px solid var(--line-soft);border-radius:12px;
+  padding:12px 14px;margin-bottom:12px}
+.filterbar .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.filterbar input[type=search],.filterbar select,.filterbar input[type=date]{
+  background:var(--surface2);border:1px solid var(--line-soft);border-radius:8px;
+  color:var(--text);padding:7px 10px;font-size:.8rem}
+.filterbar input[type=search]{flex:1 1 240px;min-width:0}
+.filterbar select{max-width:220px}
+.filterbar .date-range{display:flex;align-items:center;gap:6px;font-size:.75rem;color:var(--muted)}
+.rv-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.rv-chip{
+  --c:#8a8598;background:none;border-radius:999px;font-size:.74rem;padding:4px 11px;
+  border:1px solid color-mix(in srgb,var(--c) 45%,transparent);
+  color:color-mix(in srgb,var(--c) 80%,white);
+}
+.rv-chip[aria-pressed="true"]{
+  background:color-mix(in srgb,var(--c) 26%,transparent);
+  border-color:color-mix(in srgb,var(--c) 85%,transparent);color:#fff;
+}
+.rv-chip .cnt{color:var(--muted);margin-left:6px;font-size:.68rem}
+#rv-more{display:block;margin:4px auto 0}
+
 /* ---- cards (review) ---- */
 .toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
 .count{font-size:.85rem;color:var(--muted)}
 .count b{color:var(--gold);font-size:1rem}
+.badge-done{font-size:.68rem;color:var(--ok);border:1px solid var(--ok);border-radius:5px;
+  padding:1px 6px;margin-left:8px;vertical-align:middle}
 .a-card{
   display:flex;gap:14px;background:var(--surface);border:1px solid var(--line-soft);
   border-radius:12px;padding:14px;margin-bottom:14px;
@@ -171,7 +196,7 @@ h1 .tag{font-size:.7rem;color:var(--warn);border:1px solid var(--warn);border-ra
   </div>
 
   <div class="tabs" role="tablist">
-    <button class="tab" role="tab" aria-selected="true"  data-tab="review">① 未確認レビュー</button>
+    <button class="tab" role="tab" aria-selected="true"  data-tab="review">① レビュー・編集</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="addvideo">② 動画登録</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="addchannel">③ チャンネル登録</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="tags">④ タグ管理</button>
@@ -181,11 +206,32 @@ h1 .tag{font-size:.7rem;color:var(--warn);border:1px solid var(--warn);border-ra
 
   <!-- ① 未確認レビュー -->
   <section class="panel active" id="panel-review">
+    <div class="filterbar">
+      <div class="rv-chips" id="rv-chips"></div>
+      <div class="controls">
+        <input type="search" id="rv-q" placeholder="タイトル・チャンネル名・説明文・タグ・メモ・IDで検索">
+        <select id="rv-status" aria-label="確認状態で絞り込む">
+          <option value="自動分類">未確認のみ（自動分類）</option>
+          <option value="確認済み">確認済みのみ</option>
+          <option value="">確認状態：すべて</option>
+        </select>
+        <select id="rv-channel" aria-label="チャンネルで絞り込む"></select>
+        <span class="date-range">公開日
+          <input type="date" id="rv-from" aria-label="公開日の開始">
+          〜
+          <input type="date" id="rv-to" aria-label="公開日の終了">
+        </span>
+        <button class="btn small" id="rv-sort">公開日 ↓ 新しい順</button>
+        <button class="btn small" id="rv-clear">条件をクリア</button>
+      </div>
+    </div>
     <div class="toolbar">
-      <span class="count"><b id="review-count">0</b> 件が未確認（自動分類）</span>
-      <button class="btn small" id="bulk-confirm">表示中をすべて確認済みにする</button>
+      <span class="count"><b id="review-count">0</b> 件が該当（<span id="review-shown">0</span> 件を表示中）</span>
+      <button class="btn small" id="bulk-confirm">絞り込み結果をすべて確認済みにする</button>
+      <span class="msg" id="bulk-msg"></span>
     </div>
     <div id="review-list"></div>
+    <button class="btn" id="rv-more" hidden>もっと見る</button>
   </section>
 
   <!-- ② 動画登録 -->
@@ -323,16 +369,103 @@ function makeTagEditor(initial, onChange){
   return { wrap, getTags:()=>tags.slice() };
 }
 
-/* ===== ① 未確認レビュー ===== */
-function reviewVideos(){ return (videosDoc?.videos||[]).filter(v=>v.status==="自動分類"); }
+/* ===== ① レビュー（絞り込み付き） ===== */
+const PAGE_SIZE = 50;
+const BULK_LABEL = "絞り込み結果をすべて確認済みにする";
+/* 既定は「未確認のみ」＝これまでのタブの内容。状態を変えれば確認済みも編集できる。 */
+const rv = { q:"", status:"自動分類", channel:"", tags:new Set(),
+             from:null, toEnd:null, sortDesc:true, shown:PAGE_SIZE };
 
-function renderReview(){
+function norm(s){ return (s||"").normalize("NFKC").toLowerCase(); }
+
+/* タグ以外の条件。タグチップの件数表示で使い回すため分離している。 */
+function matchesBase(v, q){
+  if(rv.status && v.status!==rv.status) return false;
+  if(rv.channel && v.channel!==rv.channel) return false;
+  if(rv.from || rv.toEnd){
+    const d = new Date(v.publishedAt);
+    if(isNaN(d)) return false;
+    if(rv.from && d<rv.from) return false;
+    if(rv.toEnd && d>=rv.toEnd) return false;
+  }
+  // タグも対象にする。チップに出ない自由タグ（第○回・イベント名）はここでしか引けない。
+  if(q && !norm(`${v.title} ${v.channel} ${v.description} ${v.note} ${v.videoId} ${(v.tags||[]).join(" ")}`).includes(q)) return false;
+  return true;
+}
+
+function reviewVideos(){
+  const q = norm(rv.q);
+  return (videosDoc?.videos||[])
+    .filter(v => matchesBase(v,q) && (!rv.tags.size || (v.tags||[]).some(t=>rv.tags.has(t))))
+    .sort((a,b)=>{
+      const d = new Date(a.publishedAt) - new Date(b.publishedAt);
+      return rv.sortDesc ? -d : d;
+    });
+}
+
+function renderRvChips(){
+  const q = norm(rv.q), counts = {};
+  for(const v of (videosDoc?.videos||[])){
+    if(!matchesBase(v,q)) continue;
+    for(const t of (v.tags||[])) counts[t]=(counts[t]||0)+1;
+  }
+  const box = $("rv-chips"); box.innerHTML="";
+  // チップは tags.json 定義のタグのみ。第○回・イベント名などはキーワード検索で拾う。
+  for(const t of knownTags()){
+    const b = el("button","rv-chip");
+    b.style.setProperty("--c", t.color);
+    b.setAttribute("aria-pressed", rv.tags.has(t.name));
+    b.appendChild(el("span",null,t.name));
+    b.appendChild(el("span","cnt", String(counts[t.name]||0)));
+    b.onclick=()=>{
+      rv.tags.has(t.name) ? rv.tags.delete(t.name) : rv.tags.add(t.name);
+      renderReview();
+    };
+    box.appendChild(b);
+  }
+}
+
+function renderChannelOptions(){
+  const sel = $("rv-channel"), cur = sel.value;
+  const names = [...new Set((videosDoc?.videos||[]).map(v=>v.channel).filter(Boolean))]
+    .sort((a,b)=>a.localeCompare(b,"ja"));
+  sel.innerHTML="";
+  const all = el("option",null,"チャンネル：すべて"); all.value=""; sel.appendChild(all);
+  for(const n of names){ const o=el("option",null,n); o.value=n; sel.appendChild(o); }
+  sel.value = names.includes(cur) ? cur : "";
+  rv.channel = sel.value;
+}
+
+/* 件数と「もっと見る」だけを更新する（カードを個別に消したときに使う） */
+function refreshReviewCounts(){
+  const list = $("review-list");
+  const total = reviewVideos().length;
+  const shown = list.querySelectorAll(".a-card").length;
+  $("review-count").textContent = total;
+  $("review-shown").textContent = shown;
+  const more = $("rv-more");
+  more.hidden = total <= shown;
+  if(!more.hidden) more.textContent = `もっと見る（残り ${total - shown} 件）`;
+  if(!shown) renderReview(true);
+}
+
+function renderReview(keepCount = false){
+  // 絞り込み条件が変わったら先頭から描画し直す。「もっと見る」のときだけ件数を維持して伸ばす。
+  if(!keepCount) rv.shown = PAGE_SIZE;
+  const btn = $("bulk-confirm");
+  btn.dataset.armed="0"; btn.textContent=BULK_LABEL;
+  const all = reviewVideos();
+  const shown = all.slice(0, rv.shown);
   const list = $("review-list");
   list.innerHTML="";
-  const vids = reviewVideos();
-  $("review-count").textContent = vids.length;
-  if(!vids.length){ list.appendChild(el("div","empty","未確認の動画はありません。")); return; }
-  for(const v of vids) list.appendChild(reviewCard(v));
+  for(const v of shown) list.appendChild(reviewCard(v));
+  if(!all.length) list.appendChild(el("div","empty","条件に一致する動画がありません。"));
+  $("review-count").textContent = all.length;
+  $("review-shown").textContent = shown.length;
+  const more = $("rv-more");
+  more.hidden = all.length <= rv.shown;
+  if(!more.hidden) more.textContent = `もっと見る（残り ${all.length - rv.shown} 件）`;
+  renderRvChips();
 }
 
 function reviewCard(v){
@@ -346,7 +479,8 @@ function reviewCard(v){
   const title = el("div","a-title");
   const a = el("a", null, v.title); a.href=`https://www.youtube.com/watch?v=${encodeURIComponent(v.videoId)}`;
   a.target="_blank"; a.rel="noopener";
-  title.appendChild(a);
+  const badge = el("span","badge-done","確認済み");
+  title.append(a, badge);
   const meta = el("div","a-meta", `${v.channel}　/　公開 ${fmtDate(v.publishedAt)}　/　${v.videoId}`);
 
   const editor = makeTagEditor(v.tags, (t)=>{ v.tags=t; markDirty("videos"); });
@@ -355,10 +489,22 @@ function reviewCard(v){
   note.oninput=()=>{ v.note=note.value; markDirty("videos"); };
 
   const actions = el("div","a-actions");
-  const done = el("button","btn primary small","確認済みにする");
-  done.onclick=()=>{ v.status="確認済み"; markDirty("videos"); card.remove(); $("review-count").textContent=reviewVideos().length;
-    if(!reviewVideos().length) renderReview(); };
-  actions.appendChild(done);
+  const toggle = el("button","btn small","");
+  function syncStatus(){
+    const done = v.status==="確認済み";
+    badge.hidden = !done;
+    toggle.textContent = done ? "未確認に戻す" : "確認済みにする";
+    toggle.className = done ? "btn small" : "btn primary small";
+  }
+  toggle.onclick=()=>{
+    v.status = v.status==="確認済み" ? "自動分類" : "確認済み";
+    markDirty("videos");
+    // 状態で絞り込んでいるときは対象外になるのでカードを畳む。「すべて」表示中はその場で切り替えるだけ。
+    if(rv.status && v.status!==rv.status){ card.remove(); refreshReviewCounts(); }
+    else syncStatus();
+  };
+  syncStatus();
+  actions.appendChild(toggle);
 
   main.append(title, meta, editor.wrap, note, actions);
   card.append(thumb, main);
@@ -366,10 +512,49 @@ function reviewCard(v){
 }
 
 $("bulk-confirm").onclick=()=>{
-  const vids = reviewVideos();
-  if(!vids.length) return;
-  for(const v of vids) v.status="確認済み";
+  const btn=$("bulk-confirm"), msg=$("bulk-msg");
+  msg.textContent="";
+  const targets = reviewVideos().filter(v=>v.status==="自動分類");
+  if(!targets.length){ msg.className="msg"; msg.textContent="未確認の動画が絞り込み結果にありません。"; return; }
+  // 表示中の50件ではなく絞り込み結果の全件が対象。件数を見せて2回目のクリックで実行する。
+  if(btn.dataset.armed!=="1"){
+    btn.dataset.armed="1";
+    btn.textContent=`${targets.length} 件を確認済みにする（もう一度クリックで実行）`;
+    return;
+  }
+  for(const v of targets) v.status="確認済み";
   markDirty("videos");
+  renderReview();
+  msg.className="msg ok"; msg.textContent=`${targets.length} 件を確認済みにしました。`;
+};
+
+/* 絞り込み操作 */
+$("rv-q").oninput = e=>{ rv.q=e.target.value; renderReview(); };
+$("rv-status").onchange = e=>{ rv.status=e.target.value; renderReview(); };
+$("rv-channel").onchange = e=>{ rv.channel=e.target.value; renderReview(); };
+// 日付は JST の日単位で比較する（publishedAt はタイムゾーン付き ISO のため Date 同士で比較できる）
+$("rv-from").onchange = e=>{
+  rv.from = e.target.value ? new Date(`${e.target.value}T00:00:00+09:00`) : null;
+  renderReview();
+};
+$("rv-to").onchange = e=>{
+  rv.toEnd = e.target.value
+    ? new Date(new Date(`${e.target.value}T00:00:00+09:00`).getTime() + 86400000)
+    : null;
+  renderReview();
+};
+$("rv-sort").onclick = ()=>{
+  rv.sortDesc = !rv.sortDesc;
+  $("rv-sort").textContent = rv.sortDesc ? "公開日 ↓ 新しい順" : "公開日 ↑ 古い順";
+  renderReview();
+};
+$("rv-more").onclick = ()=>{ rv.shown += PAGE_SIZE; renderReview(true); };
+$("rv-clear").onclick = ()=>{
+  rv.q=""; rv.status="自動分類"; rv.channel=""; rv.tags.clear();
+  rv.from=null; rv.toEnd=null; rv.sortDesc=true;
+  $("rv-q").value=""; $("rv-status").value="自動分類"; $("rv-channel").value="";
+  $("rv-from").value=""; $("rv-to").value="";
+  $("rv-sort").textContent="公開日 ↓ 新しい順";
   renderReview();
 };
 
@@ -434,6 +619,7 @@ function showVideoPreview(id, snip){
     };
     videosDoc.videos.push(entry);
     markDirty("videos");
+    renderChannelOptions(); renderReview();  // ①タブの絞り込み候補と一覧に反映
     add.disabled=true; done.textContent="登録しました。保存バーから videos.json を保存してください。";
     $("video-url").value="";
   };
@@ -508,7 +694,7 @@ function renderTags(){
   tags.forEach((t, i)=>{
     const row = el("div","tag-row");
     const color = el("input"); color.type="color"; color.value=t.color;
-    color.oninput=()=>{ t.color=color.value; markDirty("tags"); };
+    color.oninput=()=>{ t.color=color.value; markDirty("tags"); renderRvChips(); };
     const name = el("span","name", t.name);
     const use = el("span","use", `使用 ${tagUsage(t.name)} 件`);
 
@@ -525,10 +711,13 @@ function renderTags(){
       const n = tagUsage(t.name);
       if(n>0 && del.dataset.armed==="0"){ del.dataset.armed="1"; del.textContent=`使用${n}件・もう一度で削除`; return; }
       tags.splice(i,1); markDirty("tags"); renderTags();
+      // ①タブでそのタグを絞り込みに使っていたら解除して一覧を出し直す
+      if(rv.tags.delete(t.name)) renderReview();
     };
     row.append(color, name, use, ord, del);
     list.appendChild(row);
   });
+  renderRvChips();  // タグの追加・削除・並べ替えを①タブのチップに反映
 }
 
 $("new-tag-add").onclick=()=>{
@@ -628,6 +817,7 @@ async function loadJson(path){
   }
   await loadKey();
   setKeyStatus();
+  renderChannelOptions();
   renderReview();
   renderTags();
   renderSaveBar();
