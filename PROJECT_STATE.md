@@ -71,7 +71,8 @@
 - 公開日表示に時刻を追加（e36a154、YYYY/MM/DD HH:MM・JST固定）
 - **アクセス解析(GoatCounter)導入（aef02e6）**: PV・流入元(何から来たか)計測。Cookie不使用＝同意バナー不要という条件で選定。`docs/index.html` の `</body>` 直前に計測タグ1行を追加のみ（既存機能への影響なし）。管理画面 https://irregular-prime.goatcounter.com/ （Paths=PV、Referrals=流入元）。GA4はCookie同意が必要になるため不採用
 - **検索収集の実装（07-21・push済み a9fb177 / 597ed1e / 8a298db）**: `scripts/search_collect.py`（search.list→videos.list、`source:"search"`/`status:"自動分類"`、重複はvideoIdで排除、判定はタイトルのみ）+ `.github/workflows/search.yml`（当初3時間ごと → 07-21に1時間ごとへ短縮、collect.ymlと同じconcurrencyグループ）。あわせて collect.py に `--backfill` 追加・GOMA_KEYWORDSに「ゴマ乙」追加、reclassify.py を `search` も対象化、channels.json のコンテンツ0件チャンネル1件を削除（→ **52ch**）
-- 検証状況: 静的チェック（ID突合・data-tab↔panel対応・括弧バランス）通過、serve_admin.py 全エンドポイント200確認、search_collect.py は py_compile / import解決 確認済み。**admin.htmlのブラウザ実機動作・検索収集のAPI実動作はユーザー確認に委譲**（Claude Code環境にnode/Chrome拡張なし、YOUTUBE_API_KEYも無し）
+- 検証状況: 静的チェック（ID突合・data-tab↔panel対応・括弧バランス）通過、serve_admin.py 全エンドポイント200確認、search_collect.py は py_compile / import解決 確認済み。~~admin.htmlのブラウザ実機動作・検索収集のAPI実動作はユーザー確認に委譲~~ → **07-25 に解消**（admin.html はブラウザ実機で確認済み、検索収集も本番稼働中。以降の検証状況は各項目に記載）
+- **データの現況（07-25 21:00 時点）**: 動画 **2224件**（`source` 内訳 auto 2181 / search 43）、うち**確認済み 953件・未確認 1271件**、「未分類」タグ 211件
 - **タグ自動分類の改善（07-22・push済み 0fef21e）**: ①タイトル「ギルドイベント」→ギルドバトル(イベント) ②スコア大会(イベント)のイベント名辞書 `data/event_tags.json`（57件）を新規追加し collect.py が読込。一致でイベント名を表示専用タグ付与＋週末→イベント昇格（非スコア動画は対象外の誤爆抑止付き）。reclassify で既存 **81件** のタグを再計算。候補リスト `docs/event_names_candidates.md` を同梱、参考画像フォルダ（約210MB・個人実績付きスクショ）は `.gitignore` で除外（詳細は下記「イベント名辞書の運用」）
 - **保存フローの事故と復旧（07-25・push済み c417f3f / 79b853b）**: 20:01の保存で `git pull --rebase` が videos.json の競合で停止 → 以降4回の保存が detached HEAD に積まれ、push できないまま作業継続していた（`.bat` が pull 失敗を検知せず先へ進む作りだったため、画面上は完了に見えていた）。復旧は `git rebase --quit` → `git branch -f main 7b559f1` → checkout main。**編集内容の欠落なし**（確認済み744→953件、未確認へ戻った動画0、メモ・タグ消失なし）。ただし停止中に検索収集が追加した2件（`f-JQPo46jyk` / `2s4ijlVsJGI`）がローカルに無く、そのままpushすると消える状態だったため末尾に復元（c417f3f）。意図削除の2件（FF14誤収集 `0tjUI5OoppI`・YouTube側削除済み `AInlFXIPEvU`）は戻していない。再発防止として `.bat` にガードを追加（79b853b）
 - **「もっと見る」の表示残り修正＋削除機能（07-25・push済み 05fc44c）**: ①`[hidden]{display:none!important}` を index.html / admin.html に追加。`.more-btn{display:block}` が標準の `[hidden]` を打ち消し、全件表示になってもボタンが古い残り件数のまま消えなかった（該当件数の表示自体は正しかった）。②管理ツール①タブに「YouTube存在チェック」（`videos.list` にID50件ずつ問い合わせ→返らなかった動画を一覧→選択して videos.json から削除）と、各カードの「一覧から削除」（誤収集動画用）を追加。いずれも2回クリック方式。**実機確認済み**（架空ID2件のみ検出／実在120件で誤検出0／実データ「第581回」37件中1件が実際に削除済みと判明 `AInlFXIPEvU`／削除フローと保存バー反映）
@@ -79,10 +80,12 @@
 - **ギルドバトル(通常)判定の拡充（07-23・push済み 12f14c6）**: `GUILD_NORMAL_MARKERS` を新設し、明示語（ギルドバトル/ギルバト）に加え属性有利ローテ名（旧/新/三 × 火水風光闇）＋闘技場マップ名でも(通常)判定。**スコア大会が付いた動画には付けない**ガード付き（「新火鉢」等の誤爆・併記を防止、「新火」だけ「新火有利」形）。reclassify で **102件**（すべて未分類→ギルドバトル(通常)）を再計算
 
 ## 5. 次のステップ（具体的に1〜3個）
-1. **検索収集の実機確認**: Actions で「検索収集」を手動実行 → 追加動画が管理ツール①タブ（確認状態=未確認のみ）に出るか確認
-2. **過去動画のバックフィル**（ローカル・少しずつ）: `collect.py --backfill`（登録ch）と `search_collect.py --after/--before`（検索・期間区切り）を `--dry-run` で確認してから実行 → videos.json のサイズを見て JSON分割の要否を判断
-3. **（保留・ユーザー作業）** 分類見直しの結果確認と残り未分類の手動対応。FF14誤収集の削除は管理ツール①タブの「一覧から削除」で可能になった（ただし収集対象チャンネルの動画なら再登録され得る点に注意）
+1. **過去動画のバックフィル**（ローカル・少しずつ）: `collect.py --backfill`（登録ch）と `search_collect.py --after/--before`（検索・期間区切り）を `--dry-run` で確認してから実行 → videos.json のサイズを見て JSON分割の要否を判断
+2. **（ユーザー作業）未確認1271件のレビュー消化**: ①タブの絞り込み（回数・チャンネル・タグ）で単位を区切り、「絞り込み結果をすべて確認済みにする」で消化する運用が回るかを見る
+3. **（ユーザー作業）「未分類」211件の扱いを判断**: 手動タグ付けで済ませるか、collect.py のキーワード追加＋reclassify で機械的に潰すか。件数が増え続けるようなら後者
 - Phase 4=使用キャラ・編成タグ等の拡張は後回し
+
+**完了して外したもの（07-25）**: 検索収集の実機確認（本番で1時間ごとに稼働中、`source:"search"` 43件）／FF14誤収集の削除（管理ツールの「一覧から削除」で除去済み・残0件）
 
 ### 分類見直しメモ（07-20 実施済み）
 - 未分類 106→4件。回数抽出362件（521〜580、誤抽出なし）
