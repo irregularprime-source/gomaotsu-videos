@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-28T04:24:56+09:00",
+  "updated": "2026-07-28T06:01:29+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -34807,6 +34807,21 @@
       "source": "auto",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "NupEkQHFZ_8",
+      "title": "【ゴ魔乙 プレイ動画】 魔法学園祭ｽｺｱﾀ hard 290,984,243点 ランクA #ごまおつ #ゴ魔乙 #スコアタ",
+      "channel": "ahoahomanz",
+      "description": "",
+      "publishedAt": "2026-07-27T20:15:46Z",
+      "registeredAt": "2026-07-28T06:01:29+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)"
       ],
       "status": "自動分類",
       "note": ""
