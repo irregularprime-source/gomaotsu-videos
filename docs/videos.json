@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-28T23:02:59+09:00",
+  "updated": "2026-07-29T02:17:49+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -34867,6 +34867,22 @@
       "source": "auto",
       "tags": [
         "アリーナ"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "ljpf_fYQi6I",
+      "title": "【#ゴ魔乙 プレイ動画】582回スコア大会予習 光で167M HYCC/エッタ 砂丘2BA",
+      "channel": "七瀬九鷹",
+      "description": "#ゲーム #ゴ魔乙 #ごまおつ #ごまビデオ",
+      "publishedAt": "2026-07-28T16:00:30Z",
+      "registeredAt": "2026-07-29T02:17:49+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第582回"
       ],
       "status": "自動分類",
       "note": ""
