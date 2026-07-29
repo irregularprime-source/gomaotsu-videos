@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-29T20:52:35+09:00",
+  "updated": "2026-07-29T21:54:51+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -34937,6 +34937,22 @@
         "第582回"
       ],
       "status": "確認済み",
+      "note": ""
+    },
+    {
+      "videoId": "1Gb9W69Je_4",
+      "title": "【ゴ魔乙 プレイ動画】 第582回スコア大会自習アイテム無し hard 188,819,851点",
+      "channel": "CCT-OER",
+      "description": "",
+      "publishedAt": "2026-07-29T11:56:26Z",
+      "registeredAt": "2026-07-29T21:54:51+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第582回"
+      ],
+      "status": "自動分類",
       "note": ""
     }
   ]
