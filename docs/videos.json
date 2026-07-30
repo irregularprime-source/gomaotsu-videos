@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-30T13:46:57+09:00",
+  "updated": "2026-07-30T19:11:27+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -34998,6 +34998,22 @@
       "tags": [
         "スコア大会",
         "スコア大会(週末)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "VKDiATOGEjw",
+      "title": "【ゴ魔乙 プレイ動画】第582回スコア大会 hard 205.1M 闇mk2/NEOいんへ 範ﾊﾞﾘ範",
+      "channel": "どせい",
+      "description": "",
+      "publishedAt": "2026-07-30T10:09:01Z",
+      "registeredAt": "2026-07-30T19:11:27+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第582回"
       ],
       "status": "自動分類",
       "note": ""
