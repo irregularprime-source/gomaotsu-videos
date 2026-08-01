@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-02T01:03:31+09:00",
+  "updated": "2026-08-02T01:46:52+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -35805,6 +35805,23 @@
         "第582回"
       ],
       "status": "確認済み",
+      "note": ""
+    },
+    {
+      "videoId": "zXOCihku7do",
+      "title": "[ゴ魔乙] アリーナバトル 第64回 (Death Match)",
+      "channel": "NaMgAl鈉鎂鋁",
+      "description": "ユグドラシル (集中) / オーラバスター (拡散)\n \nRecorded on 2026/08/01.",
+      "publishedAt": "2026-08-01T16:05:05Z",
+      "registeredAt": "2026-08-02T01:46:52+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "アリーナ",
+        "第64回"
+      ],
+      "status": "自動分類",
       "note": ""
     }
   ]
