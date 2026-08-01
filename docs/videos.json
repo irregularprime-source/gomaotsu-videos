@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-01T20:54:44+09:00",
+  "updated": "2026-08-01T21:54:20+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -35613,6 +35613,38 @@
       "description": "",
       "publishedAt": "2026-08-01T10:34:42Z",
       "registeredAt": "2026-08-01T20:54:44+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第582回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "bwaobuKwpy0",
+      "title": "【ネタ】【ゴ魔乙 プレイ動画】第4回リアアタ団体戦予選 0点 ノーアイテム ノーコンティニュー",
+      "channel": "Exactly-N",
+      "description": "ネタ動画です",
+      "publishedAt": "2026-08-01T12:42:54Z",
+      "registeredAt": "2026-08-01T21:54:20+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "リアルスコア大会",
+        "第4回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "rR0RPLF3dbQ",
+      "title": "【#ゴ魔乙 プレイ動画】'26/08/01第582回スコア大会1.56億 S1",
+      "channel": "あんきゅー☆",
+      "description": "水ピカトリクス／水メガロドリル\n水サーチ連射攻撃/水スーパーボム/水援護範囲攻撃\nレーザー設置を諦めたが思ったほど伸びず。これに昇格を賭ける",
+      "publishedAt": "2026-08-01T12:26:40Z",
+      "registeredAt": "2026-08-01T21:54:20+09:00",
       "source": "search",
       "tags": [
         "スコア大会",
