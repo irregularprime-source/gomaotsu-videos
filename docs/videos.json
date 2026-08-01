@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-01T19:31:58+09:00",
+  "updated": "2026-08-01T20:54:44+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -35556,6 +35556,70 @@
         "スコア大会(週末)"
       ],
       "status": "確認済み",
+      "note": ""
+    },
+    {
+      "videoId": "fQ56nJu8TYQ",
+      "title": "ゴシックは魔法乙女 第582回スコア大会 Part01",
+      "channel": "山内桜良",
+      "description": "",
+      "publishedAt": "2026-08-01T11:47:20Z",
+      "registeredAt": "2026-08-01T20:54:44+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第582回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "Ja4to7Nj1qo",
+      "title": "【ゴ魔乙 プレイ動画】 第582回スコア大会 191,887,354点 水弱々MkⅡ/大蛇 サボ範",
+      "channel": "MAD",
+      "description": "",
+      "publishedAt": "2026-08-01T11:42:50Z",
+      "registeredAt": "2026-08-01T20:54:44+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第582回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "FwZjPn7gnSo",
+      "title": "【#ゴ魔乙 プレイ動画】'26/08/01第582回スコア大会 1.52億くらい ランクS1",
+      "channel": "あんきゅー☆",
+      "description": "いやもうちょっと伸びて欲しいんだけど……このままだと昇格できないし\n水ピカトリクス／水メガロドリル\n水使い魔オプション/水スーパーボム/水レーザー設置攻撃",
+      "publishedAt": "2026-08-01T10:44:54Z",
+      "registeredAt": "2026-08-01T20:54:44+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第582回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "CS3VMFQ7iI4",
+      "title": "ゴ魔乙 582回　魔力不足",
+      "channel": "あっきー",
+      "description": "",
+      "publishedAt": "2026-08-01T10:34:42Z",
+      "registeredAt": "2026-08-01T20:54:44+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第582回"
+      ],
+      "status": "自動分類",
       "note": ""
     }
   ]
