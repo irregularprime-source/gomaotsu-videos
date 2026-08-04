@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-04T23:06:54+09:00",
+  "updated": "2026-08-05T03:21:43+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -35929,6 +35929,22 @@
       "source": "auto",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "13--MrzFyFI",
+      "title": "第583回スコア大会 161M mk2 NEO ススレ【ゴ魔乙 プレイ動画】",
+      "channel": "フライングエース",
+      "description": "",
+      "publishedAt": "2026-08-04T16:57:40Z",
+      "registeredAt": "2026-08-05T03:21:43+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第583回"
       ],
       "status": "自動分類",
       "note": ""
