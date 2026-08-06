@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-07T00:05:59+09:00",
+  "updated": "2026-08-07T08:48:46+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -36179,6 +36179,22 @@
       "source": "search",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "lycUBh-EYhw",
+      "title": "【ゴ魔乙】第583回全国スコアタ 風エリュシオン、エッタフローラ　1.85億　予習",
+      "channel": "Kゴ魔乙",
+      "description": "#ゴシックは魔法乙女 #ゴ魔乙 #ごまおつ #全国スコアタ",
+      "publishedAt": "2026-08-06T22:03:30Z",
+      "registeredAt": "2026-08-07T08:48:46+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第583回"
       ],
       "status": "自動分類",
       "note": ""
