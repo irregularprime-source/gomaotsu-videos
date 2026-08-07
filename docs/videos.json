@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-08T00:43:09+09:00",
+  "updated": "2026-08-08T01:40:24+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -36268,6 +36268,50 @@
       "description": "",
       "publishedAt": "2026-08-07T15:30:45Z",
       "registeredAt": "2026-08-08T00:43:09+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第583回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "Iq226TRvV5M",
+      "title": "【ゴ魔乙 プレイ動画】 新闇有利ブレイク 大3ピカ参考",
+      "channel": "初",
+      "description": "",
+      "publishedAt": "2026-08-07T16:10:06Z",
+      "registeredAt": "2026-08-08T01:40:24+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(通常)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "Jd0rpHeYHOA",
+      "title": "【ゴ魔乙 プレイ動画】 新闇有利非ブレ 凸48.9→105 新闇非ブレ記録",
+      "channel": "初",
+      "description": "",
+      "publishedAt": "2026-08-07T16:07:55Z",
+      "registeredAt": "2026-08-08T01:40:24+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(通常)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "VYUMYRoUzmo",
+      "title": "【ゴ魔乙 プレイ動画】 第583回スコア大会 hard 196,795,672点",
+      "channel": "CCT-OER",
+      "description": "",
+      "publishedAt": "2026-08-07T15:58:34Z",
+      "registeredAt": "2026-08-08T01:40:24+09:00",
       "source": "search",
       "tags": [
         "スコア大会",
