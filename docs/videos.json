@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-09T19:31:46+09:00",
+  "updated": "2026-08-09T20:19:43+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -36889,6 +36889,20 @@
         "第583回"
       ],
       "status": "確認済み",
+      "note": ""
+    },
+    {
+      "videoId": "7WDO4Inl7z8",
+      "title": "【ゴ魔乙】ミッドサマーメモリーズ～恋人たちの海上警護～ イベントストーリー 1話～5話",
+      "channel": "Takuma Oga",
+      "description": "ゴシックは魔法乙女（ごまおつ）\nイベント【ミッドサマーメモリーズ～恋人たちの海上警護～】\n#ゴ魔乙 #ごまおつ \nhttps://gomaotsu.jp",
+      "publishedAt": "2026-08-09T10:23:38Z",
+      "registeredAt": "2026-08-09T20:19:43+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
       "note": ""
     }
   ]
