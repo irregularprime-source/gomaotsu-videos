@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-12T03:59:37+09:00",
+  "updated": "2026-08-12T06:34:37+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -37127,6 +37127,22 @@
       "publishedAt": "2026-08-11T17:09:56Z",
       "registeredAt": "2026-08-12T03:59:37+09:00",
       "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第584回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "7jR7DYZZKl4",
+      "title": "ゴ魔乙【プレイ動画】第584回スコア大会とりあえず204",
+      "channel": "もろろさん",
+      "description": "",
+      "publishedAt": "2026-08-11T20:54:09Z",
+      "registeredAt": "2026-08-12T06:34:37+09:00",
+      "source": "search",
       "tags": [
         "スコア大会",
         "スコア大会(週末)",
