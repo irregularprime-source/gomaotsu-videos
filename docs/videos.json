@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-12T00:48:50+09:00",
+  "updated": "2026-08-12T01:45:13+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -37087,6 +37087,34 @@
       "source": "search",
       "tags": [
         "ギルドバトル(イベント)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "_Xw4yM0hRYs",
+      "title": "ゴ魔乙584とりあえず",
+      "channel": "もろろさん",
+      "description": "",
+      "publishedAt": "2026-08-11T16:26:27Z",
+      "registeredAt": "2026-08-12T01:45:13+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "xRjaYUtpmME",
+      "title": "ゴ魔乙584とりあえず",
+      "channel": "もろろさん",
+      "description": "",
+      "publishedAt": "2026-08-11T16:11:04Z",
+      "registeredAt": "2026-08-12T01:45:13+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
       ],
       "status": "自動分類",
       "note": ""
