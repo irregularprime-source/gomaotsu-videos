@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-11T00:49:13+09:00",
+  "updated": "2026-08-11T14:46:19+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -37029,6 +37029,20 @@
       "source": "search",
       "tags": [
         "アリーナ"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "jq-WpGsFbTg",
+      "title": "ゴ魔乙　ギルドイベント「ゴシックマーチ」20260810風有利　break",
+      "channel": "-XperiArk-P",
+      "description": "ボス凸128178→208316\n割と忙しいステージだった",
+      "publishedAt": "2026-08-11T05:35:39Z",
+      "registeredAt": "2026-08-11T14:46:19+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(イベント)"
       ],
       "status": "自動分類",
       "note": ""
