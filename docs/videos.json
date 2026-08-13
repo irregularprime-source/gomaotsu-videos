@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-13T21:43:23+09:00",
+  "updated": "2026-08-13T23:14:26+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -37450,6 +37450,20 @@
       "source": "search",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "bzMPAYMHVGM",
+      "title": "【ゴ魔乙 プレイ動画】ギルイベゴシックマーチ6 4日目火有利ブレイク 116076/196292",
+      "channel": "sinmoon gmo2",
+      "description": "連爆しながらマイン爆破頑張ってみたけど間違えているっぽい_(:3」∠)_",
+      "publishedAt": "2026-08-13T13:56:53Z",
+      "registeredAt": "2026-08-13T23:14:26+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(イベント)"
       ],
       "status": "自動分類",
       "note": ""
