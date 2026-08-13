@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-13T12:58:49+09:00",
+  "updated": "2026-08-13T14:39:14+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -37376,6 +37376,38 @@
       "source": "search",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "N1wJAPbpjBU",
+      "title": "【ゴ魔乙 プレイ動画】第584回スコア大会予習 hard 235.9M 光ハイパレ単騎 レ範全",
+      "channel": "ぺぺ",
+      "description": "#ごまおつ #ゴ魔乙 #ゴシックは魔法乙女",
+      "publishedAt": "2026-08-13T04:53:24Z",
+      "registeredAt": "2026-08-13T14:39:14+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第584回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "8h1oki46-M8",
+      "title": "【ゴ魔乙 プレイ動画】 第584回スコア大会 hard 231,680,417点 ランク弩S",
+      "channel": "creria",
+      "description": "",
+      "publishedAt": "2026-08-13T04:21:00Z",
+      "registeredAt": "2026-08-13T14:39:14+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第584回"
       ],
       "status": "自動分類",
       "note": ""
