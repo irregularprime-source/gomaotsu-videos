@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-14T17:57:17+09:00",
+  "updated": "2026-08-14T23:08:00+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -37568,6 +37568,20 @@
       "source": "search",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "XYEwzPErLXo",
+      "title": "【ゴ魔乙 プレイ動画】ギルイベゴシックマーチ6 5日目水有利ブレイク 142065/220189",
+      "channel": "sinmoon gmo2",
+      "description": "たまには初心に帰って花に禍レを使ってみる_(:3」∠)_",
+      "publishedAt": "2026-08-14T13:41:43Z",
+      "registeredAt": "2026-08-14T23:08:00+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(イベント)"
       ],
       "status": "自動分類",
       "note": ""
