@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-16T21:35:08+09:00",
+  "updated": "2026-08-17T00:11:11+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -38177,6 +38177,20 @@
         "スコア大会",
         "スコア大会(週末)",
         "第584回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "7NCUbDKXQ3o",
+      "title": "ゴ魔乙　ギルドイベント「ゴシックマーチ」20260815風有利　break",
+      "channel": "-XperiArk-P",
+      "description": "ボス凸123378→205731",
+      "publishedAt": "2026-08-16T15:01:19Z",
+      "registeredAt": "2026-08-17T00:11:11+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(イベント)"
       ],
       "status": "自動分類",
       "note": ""
