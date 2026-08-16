@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-16T14:18:34+09:00",
+  "updated": "2026-08-16T17:15:35+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -38119,6 +38119,48 @@
       "tags": [
         "スコア大会",
         "スコア大会(週末)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "K2FvAfNK6l0",
+      "title": "ゴシックは魔法乙女 ジギタリスとリゾート♡(前半ステージ) Part03",
+      "channel": "山内桜良",
+      "description": "ロロイを投入したけど、NEW RECORDならず･･･。",
+      "publishedAt": "2026-08-16T07:54:01Z",
+      "registeredAt": "2026-08-16T17:15:35+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "hxV0ae5F0ck",
+      "title": "ゴシックは魔法乙女 ジギタリスとリゾート♡(前半ステージ) Part02",
+      "channel": "山内桜良",
+      "description": "Part01と編成を変えずにNEW RECORD♪",
+      "publishedAt": "2026-08-16T07:38:56Z",
+      "registeredAt": "2026-08-16T17:15:35+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "ScJvt_mKAHk",
+      "title": "ゴシックは魔法乙女 ジギタリスとリゾート♡(前半ステージ) Part01",
+      "channel": "山内桜良",
+      "description": "",
+      "publishedAt": "2026-08-16T07:32:56Z",
+      "registeredAt": "2026-08-16T17:15:35+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
       ],
       "status": "自動分類",
       "note": ""
