@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-17T23:11:39+09:00",
+  "updated": "2026-08-17T23:16:57+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -38203,6 +38203,20 @@
         "ギルドバトル(イベント)"
       ],
       "status": "確認済み",
+      "note": ""
+    },
+    {
+      "videoId": "Yc-mavdHFWU",
+      "title": "【ゴ魔乙】ミッドサマーメモリーズ～冥界幻影リゾート～ イベントストーリー 1話～5話",
+      "channel": "Takuma Oga",
+      "description": "ゴシックは魔法乙女（ごまおつ）\nイベント【ミッドサマーメモリーズ～冥界幻影リゾート～】\n#ゴ魔乙 #ごまおつ \nhttps://gomaotsu.jp",
+      "publishedAt": "2026-08-17T13:42:53Z",
+      "registeredAt": "2026-08-17T23:16:57+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
       "note": ""
     }
   ]
