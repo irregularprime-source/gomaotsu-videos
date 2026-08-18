@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-19T01:18:52+09:00",
+  "updated": "2026-08-19T03:35:24+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -38331,6 +38331,22 @@
       "source": "search",
       "tags": [
         "ギルドバトル(通常)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "ZZn8e_UKhmA",
+      "title": "第585回スコア大会 220M HYC-A単騎 オ設置×2 【ゴ魔乙 プレイ動画】",
+      "channel": "フライングエース",
+      "description": "",
+      "publishedAt": "2026-08-18T16:25:54Z",
+      "registeredAt": "2026-08-19T03:35:24+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第585回"
       ],
       "status": "自動分類",
       "note": ""
