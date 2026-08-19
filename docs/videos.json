@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-19T20:36:57+09:00",
+  "updated": "2026-08-19T21:22:08+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -38370,6 +38370,38 @@
         "第585回"
       ],
       "status": "確認済み",
+      "note": ""
+    },
+    {
+      "videoId": "O4AQhU3h8p0",
+      "title": "【ゴ魔乙 プレイ動画】 第585回スコア大会自習 hard 185,422,969点",
+      "channel": "CCT-OER",
+      "description": "",
+      "publishedAt": "2026-08-19T12:11:59Z",
+      "registeredAt": "2026-08-19T21:22:08+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第585回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "6QkUpuEMh8I",
+      "title": "ゴシックは魔法乙女（ごまおつ）第585回スコア大会 hard212,146,835点シャインフレアジーナコレクトランク超ゴ魔乙 #ごまおつ #スコアタhttps://gomaotsu.jp",
+      "channel": "ごるび",
+      "description": "",
+      "publishedAt": "2026-08-19T11:34:17Z",
+      "registeredAt": "2026-08-19T21:22:08+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第585回"
+      ],
+      "status": "自動分類",
       "note": ""
     }
   ]
