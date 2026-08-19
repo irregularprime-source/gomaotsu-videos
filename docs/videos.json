@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-19T21:41:58+09:00",
+  "updated": "2026-08-20T08:13:26+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -38456,6 +38456,22 @@
       "source": "auto",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "46SWsKI7psM",
+      "title": "ゴ魔乙【プレイ動画】第585回スコア大会2.06おく ムリムリ進化論",
+      "channel": "もろろさん",
+      "description": "",
+      "publishedAt": "2026-08-19T22:17:05Z",
+      "registeredAt": "2026-08-20T08:13:26+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第585回"
       ],
       "status": "自動分類",
       "note": ""
