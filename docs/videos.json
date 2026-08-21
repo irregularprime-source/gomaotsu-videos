@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-21T19:18:57+09:00",
+  "updated": "2026-08-21T21:23:38+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -38608,6 +38608,22 @@
       "source": "search",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "fBVRH_3vUcY",
+      "title": "【ゴ魔乙 プレイ動画】 第585回スコア大会 hard 210,719,513点",
+      "channel": "CCT-OER",
+      "description": "",
+      "publishedAt": "2026-08-21T12:11:28Z",
+      "registeredAt": "2026-08-21T21:23:38+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第585回"
       ],
       "status": "自動分類",
       "note": ""
