@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-24T01:12:47+09:00",
+  "updated": "2026-08-24T03:26:03+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -39155,6 +39155,34 @@
       "publishedAt": "2026-08-23T15:19:40Z",
       "registeredAt": "2026-08-24T01:12:47+09:00",
       "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "FB3qhFA2hCw",
+      "title": "(都会の農家さん用その2)イドメタワー hard 06F",
+      "channel": "ぺぺ",
+      "description": "#ごまおつ #ゴ魔乙 #ゴシックは魔法乙女",
+      "publishedAt": "2026-08-23T14:42:29Z",
+      "registeredAt": "2026-08-24T03:26:03+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "ueVZ38kDiGU",
+      "title": "(都会の農家さん用)イドメタワー hard 06F",
+      "channel": "ぺぺ",
+      "description": "#ごまおつ #ゴ魔乙 #ゴシックは魔法乙女",
+      "publishedAt": "2026-08-23T14:30:29Z",
+      "registeredAt": "2026-08-24T03:26:03+09:00",
+      "source": "auto",
       "tags": [
         "未分類"
       ],
