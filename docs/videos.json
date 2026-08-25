@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-25T03:37:17+09:00",
+  "updated": "2026-08-25T18:24:00+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -39201,6 +39201,21 @@
         "スコア大会",
         "スコア大会(週末)",
         "第585回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "OSIJv8xGVZc",
+      "title": "【ゴ魔乙 プレイ動画】 団体戦予選ステージ hard 210,666,417点 ランク弩S",
+      "channel": "ごるび",
+      "description": "",
+      "publishedAt": "2026-08-25T09:18:39Z",
+      "registeredAt": "2026-08-25T18:24:00+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "リアルスコア大会"
       ],
       "status": "自動分類",
       "note": ""
