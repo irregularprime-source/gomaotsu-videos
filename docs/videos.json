@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-26T01:23:32+09:00",
+  "updated": "2026-08-26T03:36:36+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -39260,6 +39260,38 @@
       "source": "search",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "LgQMgD6KMRk",
+      "title": "第586回スコア大会 283M シャインフレア NEO 範範レ 【ゴ魔乙 プレイ動画】",
+      "channel": "フライングエース",
+      "description": "",
+      "publishedAt": "2026-08-25T17:48:16Z",
+      "registeredAt": "2026-08-26T03:36:36+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第586回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "CriHr5spJr4",
+      "title": "【ﾉｳｼ黄金編成♪ｽﾃ構成ｶｸﾆﾝ】第586回スコア大会 hard 186,990,505点 ランク弩S【ゴ魔乙 プレイ動画】",
+      "channel": "ゴ魔乙コルナ",
+      "description": "予習下見のみ！脳死黄金編成（ヘルギガmk2/アンドロメダ）\nゴシックは魔法乙女（ごまおつ）\n第586回スコア大会 hard\n186,990,505点\nヘルギガントmk2\nアンドロメダ\nランク弩S\n#ゴ魔乙 #ごまおつ #スコアタ\nhttps://gomaotsu.jp",
+      "publishedAt": "2026-08-25T17:21:27Z",
+      "registeredAt": "2026-08-26T03:36:36+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第586回"
       ],
       "status": "自動分類",
       "note": ""
