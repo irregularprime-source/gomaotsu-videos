@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-26T18:29:42+09:00",
+  "updated": "2026-08-26T21:27:42+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -39372,6 +39372,22 @@
         "スコア大会",
         "スコア大会(週末)",
         "第571回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "r3uQ_kfYmJ4",
+      "title": "【ゴ魔乙 プレイ動画】 第586回スコア大会自習 hard 265,845,090点",
+      "channel": "CCT-OER",
+      "description": "",
+      "publishedAt": "2026-08-26T12:00:18Z",
+      "registeredAt": "2026-08-26T21:27:42+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第586回"
       ],
       "status": "自動分類",
       "note": ""
