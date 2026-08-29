@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-30T05:33:59+09:00",
+  "updated": "2026-08-30T07:54:24+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -40086,6 +40086,22 @@
       "source": "search",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "f_R_oirqdBE",
+      "title": "【ゴ魔乙】 第586回スコア大会 302M 闇HYC/NEO ババレ",
+      "channel": "たけのこ",
+      "description": "",
+      "publishedAt": "2026-08-29T20:50:01Z",
+      "registeredAt": "2026-08-30T07:54:24+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第586回"
       ],
       "status": "自動分類",
       "note": ""
