@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-02T03:58:09+09:00",
+  "updated": "2026-09-02T05:34:41+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -40299,6 +40299,38 @@
       "publishedAt": "2026-09-01T17:43:24Z",
       "registeredAt": "2026-09-02T03:58:09+09:00",
       "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第587回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "JaubC13yuoc",
+      "title": "第587回スコア大会 18億 剣気 ジーナ 爆バラ 【ゴ魔乙 プレイ動画】",
+      "channel": "フライングエース",
+      "description": "",
+      "publishedAt": "2026-09-01T17:57:30Z",
+      "registeredAt": "2026-09-02T05:34:41+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第587回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "HBf4leLxZDU",
+      "title": "第587回スコア大会  16億 ヘーゲルMk3 ジーナ バレガ×２ ラブマ 【ゴ魔乙 プレイ動画】",
+      "channel": "フライングエース",
+      "description": "",
+      "publishedAt": "2026-09-01T17:43:37Z",
+      "registeredAt": "2026-09-02T05:34:41+09:00",
+      "source": "auto",
       "tags": [
         "スコア大会",
         "スコア大会(週末)",
