@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-02T00:17:21+09:00",
+  "updated": "2026-09-02T01:04:29+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -40251,6 +40251,38 @@
       "publishedAt": "2026-09-01T14:54:05Z",
       "registeredAt": "2026-09-02T00:17:21+09:00",
       "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第587回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "Mu-Sp4w8zcc",
+      "title": "【ゴ魔乙 プレイ動画】第587回スコア大会予習 death 早回し",
+      "channel": "ぺぺ",
+      "description": "#ごまおつ #ゴ魔乙 #ゴシックは魔法乙女",
+      "publishedAt": "2026-09-01T15:23:34Z",
+      "registeredAt": "2026-09-02T01:04:29+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第587回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "aDaixkz-efM",
+      "title": "【ゴ魔乙 プレイ動画】第587回スコア大会予習 death 遅回し",
+      "channel": "ぺぺ",
+      "description": "#ごまおつ #ゴ魔乙 #ゴシックは魔法乙女",
+      "publishedAt": "2026-09-01T15:17:48Z",
+      "registeredAt": "2026-09-02T01:04:29+09:00",
+      "source": "auto",
       "tags": [
         "スコア大会",
         "スコア大会(週末)",
