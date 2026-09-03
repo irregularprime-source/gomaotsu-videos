@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-03T00:33:27+09:00",
+  "updated": "2026-09-03T12:00:12+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -40493,6 +40493,22 @@
       "source": "search",
       "tags": [
         "ギルドバトル(通常)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "LiuuVnF-_Ng",
+      "title": "被弾【ゴ魔乙 プレイ動画】第587回スコア大会予習 death 1989M 水シャイン/ジーナ 爆バラ",
+      "channel": "ぺぺ",
+      "description": "#ごまおつ #ゴ魔乙 #ゴシックは魔法乙女",
+      "publishedAt": "2026-09-03T02:43:31Z",
+      "registeredAt": "2026-09-03T12:00:12+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第587回"
       ],
       "status": "自動分類",
       "note": ""
