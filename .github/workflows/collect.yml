@@ -30,9 +30,14 @@ jobs:
             exit 0
           fi
           added=$(git diff docs/videos.json | grep -c '^+ *"videoId"')
+
+          # 検索エンジン・AIクローラー向けの静的索引を videos.json から作り直す。
+          # （下の rebase リトライ後は作り直していないが、その場合も次回実行で追いつく）
+          python scripts/build_static.py
+
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/videos.json
+          git add docs/videos.json docs/index.html docs/sitemap.xml
           git commit -m "自動収集: 動画${added}件を追加"
 
           # push失敗時にpull --rebaseしてリトライ

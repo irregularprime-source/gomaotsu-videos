@@ -16,9 +16,16 @@ for /f "delims=" %%b in ('git rev-parse --abbrev-ref HEAD') do set BRANCH=%%b
 if not "%BRANCH%"=="main" goto :stuck
 
 echo 対象ファイル: docs/videos.json, docs/tags.json, data/channels.json
+echo 　　（あわせて docs/index.html と docs/sitemap.xml を自動で作り直します）
 echo それ以外のファイルは保存されません。
 echo.
-git add docs/videos.json docs/tags.json data/channels.json
+echo 検索・AI向けの索引を作り直しています...
+set "PYCMD=python"
+where python >nul 2>nul || set "PYCMD=py"
+%PYCMD% scripts/build_static.py
+if errorlevel 1 goto :buildfail
+echo.
+git add docs/videos.json docs/tags.json data/channels.json docs/index.html docs/sitemap.xml
 git diff --cached --quiet && echo 変更はありませんでした。保存の必要はありません。 && pause && goto :eof
 echo 変更をコミットしています...
 git commit -m "手動更新 %date% %time%"
@@ -32,6 +39,15 @@ git push
 if errorlevel 1 goto :pushfail
 echo.
 echo 完了しました。数分後にサイトへ反映されます。
+pause
+goto :eof
+
+:buildfail
+echo.
+echo [中断] 検索・AI向けの索引の作り直しに失敗しました。
+echo Python が入っていないか、scripts/build_static.py で問題が起きています。
+echo 編集内容はファイルに残っているので失われていません。まだ何も保存していません。
+echo この画面の内容をそのまま伝えて、復旧を依頼してください。
 pause
 goto :eof
 
