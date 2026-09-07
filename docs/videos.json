@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-06T14:16:46+09:00",
+  "updated": "2026-09-07T11:59:02+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -41270,6 +41270,38 @@
       "source": "search",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "izOxrI09eLc",
+      "title": "【ゴ魔乙 プレイ動画】第587回スコア大会復習 death 2255M 剣気/ジーナ 爆バラ",
+      "channel": "ぺぺ",
+      "description": "剣気の初使用\n\n#ごまおつ #ゴ魔乙 #ゴシックは魔法乙女",
+      "publishedAt": "2026-09-07T02:22:09Z",
+      "registeredAt": "2026-09-07T11:59:02+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第587回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "nYaeOyquoqY",
+      "title": "⚔️初剣氣【ゴ魔乙】第587回スコア大会　剣氣&ジーナ　2722M 爆バラ",
+      "channel": "T3-神威",
+      "description": "付け焼き刃ではあるが、パクったやつをどれだけブラッシュアップできるか",
+      "publishedAt": "2026-09-07T01:27:09Z",
+      "registeredAt": "2026-09-07T11:59:02+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第587回"
       ],
       "status": "自動分類",
       "note": ""
