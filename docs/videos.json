@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-07T20:37:10+09:00",
+  "updated": "2026-09-08T01:17:18+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -41325,6 +41325,20 @@
       "source": "auto",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "KGLKq2Wi744",
+      "title": "ゴ魔乙　実験的動画　ギルバト9/7 3色easy インヴォーク試運転",
+      "channel": "ルヴェーリエ",
+      "description": "",
+      "publishedAt": "2026-09-07T13:35:27Z",
+      "registeredAt": "2026-09-08T01:17:18+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(通常)"
       ],
       "status": "自動分類",
       "note": ""
