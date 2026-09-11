@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-11T23:40:24+09:00",
+  "updated": "2026-09-12T00:53:05+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -41682,6 +41682,54 @@
       "source": "search",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "TA_f-q0s5vc",
+      "title": "【ゴ魔乙 プレイ動画】 第588回スコア大会 normal 75,789,149点",
+      "channel": "CCT-OER",
+      "description": "",
+      "publishedAt": "2026-09-11T15:38:46Z",
+      "registeredAt": "2026-09-12T00:53:05+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第588回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "ukDWKQ9Po_M",
+      "title": "【ゴ魔乙 プレイ動画】 第588回スコア大会 normal 68,254,010点 ランク超S【予習】",
+      "channel": "御陵 樹",
+      "description": "ゴシックは魔法乙女（ごまおつ） \n第588回スコア大会 normal\n68,254,010点\nヘルギガントmk2\nヘルハウンド\nランク超S \n#ゴ魔乙 #ごまおつ #スコアタ \nhttps://gomaotsu.jp",
+      "publishedAt": "2026-09-11T15:50:29Z",
+      "registeredAt": "2026-09-12T00:53:05+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第588回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "fIuuhRDE6c4",
+      "title": "[ごまおつ]9/12第588回スコア大会[ゴシックは魔法乙女][Vtuber]",
+      "channel": "《komaki》",
+      "description": "来週Twitchテスト配信とかはじめます\n\nTwitch: https://www.twitch.tv/komaki1122\nX:https://x.com/komaki1122\n\nコメント読み上げはワンコメを使用してます。\nhttps://onecomme.com/\n\nvtuber,game,実況,ゴシックは魔法乙女,ごまおつ,ゴ魔乙,ゴシック道,シューティング,STG",
+      "publishedAt": "2026-09-11T15:03:41Z",
+      "registeredAt": "2026-09-12T00:53:05+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第588回"
       ],
       "status": "自動分類",
       "note": ""
