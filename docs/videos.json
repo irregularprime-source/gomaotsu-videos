@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-13T20:06:46+09:00",
+  "updated": "2026-09-13T21:54:37+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -42224,6 +42224,36 @@
       "tags": [
         "スコア大会",
         "スコア大会(週末)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "K7L78cs9II4",
+      "title": "【ゴ魔乙 プレイ動画】アリーナbattle65 サンライズ+スキルガード",
+      "channel": "らりるれろ",
+      "description": "",
+      "publishedAt": "2026-09-13T10:33:26Z",
+      "registeredAt": "2026-09-13T21:54:37+09:00",
+      "source": "search",
+      "tags": [
+        "アリーナ"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "4kNCPR2_zTg",
+      "title": "【ゴ魔乙 プレイ動画】 第588回スコア大会 normal 59,101,148点 ランク超S",
+      "channel": "knm.ymkw.",
+      "description": "",
+      "publishedAt": "2026-09-13T09:05:30Z",
+      "registeredAt": "2026-09-13T21:54:37+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第588回"
       ],
       "status": "自動分類",
       "note": ""
