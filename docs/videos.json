@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-15T22:57:01+09:00",
+  "updated": "2026-09-16T01:17:28+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -42336,6 +42336,22 @@
       "source": "search",
       "tags": [
         "ギルドバトル(イベント)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "reVuSbT3LQk",
+      "title": "[ごまおつ]9/15第589回スコア大会予習ステージ攻略[ゴシックは魔法乙女][Vtuber]",
+      "channel": "《komaki》",
+      "description": "久しぶりに予定ない休日。\n\nTwitch: https://www.twitch.tv/komaki1122\nX:https://x.com/komaki1122\n\nコメント読み上げはワンコメを使用してます。\nhttps://onecomme.com/\n\nvtuber,game,実況,ゴシックは魔法乙女,ごまおつ,ゴ魔乙,ゴシック道,シューティング,STG",
+      "publishedAt": "2026-09-15T14:53:06Z",
+      "registeredAt": "2026-09-16T01:17:28+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第589回"
       ],
       "status": "自動分類",
       "note": ""
