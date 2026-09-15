@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-16T01:17:28+09:00",
+  "updated": "2026-09-16T02:52:53+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -42348,6 +42348,50 @@
       "publishedAt": "2026-09-15T14:53:06Z",
       "registeredAt": "2026-09-16T01:17:28+09:00",
       "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第589回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "oU2SncL8_QY",
+      "title": "ゴ魔乙　ギルドイベント「ゴシックマーチ」20260915闇有利　break",
+      "channel": "-XperiArk-P",
+      "description": "ボス凸149745→229334（hard6位）\nボスの弱点玉が暴れたので若干スコア落ち…\n道中のマインを全部カゴ割りで取るの難しすぎる",
+      "publishedAt": "2026-09-15T17:30:50Z",
+      "registeredAt": "2026-09-16T02:52:53+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(イベント)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "30ESgKsyf18",
+      "title": "ゴ魔乙　ギルドイベント「ゴシックマーチ」20260914光有利　break",
+      "channel": "-XperiArk-P",
+      "description": "ボス凸119979→204926（hard34位）",
+      "publishedAt": "2026-09-15T17:21:55Z",
+      "registeredAt": "2026-09-16T02:52:53+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(イベント)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "ptwjT4g_hXY",
+      "title": "第589回スコア大会 115M mk2 NEO バ爆バ 【ゴ魔乙 プレイ動画】",
+      "channel": "フライングエース",
+      "description": "",
+      "publishedAt": "2026-09-15T17:22:01Z",
+      "registeredAt": "2026-09-16T02:52:53+09:00",
+      "source": "search",
       "tags": [
         "スコア大会",
         "スコア大会(週末)",
