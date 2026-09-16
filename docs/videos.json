@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-17T01:10:06+09:00",
+  "updated": "2026-09-17T05:35:56+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -42598,6 +42598,22 @@
       "source": "auto",
       "tags": [
         "アリーナ"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "v_BD2hGRWiI",
+      "title": "第589回スコア大会 126M mk2 アストラルゲート 特サバ 【ゴ魔乙 プレイ動画】",
+      "channel": "フライングエース",
+      "description": "",
+      "publishedAt": "2026-09-16T17:50:31Z",
+      "registeredAt": "2026-09-17T05:35:56+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第589回"
       ],
       "status": "自動分類",
       "note": ""
