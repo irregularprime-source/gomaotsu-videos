@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-16T08:17:12+09:00",
+  "updated": "2026-09-16T19:52:17+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -42472,6 +42472,22 @@
       "publishedAt": "2026-09-15T21:12:51Z",
       "registeredAt": "2026-09-16T08:17:12+09:00",
       "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第589回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "qFEIBReb9O4",
+      "title": "【#ゴ魔乙 プレイ動画】589回スコア大会予習 光で114M mk2/NEO BABA爆",
+      "channel": "七瀬九鷹",
+      "description": "#ゲーム #ゴ魔乙 #ごまおつ #ごまビデオ",
+      "publishedAt": "2026-09-16T09:25:30Z",
+      "registeredAt": "2026-09-16T19:52:17+09:00",
+      "source": "auto",
       "tags": [
         "スコア大会",
         "スコア大会(週末)",
