@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-17T22:54:28+09:00",
+  "updated": "2026-09-18T01:16:09+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -42775,6 +42775,20 @@
       "publishedAt": "2026-09-17T10:47:04Z",
       "registeredAt": "2026-09-17T22:54:28+09:00",
       "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "Dg-tDBNQgJk",
+      "title": "[ごまおつ]9/18配信テストとオンゲキコラボ眺めます[ゴシックは魔法乙女][Vtuber]",
+      "channel": "《komaki》",
+      "description": "Twitch配信にあわせて設定・環境変わったのでテストです\n\nTwitch: https://www.twitch.tv/komaki1122\nX:https://x.com/komaki1122\n\nコメント読み上げはワンコメを使用してます。\nhttps://onecomme.com/\n\nvtuber,game,実況,ゴシックは魔法乙女,ごまおつ,ゴ魔乙,ゴシック道,シューティング,STG",
+      "publishedAt": "2026-09-17T15:01:24Z",
+      "registeredAt": "2026-09-18T01:16:09+09:00",
+      "source": "auto",
       "tags": [
         "未分類"
       ],
