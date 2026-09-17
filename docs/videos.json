@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-18T01:16:09+09:00",
+  "updated": "2026-09-18T02:50:13+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -42791,6 +42791,22 @@
       "source": "auto",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "acECb-FqGMQ",
+      "title": "第589回スコア大会 134M mk2 アストラルゲート 特サバ 【ゴ魔乙 プレイ動画】",
+      "channel": "フライングエース",
+      "description": "",
+      "publishedAt": "2026-09-17T16:46:13Z",
+      "registeredAt": "2026-09-18T02:50:13+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第589回"
       ],
       "status": "自動分類",
       "note": ""
