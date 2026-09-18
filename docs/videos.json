@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-18T21:27:25+09:00",
+  "updated": "2026-09-19T00:51:25+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -42855,6 +42855,34 @@
         "スコア大会",
         "スコア大会(週末)",
         "第589回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "r_9CZeUo0TY",
+      "title": "【ゴ魔乙 プレイ動画】ギルイベゴシックマーチ7 5日目風有利ブレイク 121047/206846",
+      "channel": "sinmoon gmo2",
+      "description": "大型になるだけダメージを与えないで連爆するのがムズイ_(:3」∠)_",
+      "publishedAt": "2026-09-18T13:41:28Z",
+      "registeredAt": "2026-09-19T00:51:25+09:00",
+      "source": "auto",
+      "tags": [
+        "ギルドバトル(イベント)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "WQDxhtIEcuQ",
+      "title": "ゴ魔乙　ギルドイベント「ゴシックマーチ」20260917水有利　break",
+      "channel": "-XperiArk-P",
+      "description": "ボス凸137409→218138（Hard13位）",
+      "publishedAt": "2026-09-18T15:00:29Z",
+      "registeredAt": "2026-09-19T00:51:25+09:00",
+      "source": "auto",
+      "tags": [
+        "ギルドバトル(イベント)"
       ],
       "status": "自動分類",
       "note": ""
