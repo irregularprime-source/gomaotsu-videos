@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-20T22:17:09+09:00",
+  "updated": "2026-09-21T00:28:25+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -43575,6 +43575,48 @@
       "source": "search",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "ASspwkfV1mI",
+      "title": "【ゴ魔乙 プレイ動画】ギルイベゴシックマーチ7 7日目闇有利ブレイク 104202/185542",
+      "channel": "sinmoon gmo2",
+      "description": "ツボで無理やり捻り出したが・・・わかラナンちゃん_(:3」∠)_",
+      "publishedAt": "2026-09-20T13:39:04Z",
+      "registeredAt": "2026-09-21T00:28:25+09:00",
+      "source": "auto",
+      "tags": [
+        "ギルドバトル(イベント)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "GWT5OVdgCC4",
+      "title": "ゴ魔乙　ギルドイベント「ゴシックマーチ」20260920闇有利　break",
+      "channel": "-XperiArk-P",
+      "description": "ボス凸113514→198530（Hard4位）\n箱地帯の配置はギルイベで時々見かけるタイプのヤツ",
+      "publishedAt": "2026-09-20T14:45:22Z",
+      "registeredAt": "2026-09-21T00:28:25+09:00",
+      "source": "auto",
+      "tags": [
+        "ギルドバトル(イベント)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "o0XhgqX1q4g",
+      "title": "ゴ魔乙　ギルドイベント「ゴシックマーチ」20260919光有利　break",
+      "channel": "-XperiArk-P",
+      "description": "ボス凸106164→191153（Hard63位）\n最後までよく分からないステージでした…",
+      "publishedAt": "2026-09-20T13:52:08Z",
+      "registeredAt": "2026-09-21T00:28:25+09:00",
+      "source": "auto",
+      "tags": [
+        "ギルドバトル(イベント)"
       ],
       "status": "自動分類",
       "note": ""
