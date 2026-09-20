@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-21T00:28:25+09:00",
+  "updated": "2026-09-21T02:05:41+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -43617,6 +43617,34 @@
       "source": "auto",
       "tags": [
         "ギルドバトル(イベント)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "HUQzqxMdyXQ",
+      "title": "怨撃 ノーダメ 《ゴ魔乙》",
+      "channel": "えふりし夜",
+      "description": "できるだけ楽に攻略",
+      "publishedAt": "2026-09-20T13:31:29Z",
+      "registeredAt": "2026-09-21T02:05:41+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "shb5rexHgCY",
+      "title": "【#ゴ魔乙アリーナ部】オンゲキって何ですか？【アリーナ 66予習】",
+      "channel": "nyanmos",
+      "description": "ゴシックは魔法乙女（ごまおつ）\n【おしながき】\n・アリーナ\n\n音ゲーとかわからなんちゃん\n\n※マイクオフ\n※チャットは別端末で拾ってるけど、あまり反応出来ないかも\n\n#ゴ魔乙 #ごまおつ #ゴ魔乙アリーナ部\nhttps://gomaotsu.jp",
+      "publishedAt": "2026-09-20T13:28:23Z",
+      "registeredAt": "2026-09-21T02:05:41+09:00",
+      "source": "search",
+      "tags": [
+        "アリーナ"
       ],
       "status": "自動分類",
       "note": ""
