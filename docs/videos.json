@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-20T06:54:10+09:00",
+  "updated": "2026-09-20T11:14:16+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -43515,6 +43515,20 @@
       "description": "",
       "publishedAt": "2026-09-19T19:14:33Z",
       "registeredAt": "2026-09-20T06:54:10+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "u3tjYvbiGu4",
+      "title": "[ゴ魔乙　プレイ動画] 怨撃ステージの参考にしてみてください。",
+      "channel": "深景",
+      "description": "",
+      "publishedAt": "2026-09-20T01:24:52Z",
+      "registeredAt": "2026-09-20T11:14:16+09:00",
       "source": "search",
       "tags": [
         "未分類"
