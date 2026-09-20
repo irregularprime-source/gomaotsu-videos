@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-20T11:14:16+09:00",
+  "updated": "2026-09-20T12:29:34+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -43532,6 +43532,21 @@
       "source": "search",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "Dhbe5AYt7-Q",
+      "title": "【#ゴ魔乙】久々の今週のドヨアタ反省会【ゴシックは魔法乙女】",
+      "channel": "魔剣ルシエド_影森狼木",
+      "description": "今週の感想：589回 hardアタ　圧倒的持ち物検査　バリアアタックでくるみを星に\n「わんコメ」https://onecomme.com",
+      "publishedAt": "2026-09-20T03:24:37Z",
+      "registeredAt": "2026-09-20T12:29:34+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)"
       ],
       "status": "自動分類",
       "note": ""
