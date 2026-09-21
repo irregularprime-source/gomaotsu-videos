@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-21T13:20:05+09:00",
+  "updated": "2026-09-21T20:22:22+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -43658,6 +43658,36 @@
         "イベントステージ"
       ],
       "status": "確認済み",
+      "note": ""
+    },
+    {
+      "videoId": "1ne6W1ZvzXM",
+      "title": "【#ゴ魔乙 プレイ動画】 第589回スコア大会 闇hard 1.41億点 ランク弩S",
+      "channel": "SHINTOBA gomaotsu",
+      "description": "ゴシックは魔法乙女（ごまおつ）\n第589回スコア大会 闇hard\n1.41億点\nヘルギガントmk2\nOエッタフローラ\nサーチ連射1812倍13秒\nバリアアタック1300倍11秒\nバリアアタック1200倍10秒\nランク弩S\n#ゴ魔乙 #ごまおつ #スコアタ\nhttps://gomaotsu.jp",
+      "publishedAt": "2026-09-21T07:38:21Z",
+      "registeredAt": "2026-09-21T20:22:22+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第589回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "5VxUbdXoTSA",
+      "title": "【ゴ魔乙 プレイ動画】オンゲキRe:Freshコラボイベント前半 ボーナスステージ",
+      "channel": "Takuma Oga",
+      "description": "ゴシックは魔法乙女（ごまおつ）\nオンゲキRe:Freshコラボイベント【旋律の弾幕～響け！乙女たちのシューターフェス～】前半\nボーナスステージ\n#ゴ魔乙 #ごまおつ \nhttps://gomaotsu.jp",
+      "publishedAt": "2026-09-21T06:29:53Z",
+      "registeredAt": "2026-09-21T20:22:22+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
       "note": ""
     }
   ]
