@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-24T21:59:55+09:00",
+  "updated": "2026-09-25T01:31:39+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -44118,6 +44118,20 @@
       "publishedAt": "2026-09-24T09:28:58Z",
       "registeredAt": "2026-09-24T21:59:55+09:00",
       "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "Q2xMkQOy9_U",
+      "title": "🟨怨撃ステージ無被弾クリア・皇城セツナ　【ゴ魔乙 プレイ動画】 怨撃 hard 80,031,808点",
+      "channel": "SHINTOBA gomaotsu",
+      "description": "初無被弾クリア(挑戦30回目くらい？)\n\nゴシックは魔法乙女（ごまおつ）\n怨撃 hard\n80,031,808点\n#ゴ魔乙 #ごまおつ\nhttps://gomaotsu.jp",
+      "publishedAt": "2026-09-24T14:23:23Z",
+      "registeredAt": "2026-09-25T01:31:39+09:00",
+      "source": "auto",
       "tags": [
         "未分類"
       ],
