@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-25T17:18:15+09:00",
+  "updated": "2026-09-25T20:11:10+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -44148,6 +44148,22 @@
       "source": "search",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "LW1KlUitjgw",
+      "title": "【#ゴ魔乙 プレイ動画】590回スコア大会予習 ボス前201M 解説動画",
+      "channel": "七瀬九鷹",
+      "description": "#ゲーム #ゴ魔乙 #ごまおつ #ごまビデオ",
+      "publishedAt": "2026-09-25T10:35:10Z",
+      "registeredAt": "2026-09-25T20:11:10+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第590回"
       ],
       "status": "自動分類",
       "note": ""
