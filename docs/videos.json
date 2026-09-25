@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-25T01:31:39+09:00",
+  "updated": "2026-09-25T17:18:15+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -44132,6 +44132,20 @@
       "publishedAt": "2026-09-24T14:23:23Z",
       "registeredAt": "2026-09-25T01:31:39+09:00",
       "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "elNXA7uFw98",
+      "title": "ゴ魔乙590　目標スコア",
+      "channel": "もろろさん",
+      "description": "",
+      "publishedAt": "2026-09-25T07:58:06Z",
+      "registeredAt": "2026-09-25T17:18:15+09:00",
+      "source": "search",
       "tags": [
         "未分類"
       ],
