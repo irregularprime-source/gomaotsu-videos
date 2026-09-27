@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-27T19:48:03+09:00",
+  "updated": "2026-09-27T20:18:34+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -44814,6 +44814,21 @@
         "オンゲキコラボ"
       ],
       "status": "確認済み",
+      "note": ""
+    },
+    {
+      "videoId": "-u87tOaMjl8",
+      "title": "【#ゴ魔乙】 今週のドヨアタ反省会【ゴシックは魔法乙女】",
+      "channel": "魔剣ルシエド_影森狼木",
+      "description": "今週の感想：590回 hardアタ　砂丘とスパボムで王冠がっぽがぽ\n「わんコメ」https://onecomme.com",
+      "publishedAt": "2026-09-27T10:09:39Z",
+      "registeredAt": "2026-09-27T20:18:34+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)"
+      ],
+      "status": "自動分類",
       "note": ""
     }
   ]
