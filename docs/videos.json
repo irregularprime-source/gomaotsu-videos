@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-30T22:08:32+09:00",
+  "updated": "2026-10-01T02:45:58+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -45434,6 +45434,22 @@
       "publishedAt": "2026-09-30T11:03:36Z",
       "registeredAt": "2026-09-30T22:08:32+09:00",
       "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第591回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "w2tWpGdSPnI",
+      "title": "第591回スコア大会 363M mk2 パラドックス サレラ【ゴ魔乙 プレイ動画】",
+      "channel": "フライングエース",
+      "description": "",
+      "publishedAt": "2026-09-30T15:17:07Z",
+      "registeredAt": "2026-10-01T02:45:58+09:00",
+      "source": "auto",
       "tags": [
         "スコア大会",
         "スコア大会(週末)",
