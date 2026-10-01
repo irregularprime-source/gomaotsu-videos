@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-01T13:15:24+09:00",
+  "updated": "2026-10-01T21:28:20+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -45557,6 +45557,66 @@
       "tags": [
         "スコア大会",
         "スコア大会(イベント)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "R11DV2xAjqU",
+      "title": "【ゴ魔乙 プレイ動画】 第591回スコア大会 hard 374,399,624点",
+      "channel": "CCT-OER",
+      "description": "",
+      "publishedAt": "2026-10-01T11:52:06Z",
+      "registeredAt": "2026-10-01T21:28:20+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第591回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "eeBucbh2Xs0",
+      "title": "【ゴ魔乙プレイ動画】ブーストダッシュ",
+      "channel": "安満沢ライナー",
+      "description": "3回目",
+      "publishedAt": "2026-10-01T10:07:44Z",
+      "registeredAt": "2026-10-01T21:28:20+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "d2_Ac5eTF3Q",
+      "title": "【ゴ魔乙プレイ動画】ブーストダッシュ",
+      "channel": "安満沢ライナー",
+      "description": "2回目",
+      "publishedAt": "2026-10-01T10:02:30Z",
+      "registeredAt": "2026-10-01T21:28:20+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "fTwFowzyPnQ",
+      "title": "【ゴ魔乙プレイ動画】1日1回!SPステージ!",
+      "channel": "安満沢ライナー",
+      "description": "2回目",
+      "publishedAt": "2026-10-01T09:55:38Z",
+      "registeredAt": "2026-10-01T21:28:20+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第1回"
       ],
       "status": "自動分類",
       "note": ""
