@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-02T09:18:16+09:00",
+  "updated": "2026-10-02T20:54:39+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -45839,6 +45839,22 @@
       "source": "search",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "kGolJzm2kQ4",
+      "title": "第591回スコア大会 376M mk2 パラドックス サレラ【ゴ魔乙 プレイ動画】",
+      "channel": "フライングエース",
+      "description": "",
+      "publishedAt": "2026-10-02T09:45:19Z",
+      "registeredAt": "2026-10-02T20:54:39+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第591回"
       ],
       "status": "自動分類",
       "note": ""
