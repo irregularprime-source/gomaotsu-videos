@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-04T11:13:07+09:00",
+  "updated": "2026-10-04T20:48:21+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -46825,6 +46825,21 @@
         "スコア大会",
         "スコア大会(週末)",
         "第591回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "oNQdmOEwS9s",
+      "title": "【#ゴ魔乙】 今週のドヨアタ反省会【ゴシックは魔法乙女】",
+      "channel": "魔剣ルシエド_影森狼木",
+      "description": "今週の感想：591回 hardアタ　大型で王冠稼ぎとな？\n「わんコメ」https://onecomme.com",
+      "publishedAt": "2026-10-04T09:55:44Z",
+      "registeredAt": "2026-10-04T20:48:21+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)"
       ],
       "status": "自動分類",
       "note": ""
