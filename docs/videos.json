@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-04T05:36:22+09:00",
+  "updated": "2026-10-04T11:13:07+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -46749,6 +46749,78 @@
       "publishedAt": "2026-10-03T16:02:24Z",
       "registeredAt": "2026-10-04T05:36:22+09:00",
       "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第591回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "g3PZHgUvOAA",
+      "title": "【ゴ魔乙プレイ動画】アンカーボルト·弩death",
+      "channel": "安満沢ライナー",
+      "description": "",
+      "publishedAt": "2026-10-04T02:01:46Z",
+      "registeredAt": "2026-10-04T11:13:07+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "3ONax0qBVv4",
+      "title": "【ゴ魔乙プレイ動画】アンカーボルト·death",
+      "channel": "安満沢ライナー",
+      "description": "",
+      "publishedAt": "2026-10-04T01:58:01Z",
+      "registeredAt": "2026-10-04T11:13:07+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "n4I6MzcuqaE",
+      "title": "【ゴ魔乙プレイ動画】ビッグ=バーン·弩death",
+      "channel": "安満沢ライナー",
+      "description": "",
+      "publishedAt": "2026-10-04T01:48:24Z",
+      "registeredAt": "2026-10-04T11:13:07+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "GmfuGvahn_s",
+      "title": "【ゴ魔乙プレイ動画】ビッグ=バーン·death",
+      "channel": "安満沢ライナー",
+      "description": "",
+      "publishedAt": "2026-10-04T01:44:33Z",
+      "registeredAt": "2026-10-04T11:13:07+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "4pf2DOWf2iI",
+      "title": "【ゴ魔乙プレイ動画】第591回スコア大会(復習)",
+      "channel": "安満沢ライナー",
+      "description": "",
+      "publishedAt": "2026-10-04T01:31:31Z",
+      "registeredAt": "2026-10-04T11:13:07+09:00",
+      "source": "search",
       "tags": [
         "スコア大会",
         "スコア大会(週末)",
