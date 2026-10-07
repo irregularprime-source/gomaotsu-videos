@@ -1,4 +1,5 @@
 @echo off
+setlocal
 chcp 932 >nul
 cd /d "%~dp0"
 echo ================================
@@ -6,75 +7,87 @@ echo    変更を保存してサイトへ反映
 echo ================================
 echo.
 
-rem --- 前回の同期が途中で止まっていないか先に確認する ---
-rem rebase 途中や main 以外の状態でコミットすると、保存がブランチの外に積まれて
-rem GitHub へ push できず、サイトへ永久に反映されない。その場合は何もせず終了する。
-set BRANCH=
+rem 前回の同期が途中で止まっている状態や main 以外では保存しない。
+set "BRANCH="
 if exist ".git\rebase-merge" goto :stuck
 if exist ".git\rebase-apply" goto :stuck
-for /f "delims=" %%b in ('git rev-parse --abbrev-ref HEAD') do set BRANCH=%%b
+for /f "delims=" %%b in ('git rev-parse --abbrev-ref HEAD') do set "BRANCH=%%b"
 if not "%BRANCH%"=="main" goto :stuck
+
+set "PYCMD=py -3.10"
+if exist ".venv\Scripts\python.exe" set PYCMD=".venv\Scripts\python.exe"
+%PYCMD% -B "scripts/check_staged.py"
+if errorlevel 1 goto :stagefail
 
 echo 対象ファイル: docs/videos.json, docs/tags.json, data/channels.json
 echo 　　（あわせて docs/index.html と docs/sitemap.xml を自動で作り直します）
-echo それ以外のファイルは保存されません。
 echo.
 echo 検索・AI向けの索引を作り直しています...
-set "PYCMD=python"
-where python >nul 2>nul || set "PYCMD=py"
-%PYCMD% scripts/build_static.py
+%PYCMD% -B "scripts/build_static.py"
 if errorlevel 1 goto :buildfail
-echo.
-git add docs/videos.json docs/tags.json data/channels.json docs/index.html docs/sitemap.xml
-git diff --cached --quiet && echo 変更はありませんでした。保存の必要はありません。 && pause && goto :eof
+
+git add -- "docs/videos.json" "docs/tags.json" "data/channels.json" "docs/index.html" "docs/sitemap.xml"
+if errorlevel 1 goto :gitfail
+%PYCMD% -B "scripts/check_staged.py"
+if errorlevel 1 goto :stagefail
+git diff --cached --quiet
+if errorlevel 2 goto :gitfail
+if not errorlevel 1 goto :unchanged
+
 echo 変更をコミットしています...
 git commit -m "手動更新 %date% %time%"
-echo.
+if errorlevel 1 goto :gitfail
 echo 最新の状態と統合しています...
 git pull --rebase
 if errorlevel 1 goto :pullfail
-echo.
 echo GitHub へ反映しています...
 git push
 if errorlevel 1 goto :pushfail
-echo.
 echo 完了しました。数分後にサイトへ反映されます。
 pause
-goto :eof
+exit /b 0
+
+:unchanged
+echo 変更はありませんでした。保存の必要はありません。
+pause
+exit /b 0
+
+:stagefail
+echo [中断] ステージ済みファイルの確認に失敗しました。上の表示を確認してください。
+echo Python が使えない場合は、Python 3.10 またはプロジェクトの仮想環境を確認してください。
+pause
+exit /b 1
 
 :buildfail
-echo.
 echo [中断] 検索・AI向けの索引の作り直しに失敗しました。
-echo Python が入っていないか、scripts/build_static.py で問題が起きています。
-echo 編集内容はファイルに残っているので失われていません。まだ何も保存していません。
+echo 編集内容はファイルに残っています。まだコミットしていません。
 echo この画面の内容をそのまま伝えて、復旧を依頼してください。
 pause
-goto :eof
+exit /b 1
+
+:gitfail
+echo [中断] Git のステージ処理またはコミットに失敗しました。
+echo 編集内容はファイルに残っています。GitHub への反映は行っていません。
+pause
+exit /b 1
 
 :stuck
 echo [中断] 前回の同期が途中で止まっているか、main 以外の状態です。
-echo 今コミットすると、変更がサイトへ反映されない場所に積まれてしまうため、何もしませんでした。
-echo 編集内容はファイルに残っているので失われていません。
-echo.
-echo 現在の状態:
+echo 編集内容はファイルに残っています。
 git status --short --branch
-echo.
 echo この画面の内容をそのまま伝えて、復旧を依頼してください。
 pause
-goto :eof
+exit /b 1
 
 :pullfail
-echo.
 echo [中断] 最新の状態との統合に失敗しました（自動収集との競合の可能性）。
-echo コミットは済んでいるので編集内容は失われていません。GitHub への反映だけ行っていません。
-echo この状態でもう一度実行しても直りません。この画面の内容をそのまま伝えて、復旧を依頼してください。
-pause
-goto :eof
-
-:pushfail
-echo.
-echo [中断] GitHub への反映に失敗しました。
-echo コミットは済んでいるので編集内容は失われていません。
+echo コミットは済んでいますが、GitHub への反映は行っていません。
 echo この画面の内容をそのまま伝えて、復旧を依頼してください。
 pause
-goto :eof
+exit /b 1
+
+:pushfail
+echo [中断] GitHub への反映に失敗しました。コミットは済んでいます。
+echo この画面の内容をそのまま伝えて、復旧を依頼してください。
+pause
+exit /b 1

@@ -25,7 +25,7 @@ import requests
 # collect.py と同じ scripts/ にあるため直接 import できる（reclassify.py と同じパターン）。
 from collect import (
     VIDEOS_PATH, JST, GOMA_KEYWORDS,
-    norm, is_gomaotsu, make_tags, load_videos,
+    norm, is_gomaotsu, make_tags, load_videos, request_error_summary,
 )
 
 SEARCH_URL = "https://www.googleapis.com/youtube/v3/search"
@@ -175,7 +175,12 @@ def main():
         published_after = iso_z(datetime.now(timezone.utc) - timedelta(hours=args.since_hours))
         published_before = None
 
-    sys.exit(collect_search(args.dry_run, published_after, published_before))
+    try:
+        result = collect_search(args.dry_run, published_after, published_before)
+    except requests.RequestException as error:
+        print(f"[error] 検索収集: {request_error_summary(error)}", file=sys.stderr)
+        result = 1
+    sys.exit(result)
 
 
 if __name__ == "__main__":

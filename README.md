@@ -30,14 +30,37 @@ scripts/
   reclassify.py       … 既存データのタグを最新ルールで再計算する保守ツール
   build_static.py     … videos.json から index.html 内の静的索引と sitemap.xml を生成
   serve_admin.py      … 管理ツールをローカルで開くための起動用サーバー
+  check_staged.py     … 保存対象外のファイルがステージ済みなら保存を止める
+tests/
+  test_security.py    … ローカルサーバー・ログ・保存フローの回帰検証
 tools/
   admin.html          … ローカル専用の管理ツール（公開されない）
 .github/workflows/
   collect.yml         … 登録チャンネル収集のワークフロー（6時間ごと）
   search.yml          … 検索収集のワークフロー（1時間ごと）
-.github/dependabot.yml … ワークフローで使う Actions の更新PRを週1回作る設定
-requirements.txt      … collect.py の依存（requests のみ）
+  security-check.yml  … Windows/Python 3.10 と Linux/Python 3.11 の回帰検証
+.github/dependabot.yml … Actions と Python 依存の更新PRを週1回作る設定
+requirements.txt      … requests と間接依存のバージョン・wheel SHA256 の固定
 ```
+
+## ローカルの Python 環境
+
+Windows / PowerShell で、リポジトリ直下から初回に実行する：
+
+```powershell
+py -3.10 -m venv ".venv"
+```
+
+上の環境作成後、依存をインストールする：
+
+```powershell
+& ".\.venv\Scripts\python.exe" -m pip install --require-hashes --only-binary=:all: -r "requirements.txt"
+& ".\.venv\Scripts\python.exe" -m pip check
+```
+
+以降は `& ".\.venv\Scripts\python.exe"` を使う。グローバル環境へはインストールしない。
+2本の起動・保存用 BAT も `.venv` を優先し、無い場合だけ `py -3.10` を使う。
+`.venv/` は Git の管理対象外。
 
 ## 自動収集の仕組み
 
@@ -83,9 +106,9 @@ push が他の更新と競合して弾かれた場合は `git pull --rebase` で
 
 定期収集は最新分しか拾わないため、過去動画は次の2経路で少しずつ登録する（いずれも巨大な差分になるためローカル実行推奨）。
 
-- **登録チャンネルの過去分**: `python scripts/collect.py --backfill`
+- **登録チャンネルの過去分**: `& ".\.venv\Scripts\python.exe" "scripts/collect.py" --backfill`
   各チャンネルのアップロードを `nextPageToken` で全件たどり、未登録分を `source: "auto"` で追記する。
-- **検索でひっかかる過去分**（未登録投稿者を含む）: `python scripts/search_collect.py --after 2025-01-01 --before 2025-01-08`
+- **検索でひっかかる過去分**（未登録投稿者を含む）: `& ".\.venv\Scripts\python.exe" "scripts/search_collect.py" --after 2025-01-01 --before 2025-01-08`
   公開期間を区切って（1週間・1か月など）窓をずらしながら少しずつ実行する。レビュー負荷・ノイズ・API コストを平準化するため。
 
 どちらも `--dry-run` で追加予定を確認してから実行する。件数が増えたら `docs/videos.json` のサイズを見て分割の要否を判断する。
@@ -119,7 +142,7 @@ push が他の更新と競合して弾かれた場合は `git pull --rebase` で
 - **sitemap.xml**: トップページ1件のみ。`lastmod` は `videos.json` の `updated`。
 - **メタ情報**: `<head>` に canonical / OGP / Twitter Card / title・description を設定済み（こちらは手書きで、自動生成ではない）。
 - **作り直すタイミング**: 収集ワークフロー2つ（`videos.json` に差分があったとき）と `変更を保存する.bat` が自動で実行する。
-  手で作り直すなら `python scripts/build_static.py`（変更が無ければ「変更なし」と表示されるだけ）。
+  手で作り直すなら `& ".\.venv\Scripts\python.exe" "scripts/build_static.py"`（変更が無ければ「変更なし」と表示されるだけ）。
 - **Google Search Console**: 所有権確認ファイル `docs/googlec5a426f06dcfde4b.html` を置いて確認済み。
   サイトマップ送信・インデックス登録リクエストも 2026-09-05 に実施済み。このファイルを消すと所有権確認が外れる。
   効果は Search Console の「検索パフォーマンス」と「URL 検査」で見る（GoatCounter は JS で計測するため、
@@ -132,7 +155,32 @@ push が他の更新と競合して弾かれた場合は `git pull --rebase` で
 | 公開サイト（`docs/index.html`） | `<meta>` で CSP を指定（GitHub Pages はレスポンスヘッダーを設定できないため）。スクリプトは自サイト（`app.js`）と GoatCounter だけ許可し、画像・フォント・通信先も使っているものに限定 | 新しい外部サービス（画像・フォント・API など）を使うときは CSP の該当項目に追加する。追加しないとブラウザに読み込みを拒否される |
 | 〃 インラインスクリプト | 禁止。例外は `<head>` の `html.js` を付ける1行だけで、CSP にその1行の sha256 ハッシュを書いて許可している | この1行を書き換えたらハッシュも計算し直す。JS を足すときは `app.js` に書く |
 | GitHub Actions | `actions/checkout` などはタグではなくコミット SHA で固定（タグの付け替えで中身が差し替わるのを防ぐ） | 更新は Dependabot が作るPRで受け取る。メジャー版の更新は挙動が変わり得るので、内容を確認してからマージする |
-| 管理ツール用サーバー（`serve_admin.py`） | Host ヘッダーが `127.0.0.1:8000` / `localhost:8000` 以外の要求は 403 で拒否（DNS リバインディング対策。起動中に悪意あるサイトを開いても APIキーや手元ファイルを読まれない） | ブラウザでは必ず `127.0.0.1` か `localhost` の URL で開く |
+| 管理ツール用サーバー（`serve_admin.py`） | 127.0.0.1 限定の待ち受けと Host 検査。必要な6ファイルと `/api/key` だけ配信し、ディレクトリ一覧・`.git`・`_local`・リンク先の別ファイルを拒否 | ブラウザでは必ず `127.0.0.1:8000` か `localhost:8000` で開く。新しいファイルが必要なら `ALLOWED_FILES` を見直す |
+| 〃 レスポンス | 全応答に `no-store`、`nosniff`、フレーム埋め込み禁止。`/api/key` は異なる Origin や cross-site の要求を拒否し、CORS 許可を付けない | キーは同じ端末のプロセスからは取得できる。ローカルサーバーに利用者認証は無く、端末・アカウント自体を信頼する設計 |
+| 管理ツールのキー | 環境変数または手入力をページのメモリで保持。localStorage へ保存せず、入力欄も使用後に空にする | 手入力は再読み込みで消える。旧版の保存キーは管理画面を開くとその Origin から削除される。両方のホスト名を使っていた場合は各 URL を一度開く |
+| 動的なタグ・エラー表示 | `textContent` で文字として表示し、HTML として解釈しない | 外部データや例外文字列を `innerHTML` に入れない |
+| 収集エラーのログ | 通信例外は種類と HTTP ステータスだけを記録し、キー付き URL・応答本文・トレースバックを出さない | 詳細調査でも APIキーをログへ出さない |
+| 保存用 BAT | 静的生成の前と `git add` の後でステージ済みファイルを検査。保存対象5ファイル以外があれば中断し、ステージ状態は変更しない | ソースコードやイベント辞書の更新は別途、差分を確認して明示的に commit する |
+| Python 依存 | 直接・間接依存を全て固定し、wheel の SHA256 を検証してインストール。Dependabot の pip 更新PRと2環境の CI で検証 | 固定だけでは将来の脆弱性には対応できないため、更新PR・アラートを確認する |
+
+### 検証・依存更新の運用
+
+```powershell
+& ".\.venv\Scripts\python.exe" -B -m unittest discover -s "tests" -v
+```
+
+回帰検証では実 APIキーを使わず、ダミー応答と一時 Git リポジトリを使う。
+Windows のシンボリックリンク作成権限が無い場合、その1件はスキップされ、Linux CI で検証する。
+ブラウザの登録・編集・コピー・ダウンロードは手動でも確認する。
+
+依存を更新するときは Dependabot PR を確認し、`requirements.txt` の直接・間接依存を
+整合する版に更新する。手動更新では、対象版の PyPI JSON に掲載された wheel の SHA256 を
+固定値へ反映する。ハッシュ検証を外して更新を通さない。Windows/Python 3.10 と Linux/Python 3.11
+の両方でインストール・`pip check`・回帰検証が成功してからマージする。
+
+GitHub の Dependabot alerts とセキュリティ更新も有効化して、新たに判明した脆弱性を追跡する。
+2026-10-07 の確認ではこの2設定は無効だったため、今回のローカル実装とは別に、公開時の設定変更が必要。
+この節の追加対策・CI はローカル実装済みで、公開・本番実行の確認待ち（詳細は PROJECT_STATE.md）。
 
 ## タグの仕組み
 
@@ -169,19 +217,21 @@ push が他の更新と競合して弾かれた場合は `git pull --rebase` で
 ### 起動
 
 いちばん簡単なのは、リポジトリ直下の **`管理ツールを開く.bat` をダブルクリック**する方法。
-最新データの取得（git pull）→ サーバー起動 → ブラウザで管理ツールを自動オープン、までまとめて行う。
+最新データの取得（git pull --ff-only）→ サーバー起動 → ブラウザで管理ツールを自動オープン、までまとめて行う。
+取得に失敗したらサーバーを起動せず中断する。
 
 コマンドで起動する場合：
 
 ```
-python scripts/serve_admin.py         # サーバーのみ
-python scripts/serve_admin.py --open  # ブラウザも自動で開く
+& ".\.venv\Scripts\python.exe" "scripts/serve_admin.py"         # サーバーのみ
+& ".\.venv\Scripts\python.exe" "scripts/serve_admin.py" --open  # ブラウザも自動で開く
 ```
 
 いずれも `http://127.0.0.1:8000/tools/admin.html` をブラウザで開く（127.0.0.1 限定。
 `127.0.0.1:8000` / `localhost:8000` 以外のホスト名で来た要求は拒否する。上の「セキュリティ対策」参照）。
 環境変数 `YOUTUBE_API_KEY` があれば自動で読み込む（`/api/key` 経由。ディスクにも git にも保存しない）。
-無い場合はツール上部にキーを貼り付ける（この端末のブラウザの localStorage にのみ保存）。
+無い場合はツール上部にキーを貼り付けて「使用」を押す。キーはページのメモリ内だけで保持し、
+再読み込みすると消える。旧版の localStorage 保存値は起動時に削除する。
 
 ### タブ
 
@@ -254,6 +304,8 @@ YouTube 側の状態に関係なく、その動画を `videos.json` から消す
 あわせて commit → `git pull --rebase` → push まで自動で行いサイトへ反映する
 （自動収集が同時に更新していても取りこぼさないよう rebase を挟む）。コマンド操作は不要。
 Python が見つからないか `build_static.py` が失敗したときは、そこで止めて commit しない。
+他のファイルが既にステージ済みの場合も、生成前に一覧を表示して中断する。
+そのファイルは勝手にステージ解除しないので、別の変更として内容を確認して処理する。
 
 **`[中断]` と表示されたとき**は、その画面の内容をそのまま伝えて復旧を依頼する。
 前回の rebase が競合で止まったままだったり `main` 以外にいる状態でコミットすると、
@@ -268,25 +320,18 @@ Python が見つからないか `build_static.py` が失敗したときは、そ
 手動登録・確認済み（`status: 確認済み`）は上書きしない。
 
 ```
-python scripts/reclassify.py --dry-run   # 変更予定だけ表示
-python scripts/reclassify.py             # 実際に書き込む
+& ".\.venv\Scripts\python.exe" "scripts/reclassify.py" --dry-run   # 変更予定だけ表示
+& ".\.venv\Scripts\python.exe" "scripts/reclassify.py"             # 実際に書き込む
 ```
 
 ## ローカルでの動作確認
 
-`serve_admin.py` はリポジトリ直下を配信するので、サイト本体もこれで確認できる：
+`serve_admin.py` は必要なファイルだけを配信し、サイト本体もこれで確認できる：
 
 ```
-python scripts/serve_admin.py
+& ".\.venv\Scripts\python.exe" "scripts/serve_admin.py"
 # → http://127.0.0.1:8000/docs/index.html  … サイト
 # → http://127.0.0.1:8000/tools/admin.html … 管理ツール
-```
-
-管理ツールが不要なら、サイトだけを見る簡易サーバーでもよい：
-
-```
-cd docs
-python -m http.server 8000   # → http://localhost:8000
 ```
 
 `index.html` をファイルとして直接開く（`file://`）と videos.json を読み込めないため、必ずサーバー経由で開く。

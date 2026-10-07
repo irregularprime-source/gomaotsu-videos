@@ -205,8 +205,8 @@ h1 .tag{font-size:.7rem;color:var(--warn);border:1px solid var(--warn);border-ra
   <div class="keybar" id="keybar">
     <span class="dot"></span>
     <span id="key-status">APIキーを確認中…</span>
-    <input type="text" id="key-input" placeholder="YouTube API キーを貼り付け（環境変数が未設定のとき）" hidden>
-    <button class="btn small" id="key-save" hidden>保存</button>
+    <input type="password" id="key-input" autocomplete="off" placeholder="YouTube API キーを貼り付け（環境変数が未設定のとき）" hidden>
+    <button class="btn small" id="key-save" hidden>使用</button>
   </div>
 
   <div class="tabs" role="tablist">
@@ -896,22 +896,22 @@ function setKeyStatus(){
     inp.hidden=true; sv.hidden=true;
   }else{
     bar.className="keybar no";
-    st.textContent="APIキー未設定 — 環境変数が無い場合は貼り付けて保存（この端末のブラウザにのみ保存）";
+    st.textContent="APIキー未設定 — 環境変数が無い場合は貼り付けて使用（ページを閉じると消去）";
     inp.hidden=false; sv.hidden=false;
   }
 }
 $("key-save").onclick=()=>{
   const v=$("key-input").value.trim();
-  if(v){ apiKey=v; try{ localStorage.setItem("yt_api_key", v); }catch(e){} setKeyStatus(); }
+  if(v){ apiKey=v; $("key-input").value=""; setKeyStatus(); }
 };
 
 async function loadKey(){
-  // まず環境変数（serve_admin.py 経由）。無ければ localStorage を試す。
+  // 旧版で永続保存したキーを、このオリジンから除去する。
+  try{ localStorage.removeItem("yt_api_key"); }catch(e){}
   try{
     const res = await fetch("/api/key");
     if(res.ok){ const d=await res.json(); if(d.key){ apiKey=d.key; return; } }
   }catch(e){}
-  try{ const s=localStorage.getItem("yt_api_key"); if(s) apiKey=s; }catch(e){}
 }
 
 /* ===== 初期化 ===== */
@@ -929,10 +929,10 @@ async function loadJson(path){
       loadJson("../docs/tags.json"),
     ]);
   }catch(e){
-    $("load-error").innerHTML =
-      `<div class="load-err">データファイルを読み込めませんでした（${e.message}）。<br>` +
-      `<b>python scripts/serve_admin.py</b> で起動し、表示された <b>/tools/admin.html</b> を開いてください` +
-      `（file:// で直接開くと動きません）。</div>`;
+    const box=el("div","load-err",`データファイルを読み込めませんでした（${e.message}）。` +
+      `「管理ツールを開く.bat」で起動し、表示された /tools/admin.html を開いてください` +
+      `（file:// で直接開くと動きません）。`);
+    $("load-error").replaceChildren(box);
     return;
   }
   await loadKey();

@@ -258,7 +258,7 @@ def collect(dry_run, backfill=False):
             items = fetch_uploads(ch["channelId"], api_key, all_pages=backfill)
         except requests.RequestException as e:
             # あるチャンネルの取得失敗で全体を止めない。
-            print(f"[error] {ch['name']} ({ch['channelId']}): {e}", file=sys.stderr)
+            print(f"[error] {ch['name']} ({ch['channelId']}): {request_error_summary(e)}", file=sys.stderr)
             continue
 
         for item in items:
@@ -289,6 +289,12 @@ def collect(dry_run, backfill=False):
     )
     print(f"動画{len(new_entries)}件を追加しました。")
     return 0
+
+
+def request_error_summary(error):
+    """例外に含まれるキー付きURLやレスポンス本文はログに出さない。"""
+    status = error.response.status_code if error.response is not None else None
+    return f"{type(error).__name__}" + (f" (HTTP {status})" if status is not None else "")
 
 
 def main():

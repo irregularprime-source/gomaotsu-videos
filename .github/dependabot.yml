@@ -1,8 +1,12 @@
 # ワークフローで使う Actions は SHA で固定しているため、更新は Dependabot のPRで受け取る。
-# requirements.txt は requests をバージョン固定していない（常に最新が入る）ので pip は対象にしない。
+# Pythonも間接依存・ハッシュを固定し、更新PRで互換性を確認する。
 version: 2
 updates:
   - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+  - package-ecosystem: pip
     directory: /
     schedule:
       interval: weekly

@@ -4,7 +4,7 @@
 複数のAIアシスタント（Claude Code / Web版Claude / ChatGPT 等）や本人が現状を把握するための共有メモ。
 リポジトリ全体の使い方・仕様は [README.md](README.md) を参照。
 
-最終更新: 2026-10-07 (JST)
+最終更新: 2026-10-08 (JST)
 
 ## 1. 元の依頼（原文に近い形で保持。書き換え禁止）
 > 次に、サンプルデータを削除と、チャンネル・動画登録用のフォームを作って。フォームは当面私だけ使えればよい。あと、作業用に未確認の動画などを確認して、手動でタグの追加とかしたりできるように。それに関して、表示用のタグは多分今後も増えていくので、それに耐えうる作りにしていきたい。
@@ -28,7 +28,7 @@
 | タグ定義を docs/tags.json に外出し | タグ追加=データ編集のみで済む拡張耐性 | 07-20 |
 | 未定義タグ（第○回等）は名前ハッシュ→HSLで自動採色、フィルタチップに出さない | 約500種になり得るためチップは破綻 | 07-20 |
 | 管理ツールは tools/admin.html（docs外=Pages非公開）、ローカルサーバーで開く | 静的サイトのため直接書込不可。トークン不要で安全 | 07-20 |
-| 管理ツールのメタ取得はYouTube APIキー（環境変数優先→無ければlocalStorage、コミットしない） | URL貼付だけで登録できる。forHandleでハンドル解決 | 07-20 |
+| 管理ツールのメタ取得はYouTube APIキー（環境変数優先→無ければ手入力、コミットしない）。手入力はページのメモリのみで保持 | URL貼付だけで登録できる。forHandleでハンドル解決。旧 localStorage 保存は 10-07 の追加対策で廃止 | 07-20 / 10-07 |
 | 保存=更新後JSONダウンロード/コピー→ユーザーがcommit/push | ユーザー選択（ローカル+手動commit） | 07-20 |
 | 段階描画: PAGE_SIZE=100、ボタン式「もっと見る」 | 老眼気味の利用者に位置が分かりやすい | 07-20 |
 | 期間絞込はJST日単位（`T00:00:00+09:00`基準、TOは翌日0時未満） | publishedAtはTZ付きISOなのでDate比較で正確 | 07-20 |
@@ -68,7 +68,26 @@
 | Actions（checkout / setup-python）を現行と同じ版（v4.4.0 / v5.6.0）の SHA に固定し、`.github/dependabot.yml` で週1回の更新PRを受け取る | タグは付け替えで中身が差し替わり得る。版は上げずに固定だけ行い挙動を変えない。メジャー版の更新（v7 系）は Dependabot のPRを見てユーザーが判断する | 10-07 |
 | Dependabot PR #1 / #2 をマージし checkout v7.0.1 / setup-python v7.0.0 へ更新（squash） | v4/v5 は Node 20 向けで、実行時に「Node.js 20 is deprecated…強制的に Node 24 で実行」の警告が出ていた。リリースノート上の破壊的変更（v6 の認証情報の別ファイル化、v7 のフォークPR制限・pip-install 入力削除）はこのワークフローに該当しない。PR ではワークフローが走らないため、マージ後に workflow_dispatch で実動作を確認 | 10-07 |
 
-## 4. 現在の状態（すべてコミット済み・origin/main 反映済み）
+| 管理サーバーは必要な6ファイルと /api/key のみ配信し、全応答 no-store・nosniff・フレーム埋め込み禁止 | Host 検査だけでは同じ端末からの不要ファイル閲覧やキャッシュを防げないため。利用者認証は設けず端末自体を信頼する | 10-07 ローカル実装 |
+| 収集通信例外は種類と HTTP ステータスだけ記録 | requests の例外には APIキー付き URL が含まれるため、例外本文やトレースバックをログに出さない | 10-07 ローカル実装 |
+| 保存対象外のステージ済みファイルがあれば BAT を中断。自動でステージ解除しない | git add の対象を絞っても git commit は以前のステージ分を含むため。既存の編集・ステージ状態を保護する | 10-07 ローカル実装 |
+| Python 依存を直接・間接とも版と wheel SHA256 で固定し、pip の Dependabot と2環境の回帰 CI を追加 | 毎回変わる依存の取り込みを防ぎ、将来の更新も検証して受け取る。更新を放置しない運用と組み合わせる | 10-07 ローカル実装 |
+
+## 4. 現在の状態（追加対策はローカル実装済み・公開待ち）
+
+### セキュリティ追加対策（2026-10-07〜08）
+
+- **承認範囲**: 実装計画1〜5（ローカル修正・仮想環境・検証・CI定義・文書更新）はユーザー承認済み。2026-10-08 に完成差分の提示後、ユーザーが「公開工程を進めて」と計画6（commit/push・本番ワークフロー実行・GitHub設定変更）も承認。現在その検証を実施中。
+- **実装済み**: 収集ログのキー漏えい抑止、不要なステージ済みファイルの保存中断、配信ファイルの限定とキャッシュ・フレーム対策、管理キーの永続保存廃止、タグ・エラー表示の textContent 化、起動 BAT の pull 失敗時中断。
+- **環境・依存**: `.venv` は Python 3.10.6。requests 2.34.2 / urllib3 2.8.0 / certifi 2026.7.22 / charset-normalizer 3.5.2 / idna 3.20 を wheel SHA256 付きで固定。Windows へのハッシュ検証付きインストールと pip check に成功。Linux/Python 3.11 向け wheel の取得・ハッシュ検証にも成功（Linux 上の実行検証は CI 待ち）。
+- **回帰検証**: 14件中13件成功。Windows のシンボリックリンク作成権限が無いため1件スキップ。実 HTTP サーバー、一時 Git リポジトリ、ダミーキーを使い、許可 URL・GET/HEAD・Host/Origin 拒否・非公開ファイルとパストラバーサル拒否・キーを出さない通信エラー・BAT の正常保存と中断を確認。新 CI は Windows/Python 3.10 と Linux/Python 3.11、contents:read、実キー不要で定義済み。
+- **ブラウザ検証**: 既存の3,019件・14タグの一覧、検索と管理画面の初期表示を確認。ダミー API 応答で動画・チャンネル登録、メモ・タグ編集、JSON コピーとダウンロードの一致、再読み込み時の手入力キー消失、旧 localStorage の削除を確認。HTML を含むタグ・タイトル・エラーが文字として表示され、スクリプトが実行されないことも確認。実 YouTube API 呼び出し・実データ書き込みは行っていない。
+- **最終チェック**: BAT 2本の CP932 / CRLF、公開 JS と管理画面 JS の Node 構文検証、git diff --check に成功。依存 wheel に誤った SHA256 を指定するとオフラインでも拒否されることを確認。変更ファイルに既知の資格情報形式は見つからず、動画・タグ等の JSON と生成済み index.html / sitemap.xml の差分は無し。
+- **未実施**: 今回の commit/push、新 CI の Actions 上での実行、更新後の収集2本の本番実行、公開ページの再確認、Dependabot alerts とセキュリティ更新の有効化（10-07 時点は無効）。Secret scanning / push protection は10-07確認で有効。
+- **維持したもの**: 動画・タグ・チャンネル・イベント辞書のデータ、静的生成範囲、分類ルール、収集間隔、APIキー制限方針。`_local/` と既存 `.claude/` は変更していない。
+- **公開前同期**: origin/main の自動収集コミット 2b02c07（動画1件追加）を fast-forward で取り込み。追加対策の commit に動画データ・生成済み索引の変更は含めない。
+
+### 以前の公開済み変更（以下は履歴）
 - Phase2実装（collect.py/collect.yml）、実チャンネル設定、回数・イベント名タグ+フォント特大化（19e8f4f）
 - **Phase A（53d2e9f）**: tags.json外出し・自動採色・段階描画・期間絞込・サンプル削除 → ユーザー実機確認OK
 - **Phase B（5095838）**: `tools/admin.html`（管理ツール本体・4タブ+保存バー）+ `scripts/serve_admin.py`（環境変数YOUTUBE_API_KEYを127.0.0.1限定 /api/key で渡す起動用サーバー）
@@ -92,6 +111,7 @@
 - **ギルドバトル(通常)判定の拡充（07-23・push済み 12f14c6）**: `GUILD_NORMAL_MARKERS` を新設し、明示語（ギルドバトル/ギルバト）に加え属性有利ローテ名（旧/新/三 × 火水風光闇）＋闘技場マップ名でも(通常)判定。**スコア大会が付いた動画には付けない**ガード付き（「新火鉢」等の誤爆・併記を防止、「新火」だけ「新火有利」形）。reclassify で **102件**（すべて未分類→ギルドバトル(通常)）を再計算
 
 ## 5. 次のステップ（具体的に1〜3個）
+0. **追加対策の公開**: 完成差分の承認後に commit/push → 回帰 CI の2環境を確認 → 収集2本を各1回実行 → Dependabot alerts / セキュリティ更新を有効化 → 公開サイト・非公開パス・ログを確認し、このファイルの公開待ち表示を更新する。
 1. **過去動画のバックフィル**（ローカル・少しずつ）: `collect.py --backfill`（登録ch）と `search_collect.py --after/--before`（検索・期間区切り）を `--dry-run` で確認してから実行 → videos.json のサイズを見て JSON分割の要否を判断
 2. **（ユーザー作業）未確認1271件のレビュー消化**: ①タブの絞り込み（回数・チャンネル・タグ）で単位を区切り、「絞り込み結果をすべて確認済みにする」で消化する運用が回るかを見る
 3. **（ユーザー作業）「未分類」211件の扱いを判断**: 手動タグ付けで済ませるか、collect.py のキーワード追加＋reclassify で機械的に潰すか。件数が増え続けるようなら後者
@@ -113,9 +133,9 @@
    - `keywords` は NFKC正規化＋小文字化した**タイトルへの部分一致**で判定。いずれか1つ含めば一致。
    - **短語・汎用語は誤爆に注意**。「スコアタ」を付ける等で限定一致させる（例: `"うまるスコアタ"`, `"Xmasスコアタ"`）。
    - **「○○限定」形式は入れない**。既存 `EVENT_RE`（collect.py）が「○○」を自動抽出するため重複する。
-2. `cd scripts && python reclassify.py --dry-run` で既存動画への影響（付与/昇格の差分）を確認。
-3. 問題なければ `python reclassify.py` で本反映（`status:"確認済み"`・手動登録は保護される）。
-4. `変更を保存する.bat` 等で videos.json と event_tags.json を commit / push。
+2. リポジトリ直下から `& ".\.venv\Scripts\python.exe" "scripts/reclassify.py" --dry-run` で既存動画への影響（付与/昇格の差分）を確認。
+3. 問題なければ `& ".\.venv\Scripts\python.exe" "scripts/reclassify.py"` で本反映（`status:"確認済み"`・手動登録は保護される）。
+4. videos.json と event_tags.json の差分を確認して明示的に commit / push（保存用 BAT は event_tags.json を対象に含めない）。
 
 **仕組み（collect.py）**: `make_tags` が `match_event_tags(ntitle)` で辞書一致を集め、一致があれば `classify` に `has_event_dict=True` を渡して週末→イベントへ昇格。辞書タグは分類結果に「スコア大会」が含まれる動画にのみ付与（ガチャ/アリーナ等への季節名誤爆を抑止）。reclassify.py は collect.py の `make_tags` を import して共用するため、**改修は collect.py 側だけでよい**。
 
@@ -123,6 +143,7 @@
 
 ## 6. ファイル境界
 - 変更してよい: docs/（index.html, app.js, videos.json, tags.json, event_names_candidates.md）, data/（channels.json, event_tags.json）, tools/, scripts/, .github/workflows/collect.yml, .github/workflows/search.yml, .github/dependabot.yml, .gitignore, README.md, PROJECT_STATE.md（app.js・search.yml・dependabot.yml は 10-07 にユーザー承認で追加）
+- 今回の承認済み追加範囲: requirements.txt、tests/、.github/workflows/security-check.yml、起動・保存 BAT、ローカル .venv（Git 対象外）。scripts/check_staged.py は scripts/ の承認範囲内。
 - 自動生成なので手で編集しない: index.html の BUILD:STATIC マーカー間、docs/sitemap.xml（どちらも build_static.py が上書き。マーカー自体を消すと build_static.py がエラーで止まる）
 - 消さない: docs/googlec5a426f06dcfde4b.html（Search Console の所有権確認。消すと確認が外れる）
 - 変更禁止（非公開・gitignore維持）: _local/ 配下（内部向け実装指示書 _local/phase2_implementation_guide.md、参考スクショ _local/スコア大会（イベント）名称参考用/ など。手元専用ファイルはここに置けば自動除外）
@@ -130,11 +151,11 @@
 ## 7. 注意事項・ハマりどころ
 - リポジトリ: https://github.com/irregularprime-source/gomaotsu-videos （public, gh認証=irregularprime-source, Pages=main /docs）
 - 公開URL: https://irregularprime-source.github.io/gomaotsu-videos/
-- コミットメッセージはWhyを書く+末尾に `Co-Authored-By: Claude`（全コミットで実施済み）
-- Claude Code環境は node無し・Chrome拡張未接続 → JS検証はpythonでの静的チェック（ID突合・括弧バランス）で代替
+- コミットメッセージは変更理由を書く。過去の Claude による作業は `Co-Authored-By: Claude` を付記していた。今回の Codex による作業を Claude 作成として記録しない。
+- 過去の Claude Code 環境では Node・ブラウザ検証が使えなかった。今回の Codex 環境では Node の構文検証とブラウザ検証を使用できる
 - JSON書込は `json.dumps(ensure_ascii=False, indent=2)` + 末尾改行（collect.py と同一書式。admin.htmlのJS直列化も同形式で揃え、git差分を最小化）
 - 自動収集の同時実行対策済みだが、**手動でローカルpushする際は Actions の実行と重ならないよう注意**（重なっても直列化+リトライで復帰はする）
-- ローカル確認: `python scripts/serve_admin.py` でサイト（/docs/index.html）も管理ツール（/tools/admin.html）も配信可
+- ローカル確認: `& ".\.venv\Scripts\python.exe" "scripts/serve_admin.py"` でサイト（/docs/index.html）と管理ツール（/tools/admin.html）の必要ファイルのみ配信。環境構築・依存更新・回帰検証は README を参照
 - YOUTUBE_API_KEY は Actions の Secret とローカル環境変数の両方に設定。**コードには絶対に含めない**
 - **APIキーの制限（10-07 ユーザーが Google Cloud コンソールで確認）**: キー `YOUTUBE_API_KEY`（2026-07-20 作成）の「API の制限」は **YouTube Data API v3 のみ**。「アプリケーションの制限」（IP / HTTP リファラー）は**付けない方針**: Actions は実行ごとに IP が変わり、収集スクリプト（requests）はリファラーを送らないため、付けると自動収集が止まる。漏えい時の影響は日次クォータ（10,000）を使い切られて当日の収集が止まる程度、という想定（課金設定をしていない前提。README 初回セットアップの記載どおり）。コンソールに出る「OAuth 同意画面を構成してください」の警告は、OAuth を使っていないため対応不要
 - **CSP の注意**: index.html 先頭の `html.js` 付与1行を書き換えたら、CSP の `sha256-…` も計算し直す（ずれるとその行が動かず、静的索引が JS 環境でも表示されたままになる）。JS は `docs/app.js` に書く（インラインは CSP で止まる）。新しい外部の画像・フォント・通信先を使うときは CSP に追記する

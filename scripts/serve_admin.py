@@ -3,9 +3,9 @@
 
 環境変数 YOUTUBE_API_KEY を GET /api/key で返すことで、admin.html が
 APIキーを手入力せずに YouTube Data API を叩けるようにする。
-リポジトリ直下を配信し、127.0.0.1 のみで待ち受ける（外部からは触れない）。
+必要なHTML・JS・JSONだけを配信し、127.0.0.1 のみで待ち受ける。
 
-  python scripts/serve_admin.py
+  .venv/Scripts/python.exe scripts/serve_admin.py
   → 表示された URL（http://127.0.0.1:8000/tools/admin.html）をブラウザで開く
 """
 import argparse
@@ -15,6 +15,7 @@ import os
 import webbrowser
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parent.parent
 HOST = "127.0.0.1"
@@ -23,32 +24,81 @@ PORT = 8000
 # 127.0.0.1 に向け直すとブラウザ経由で同一オリジン扱いで読まれてしまう。
 # そのとき Host ヘッダーは相手のドメイン名になるので、ここに無い Host は拒否する。
 ALLOWED_HOSTS = {f"127.0.0.1:{PORT}", f"localhost:{PORT}"}
+ALLOWED_FILES = {
+    "/tools/admin.html": "tools/admin.html",
+    "/docs/index.html": "docs/index.html",
+    "/docs/app.js": "docs/app.js",
+    "/docs/videos.json": "docs/videos.json",
+    "/docs/tags.json": "docs/tags.json",
+    "/data/channels.json": "data/channels.json",
+}
 
 
 class Handler(SimpleHTTPRequestHandler):
     def host_allowed(self):
-        if self.headers.get("Host", "").lower() in ALLOWED_HOSTS:
+        hosts = self.headers.get_all("Host", [])
+        if len(hosts) == 1 and hosts[0].lower() in ALLOWED_HOSTS:
             return True
         self.send_error(403, "Forbidden host")
         return False
 
+    def end_headers(self):
+        self.send_header("X-Content-Type-Options", "nosniff")
+        self.send_header("X-Frame-Options", "DENY")
+        self.send_header("Content-Security-Policy", "frame-ancestors 'none'")
+        self.send_header("Cache-Control", "no-store")
+        super().end_headers()
+
+    def request_path(self):
+        try:
+            parts = urlsplit(self.path)
+        except ValueError:
+            return ""
+        return parts.path if not parts.scheme and not parts.netloc else ""
+
+    def send_head(self):
+        relative = ALLOWED_FILES.get(self.request_path())
+        if relative is None:
+            self.send_error(404, "Not found")
+            return None
+        expected = Path(self.directory).absolute() / relative
+        # 許可したURLでも、実ファイルがリンク経由で別の場所を指す場合は配信しない。
+        try:
+            resolved = expected.resolve()
+        except (OSError, RuntimeError):
+            resolved = None
+        if resolved != expected:
+            self.send_error(404, "Not found")
+            return None
+        return super().send_head()
+
     def do_HEAD(self):
-        if self.host_allowed():
-            super().do_HEAD()
+        self.serve_request(head_only=True)
 
     def do_GET(self):
+        self.serve_request(head_only=False)
+
+    def serve_request(self, head_only):
         if not self.host_allowed():
             return
-        # 環境変数のAPIキーをブラウザに渡す唯一のエンドポイント。上の Host 検査により外部露出はない。
-        if self.path == "/api/key":
+        if self.request_path() == "/api/key":
+            origin = self.headers.get("Origin")
+            if (origin is not None and origin != f"http://{self.headers['Host'].lower()}") or \
+                    self.headers.get("Sec-Fetch-Site") == "cross-site":
+                self.send_error(403, "Forbidden origin")
+                return
             body = json.dumps({"key": os.environ.get("YOUTUBE_API_KEY", "")}).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Content-Length", str(len(body)))
             self.end_headers()
-            self.wfile.write(body)
+            if not head_only:
+                self.wfile.write(body)
             return
-        super().do_GET()
+        if head_only:
+            super().do_HEAD()
+        else:
+            super().do_GET()
 
     def log_message(self, *args):
         pass  # アクセスログは抑制（キー取得も含め静かに動かす）

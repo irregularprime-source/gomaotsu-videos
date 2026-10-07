@@ -77,10 +77,12 @@ async function loadData() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return await res.json();
   } catch (e) {
-    $("error-area").innerHTML =
-      `<div class="error-box">videos.json を読み込めませんでした（${e.message}）。` +
-      `ローカルで開いている場合は簡易サーバー経由（例：python -m http.server）で表示してください。` +
-      `以下は内蔵サンプルの表示です。</div>`;
+    const box = document.createElement("div");
+    box.className = "error-box";
+    box.textContent = `videos.json を読み込めませんでした（${e.message}）。` +
+      `ローカルで開いている場合は「管理ツールを開く.bat」で起動し、/docs/index.html を開いてください。` +
+      `以下は内蔵サンプルの表示です。`;
+    $("error-area").replaceChildren(box);
     // グリッドが本物のデータを描けないので、HTML に埋め込んである静的索引を見せて内容を失わせない
     document.documentElement.classList.remove("js");
     return FALLBACK;
@@ -102,7 +104,11 @@ function renderChips() {
     b.className = "chip";
     b.style.setProperty("--c", TAG_COLOR[name]);
     b.setAttribute("aria-pressed", state.selectedTags.has(name));
-    b.innerHTML = `${name}<span class="cnt">${counts[name] || 0}</span>`;
+    b.textContent = name;
+    const count = document.createElement("span");
+    count.className = "cnt";
+    count.textContent = String(counts[name] || 0);
+    b.appendChild(count);
     b.addEventListener("click", () => {
       state.selectedTags.has(name) ? state.selectedTags.delete(name) : state.selectedTags.add(name);
       b.setAttribute("aria-pressed", state.selectedTags.has(name));
