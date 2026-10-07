@@ -19,11 +19,27 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 HOST = "127.0.0.1"
 PORT = 8000
+# DNSリバインディング対策。127.0.0.1 で待ち受けていても、悪意あるサイトが自ドメインを
+# 127.0.0.1 に向け直すとブラウザ経由で同一オリジン扱いで読まれてしまう。
+# そのとき Host ヘッダーは相手のドメイン名になるので、ここに無い Host は拒否する。
+ALLOWED_HOSTS = {f"127.0.0.1:{PORT}", f"localhost:{PORT}"}
 
 
 class Handler(SimpleHTTPRequestHandler):
+    def host_allowed(self):
+        if self.headers.get("Host", "").lower() in ALLOWED_HOSTS:
+            return True
+        self.send_error(403, "Forbidden host")
+        return False
+
+    def do_HEAD(self):
+        if self.host_allowed():
+            super().do_HEAD()
+
     def do_GET(self):
-        # 環境変数のAPIキーをブラウザに渡す唯一のエンドポイント。localhost限定なので外部露出はない。
+        if not self.host_allowed():
+            return
+        # 環境変数のAPIキーをブラウザに渡す唯一のエンドポイント。上の Host 検査により外部露出はない。
         if self.path == "/api/key":
             body = json.dumps({"key": os.environ.get("YOUTUBE_API_KEY", "")}).encode("utf-8")
             self.send_response(200)
