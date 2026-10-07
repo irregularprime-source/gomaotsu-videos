@@ -17,20 +17,25 @@
 ```
 docs/                 … GitHub Pages で公開される領域
   index.html          … 一覧サイト本体
+  app.js              … 一覧サイトの JS（CSP でインラインを禁止しているため別ファイル）
   videos.json         … 動画データ（自動収集[登録ch＋検索]＋手動登録がここに溜まる）
   tags.json           … フィルタチップに出すタグの定義（名前・色・表示順）
+  sitemap.xml         … 検索エンジン向けサイトマップ（build_static.py が自動生成）
+  googlec5a426f06dcfde4b.html … Google Search Console の所有権確認ファイル（消さない）
 data/
   channels.json       … 自動収集の対象チャンネルリスト
 scripts/
   collect.py          … 登録チャンネル収集スクリプト（Actions から実行）
   search_collect.py   … 検索収集スクリプト（Actions から実行）
   reclassify.py       … 既存データのタグを最新ルールで再計算する保守ツール
+  build_static.py     … videos.json から index.html 内の静的索引と sitemap.xml を生成
   serve_admin.py      … 管理ツールをローカルで開くための起動用サーバー
 tools/
   admin.html          … ローカル専用の管理ツール（公開されない）
 .github/workflows/
   collect.yml         … 登録チャンネル収集のワークフロー（6時間ごと）
   search.yml          … 検索収集のワークフロー（1時間ごと）
+.github/dependabot.yml … ワークフローで使う Actions の更新PRを週1回作る設定
 requirements.txt      … collect.py の依存（requests のみ）
 ```
 
@@ -44,7 +49,8 @@ requirements.txt      … collect.py の依存（requests のみ）
    ゴ魔乙判定語（`ゴ魔乙` / `ごまおつ` / `ゴシックは魔法乙女` / `ゴマ乙`）を含む動画のみ対象
 3. タイトル・説明文からタグを自動分類し、`docs/videos.json` に**未登録の動画だけ**追記
    - 既存の `videoId` は手動修正を保護するためスキップ
-4. 差分があれば `github-actions[bot]` がコミット＆プッシュ
+4. 差分があれば `scripts/build_static.py` で静的索引と sitemap.xml を作り直し（後述「検索エンジン・AIクローラー向けの静的索引」）、
+   `github-actions[bot]` がコミット＆プッシュ（検索収集も同じ）
 
 ### 検索収集（search.yml）
 
@@ -91,6 +97,42 @@ push が他の更新と競合して弾かれた場合は `git pull --rebase` で
 - **Cookie を使わないため、同意バナー・プライバシーポリシーは不要**（この点を最優先に選定。GA4 は Cookie 同意が必要になるため不採用）
 - 管理画面: https://irregular-prime.goatcounter.com/ （**Paths** で PV、**Referrals** で流入元を確認）
 - 管理ツール `tools/admin.html` は非公開かつ自分専用のため計測タグを入れていない（数字を汚さないため）
+- 計測スクリプトは中身が固定される版付きの `count.v5.js` を、改ざん検知（SRI の `integrity`）付きで読み込む。
+  自動更新されないので、新機能が必要になったら [版の一覧](https://www.goatcounter.com/help/countjs-versions)
+  にある新しい版の URL と `integrity` に差し替える
+
+## 検索エンジン・AIクローラー向けの静的索引
+
+一覧は `videos.json` を JS で描画するため、HTML そのものには動画が1件も書かれていない。Googlebot は JS を
+実行するので読めるが、GPTBot / ClaudeBot / PerplexityBot などの AI クローラーは基本的に JS を実行せず空の
+ページとして扱う。そこで `scripts/build_static.py` が同じ内容を HTML に直接書き出している（2026-09-05 導入）。
+
+- **静的索引**: `docs/index.html` の `<!-- BUILD:STATIC:START … -->` 〜 `<!-- BUILD:STATIC:END -->` の間に、
+  全動画の一覧（`docs/tags.json` の主要タグごとの見出し＋どれにも属さない「その他」）を差し込む。
+  1本の動画は最も具体的なタグ1つの見出しにだけ載せる（親タグ「スコア大会」等に重複させると HTML が膨らむため。
+  各行には全タグを書き出すので情報は失われない）。
+  - マーカー間は毎回上書きされるので手で編集しない。**マーカー自体を消すと build_static.py がエラーで止まる**。
+  - JS が動く環境では `<html>` に付く `js` クラスで隠し、通常のカード一覧を見せる。`videos.json` を読めなかったときは
+    クラスを外して静的索引を見せ直す。
+- **JSON-LD**: `CollectionPage` + `ItemList`（直近50件）の構造化データ。他人の YouTube 動画に `VideoObject` を
+  付けるのは Google のガイドライン上リスクがあるため、「一覧ページ」としてのマークアップに留めている。
+- **sitemap.xml**: トップページ1件のみ。`lastmod` は `videos.json` の `updated`。
+- **メタ情報**: `<head>` に canonical / OGP / Twitter Card / title・description を設定済み（こちらは手書きで、自動生成ではない）。
+- **作り直すタイミング**: 収集ワークフロー2つ（`videos.json` に差分があったとき）と `変更を保存する.bat` が自動で実行する。
+  手で作り直すなら `python scripts/build_static.py`（変更が無ければ「変更なし」と表示されるだけ）。
+- **Google Search Console**: 所有権確認ファイル `docs/googlec5a426f06dcfde4b.html` を置いて確認済み。
+  サイトマップ送信・インデックス登録リクエストも 2026-09-05 に実施済み。このファイルを消すと所有権確認が外れる。
+  効果は Search Console の「検索パフォーマンス」と「URL 検査」で見る（GoatCounter は JS で計測するため、
+  クローラーの訪問は数えられない。人間の検索流入は Referrals で見える）。
+
+## セキュリティ対策
+
+| 対象 | 対策 | 変更するときの注意 |
+|---|---|---|
+| 公開サイト（`docs/index.html`） | `<meta>` で CSP を指定（GitHub Pages はレスポンスヘッダーを設定できないため）。スクリプトは自サイト（`app.js`）と GoatCounter だけ許可し、画像・フォント・通信先も使っているものに限定 | 新しい外部サービス（画像・フォント・API など）を使うときは CSP の該当項目に追加する。追加しないとブラウザに読み込みを拒否される |
+| 〃 インラインスクリプト | 禁止。例外は `<head>` の `html.js` を付ける1行だけで、CSP にその1行の sha256 ハッシュを書いて許可している | この1行を書き換えたらハッシュも計算し直す。JS を足すときは `app.js` に書く |
+| GitHub Actions | `actions/checkout` などはタグではなくコミット SHA で固定（タグの付け替えで中身が差し替わるのを防ぐ） | 更新は Dependabot が作るPRで受け取る。メジャー版の更新は挙動が変わり得るので、内容を確認してからマージする |
+| 管理ツール用サーバー（`serve_admin.py`） | Host ヘッダーが `127.0.0.1:8000` / `localhost:8000` 以外の要求は 403 で拒否（DNS リバインディング対策。起動中に悪意あるサイトを開いても APIキーや手元ファイルを読まれない） | ブラウザでは必ず `127.0.0.1` か `localhost` の URL で開く |
 
 ## タグの仕組み
 
@@ -136,7 +178,8 @@ python scripts/serve_admin.py         # サーバーのみ
 python scripts/serve_admin.py --open  # ブラウザも自動で開く
 ```
 
-いずれも `http://127.0.0.1:8000/tools/admin.html` をブラウザで開く（127.0.0.1 限定）。
+いずれも `http://127.0.0.1:8000/tools/admin.html` をブラウザで開く（127.0.0.1 限定。
+`127.0.0.1:8000` / `localhost:8000` 以外のホスト名で来た要求は拒否する。上の「セキュリティ対策」参照）。
 環境変数 `YOUTUBE_API_KEY` があれば自動で読み込む（`/api/key` 経由。ディスクにも git にも保存しない）。
 無い場合はツール上部にキーを貼り付ける（この端末のブラウザの localStorage にのみ保存）。
 
@@ -207,8 +250,10 @@ YouTube 側の状態に関係なく、その動画を `videos.json` から消す
 | `tags.json` | `docs/tags.json` |
 
 置き場所に反映したら、リポジトリ直下の **`変更を保存する.bat` をダブルクリック**すると、
-上記3つのJSONの変更を commit → `git pull --rebase` → push まで自動で行いサイトへ反映する
+`build_static.py` で静的索引（`docs/index.html`）と `docs/sitemap.xml` を作り直したうえで、上記3つのJSONと
+あわせて commit → `git pull --rebase` → push まで自動で行いサイトへ反映する
 （自動収集が同時に更新していても取りこぼさないよう rebase を挟む）。コマンド操作は不要。
+Python が見つからないか `build_static.py` が失敗したときは、そこで止めて commit しない。
 
 **`[中断]` と表示されたとき**は、その画面の内容をそのまま伝えて復旧を依頼する。
 前回の rebase が競合で止まったままだったり `main` 以外にいる状態でコミットすると、

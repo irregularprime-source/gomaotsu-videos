@@ -4,7 +4,7 @@
 複数のAIアシスタント（Claude Code / Web版Claude / ChatGPT 等）や本人が現状を把握するための共有メモ。
 リポジトリ全体の使い方・仕様は [README.md](README.md) を参照。
 
-最終更新: 2026-07-25 (JST)
+最終更新: 2026-10-07 (JST)
 
 ## 1. 元の依頼（原文に近い形で保持。書き換え禁止）
 > 次に、サンプルデータを削除と、チャンネル・動画登録用のフォームを作って。フォームは当面私だけ使えればよい。あと、作業用に未確認の動画などを確認して、手動でタグの追加とかしたりできるように。それに関して、表示用のタグは多分今後も増えていくので、それに耐えうる作りにしていきたい。
@@ -19,6 +19,7 @@
 - スクロール自動読み込みは不採用（ボタン式「もっと見る」に決定）
 - 回数タグのフィルタチップ化・専用フィールド化はしない（検索+カテゴリタグ併用で要件充足、チップは表示のみ）
 - 過剰な抽象化・防御的コード禁止（発注者方針。外部入力のみバリデーション）
+- 検索収集で入った未確認動画（`source:"search"` / `status:"自動分類"`）を静的索引・JSON-LD から除外する対策は**やらない**（10-07 セキュリティ確認で提案 → ユーザー判断で見送り。現状のまま確認前でも掲載する）
 - 検索ベース収集（search.list）は **07-21 実装済み**（別ワークフロー・1時間ごと）。ただし過去分の初回遡り（`--after`/`--before` の期間区切りバッチ）はまだ運用しておらず、随時少しずつ進める（詳細はセクション8）
 
 ## 3. 確定した設計判断
@@ -57,6 +58,14 @@
 | 削除動画の検出は `videos.list?part=id` の**戻りIDに無いもの**＝存在しない、で判定。対象は絞り込み結果 | ID50件で1ユニットのため全件でも45ユニット程度と安い。限定公開は返るので誤検出しない。削除/非公開/BANは区別できないため表示は「見つからない」に留める | 07-25 |
 | `変更を保存する.bat` は rebase途中・main以外を検知したら**何もせず中断**。pull/push 失敗時も後続を実行しない | 07-25 に「rebaseが競合で止まったまま4回保存し続け、全部detached HEADに積まれてpushできていなかった」事故が発生。失敗しても次に進む作りだと、ユーザーからは成功しているように見えて気づけない | 07-25 |
 | 削除は videos.json から消すだけ。**除外リストは作らない** | YouTube側で消えた動画は再取得され得ないので不要。YouTubeに残る動画（誤収集）を消した場合は再登録され得るが、頻度が低くチャンネル登録解除で対応可能とユーザー判断 | 07-25 |
+| videos.json から静的索引を HTML に直接書き出す（`scripts/build_static.py`、index.html の BUILD:STATIC マーカー間）。JS 有効時は `html.js` クラスで隠す | JS 描画のみで HTML に動画0件だったため、JS を実行しない AI クローラー（GPTBot/ClaudeBot 等）に空ページ扱いされていた。人間には従来のカード一覧を見せる | 09-05 |
+| 静的索引の見出しは tags.json の主要タグのみ。1本は最も具体的なタグ1つの見出しに寄せる | 第○回等まで見出しにすると数百セクション。親タグ「スコア大会」と下位タグに重複させると HTML が約1.8倍に膨らむ（行内に全タグは書くので情報は失われない） | 09-05 |
+| 構造化データは CollectionPage + ItemList（直近50件）。VideoObject は付けない | 他人の YouTube 動画に VideoObject を付けるのは Google のガイドライン上リスク。全件載せても巨大になるだけで得がない | 09-05 |
+| build_static.py は収集ワークフロー2つ（差分ありのとき）と `変更を保存する.bat` から自動実行 | 手で作り直し忘れて索引が古くなるのを防ぐ。.bat は失敗時に commit せず中断 | 09-05 |
+| serve_admin.py は Host ヘッダーが `127.0.0.1:8000` / `localhost:8000` 以外なら GET・HEAD とも 403 | 127.0.0.1 待ち受けだけでは DNS リバインディング（悪意あるサイトが自ドメインを 127.0.0.1 に向け直す）でブラウザ経由で /api/key のキーやリポジトリ直下（_local/・.git）を読まれ得る。その場合 Host は相手のドメイン名になるので Host で弾ける | 10-07 |
+| 公開サイトに meta の CSP を追加。本体 JS は中身そのまま `docs/app.js` へ移し、インラインは `html.js` 付与1行のみハッシュ許可。style-src は unsafe-inline | Pages はヘッダーを付けられないため meta。インライン JS を許すと CSP の意味が薄いので外出し。ちらつき防止の1行だけはインライン必須。`<style>` は頻繁に触るのでハッシュ化せずリスクの小さい unsafe-inline に留めた | 10-07 |
+| GoatCounter を版固定の `count.v5.js` + SRI（integrity）で読み込む | 外部スクリプトが改ざんされてもそのまま実行される状態だった。ハッシュは公式掲載値と実ファイルの一致を確認済み。代償として自動更新はされない | 10-07 |
+| Actions（checkout / setup-python）を現行と同じ版（v4.4.0 / v5.6.0）の SHA に固定し、`.github/dependabot.yml` で週1回の更新PRを受け取る | タグは付け替えで中身が差し替わり得る。版は上げずに固定だけ行い挙動を変えない。メジャー版の更新（v7 系）は Dependabot のPRを見てユーザーが判断する | 10-07 |
 
 ## 4. 現在の状態（すべてコミット済み・origin/main 反映済み）
 - Phase2実装（collect.py/collect.yml）、実チャンネル設定、回数・イベント名タグ+フォント特大化（19e8f4f）
@@ -77,12 +86,16 @@
 - **保存フローの事故と復旧（07-25・push済み c417f3f / 79b853b）**: 20:01の保存で `git pull --rebase` が videos.json の競合で停止 → 以降4回の保存が detached HEAD に積まれ、push できないまま作業継続していた（`.bat` が pull 失敗を検知せず先へ進む作りだったため、画面上は完了に見えていた）。復旧は `git rebase --quit` → `git branch -f main 7b559f1` → checkout main。**編集内容の欠落なし**（確認済み744→953件、未確認へ戻った動画0、メモ・タグ消失なし）。ただし停止中に検索収集が追加した2件（`f-JQPo46jyk` / `2s4ijlVsJGI`）がローカルに無く、そのままpushすると消える状態だったため末尾に復元（c417f3f）。意図削除の2件（FF14誤収集 `0tjUI5OoppI`・YouTube側削除済み `AInlFXIPEvU`）は戻していない。再発防止として `.bat` にガードを追加（79b853b）
 - **「もっと見る」の表示残り修正＋削除機能（07-25・push済み 05fc44c）**: ①`[hidden]{display:none!important}` を index.html / admin.html に追加。`.more-btn{display:block}` が標準の `[hidden]` を打ち消し、全件表示になってもボタンが古い残り件数のまま消えなかった（該当件数の表示自体は正しかった）。②管理ツール①タブに「YouTube存在チェック」（`videos.list` にID50件ずつ問い合わせ→返らなかった動画を一覧→選択して videos.json から削除）と、各カードの「一覧から削除」（誤収集動画用）を追加。いずれも2回クリック方式。**実機確認済み**（架空ID2件のみ検出／実在120件で誤検出0／実データ「第581回」37件中1件が実際に削除済みと判明 `AInlFXIPEvU`／削除フローと保存バー反映）
 - **管理ツール①タブの絞り込み（07-25・push済み 5cedea9）**: キーワード（タイトル/チャンネル/説明文/**タグ**/メモ/ID）・確認状態・タグチップ・チャンネル・公開日FROM-TO・並び順・条件クリアを追加。**50件ずつの段階描画**（従来は未確認1448件を一度にDOM生成）。確認済みも表示・編集できるようにし「未確認に戻す」を追加、一括確認は絞り込み結果の全件を対象に件数表示＋2回クリック方式へ。タブ名を「① 未確認レビュー」→「① レビュー・編集」。**ブラウザ実機で動作確認済み**（絞り込み各条件と組み合わせ・ページング・並び順・状態トグル・一括確認・保存バーのdirty反映）
+- **検索エンジン・AIクローラー向け対応（09-05・push済み c8e1d79）**: `scripts/build_static.py` を追加し、videos.json から index.html 内の静的索引＋JSON-LD と `docs/sitemap.xml` を生成。canonical / OGP / Twitter Card / title・description を追加。収集ワークフロー2つと `変更を保存する.bat` に組み込み済み。Search Console の所有権確認ファイル `docs/googlec5a426f06dcfde4b.html` を配置し、**ユーザーが同日に所有権確認・サイトマップ送信・インデックス登録リクエストまで完了 → 以後は結果待ち**
+- **セキュリティ確認と対策（10-07・push済み 410f32b / 9594cf8 / f81c17c）**: 公開サイト・リポジトリ・管理ツールを確認。XSS（表示は textContent／静的索引は html.escape）、APIキーの混入（作業ツリー・全履歴とも無し）、非公開ファイルの露出（tools/・data/・.git は 404、_local/ は未コミット）は問題なし。対策として ①serve_admin.py の Host 検査 ②CSP 追加＋JS を app.js へ外出し＋GoatCounter の SRI 化 ③Actions の SHA 固定＋Dependabot を実施（各判断はセクション3）。**ローカル・公開サイトとも実機確認済み**（一覧・絞り込み・サムネ・フォント・GoatCounter 読込が正常、CSP 違反0件、差し込んだスクリプトが CSP で止まることも確認。Host 偽装は 403）。Dependabot は push 直後に更新PR #1（checkout→7.0.1）/ #2（setup-python→7.0.0）を作成済み・未マージ。コミットの作成者メールは過去分はそのまま、今後は noreply（ユーザー設定済み）
 - **ギルドバトル(通常)判定の拡充（07-23・push済み 12f14c6）**: `GUILD_NORMAL_MARKERS` を新設し、明示語（ギルドバトル/ギルバト）に加え属性有利ローテ名（旧/新/三 × 火水風光闇）＋闘技場マップ名でも(通常)判定。**スコア大会が付いた動画には付けない**ガード付き（「新火鉢」等の誤爆・併記を防止、「新火」だけ「新火有利」形）。reclassify で **102件**（すべて未分類→ギルドバトル(通常)）を再計算
 
 ## 5. 次のステップ（具体的に1〜3個）
 1. **過去動画のバックフィル**（ローカル・少しずつ）: `collect.py --backfill`（登録ch）と `search_collect.py --after/--before`（検索・期間区切り）を `--dry-run` で確認してから実行 → videos.json のサイズを見て JSON分割の要否を判断
 2. **（ユーザー作業）未確認1271件のレビュー消化**: ①タブの絞り込み（回数・チャンネル・タグ）で単位を区切り、「絞り込み結果をすべて確認済みにする」で消化する運用が回るかを見る
 3. **（ユーザー作業）「未分類」211件の扱いを判断**: 手動タグ付けで済ませるか、collect.py のキーワード追加＋reclassify で機械的に潰すか。件数が増え続けるようなら後者
+- **（ユーザー作業）SEO 対応の効果確認**: Search Console の「検索パフォーマンス」「URL 検査」でインデックス状況と検索流入を見る（GoatCounter は JS 計測なのでクローラー訪問は数えられない。人間の検索流入は Referrals で見える）
+- **（ユーザー判断）Dependabot の更新PR #1 / #2 の扱い**: どちらもメジャー版の更新（checkout v4→v7、setup-python v5→v7）。リリースノートで破壊的変更を確認してからマージするか決める
 - Phase 4=使用キャラ・編成タグ等の拡張は後回し
 
 **完了して外したもの（07-25）**: 検索収集の実機確認（本番で1時間ごとに稼働中、`source:"search"` 43件）／FF14誤収集の削除（管理ツールの「一覧から削除」で除去済み・残0件）
@@ -108,7 +121,9 @@
 **注意**: `data/event_tags.json` はゲーム内スクショ（`_local/スコア大会（イベント）名称参考用/`・約210MB・個人実績付き）のOCRから作成。**元スクショは `_local/` 配下＝.gitignore でリポジトリ非同梱**。カタカナ固有名にOCR誤読が残り得るため、追加時は実タイトルとの一致で裏取りするのが確実（`ゴシパ`/`HYCレーザー`/`20thレコ` は既存動画一致で確認済み）。候補の全体像は [docs/event_names_candidates.md](docs/event_names_candidates.md)（Tier A/B/C）を参照。
 
 ## 6. ファイル境界
-- 変更してよい: docs/（index.html, videos.json, tags.json, event_names_candidates.md）, data/（channels.json, event_tags.json）, tools/, scripts/, .github/workflows/collect.yml, .gitignore, README.md, PROJECT_STATE.md
+- 変更してよい: docs/（index.html, app.js, videos.json, tags.json, event_names_candidates.md）, data/（channels.json, event_tags.json）, tools/, scripts/, .github/workflows/collect.yml, .github/workflows/search.yml, .github/dependabot.yml, .gitignore, README.md, PROJECT_STATE.md（app.js・search.yml・dependabot.yml は 10-07 にユーザー承認で追加）
+- 自動生成なので手で編集しない: index.html の BUILD:STATIC マーカー間、docs/sitemap.xml（どちらも build_static.py が上書き。マーカー自体を消すと build_static.py がエラーで止まる）
+- 消さない: docs/googlec5a426f06dcfde4b.html（Search Console の所有権確認。消すと確認が外れる）
 - 変更禁止（非公開・gitignore維持）: _local/ 配下（内部向け実装指示書 _local/phase2_implementation_guide.md、参考スクショ _local/スコア大会（イベント）名称参考用/ など。手元専用ファイルはここに置けば自動除外）
 
 ## 7. 注意事項・ハマりどころ
@@ -120,6 +135,8 @@
 - 自動収集の同時実行対策済みだが、**手動でローカルpushする際は Actions の実行と重ならないよう注意**（重なっても直列化+リトライで復帰はする）
 - ローカル確認: `python scripts/serve_admin.py` でサイト（/docs/index.html）も管理ツール（/tools/admin.html）も配信可
 - YOUTUBE_API_KEY は Actions の Secret とローカル環境変数の両方に設定。**コードには絶対に含めない**
+- **CSP の注意**: index.html 先頭の `html.js` 付与1行を書き換えたら、CSP の `sha256-…` も計算し直す（ずれるとその行が動かず、静的索引が JS 環境でも表示されたままになる）。JS は `docs/app.js` に書く（インラインは CSP で止まる）。新しい外部の画像・フォント・通信先を使うときは CSP に追記する
+- 作業コピーの index.html は CRLF（リポジトリ内は LF、git の自動変換）。Python で文字列置換するときは `\r\n` を考慮する
 - ユーザーの承認を得てから作業開始（グローバルCLAUDE.mdの最重要ルール）。ファイル作成・編集・削除、状態変更コマンドは要承認／調査・読み取りは承認不要
 
 ## 8. 収集拡張（検索ベース発見）の設計メモ — 07-21 実装済み
