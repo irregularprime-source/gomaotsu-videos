@@ -11,6 +11,8 @@ permissions:
 
 jobs:
   test:
+    env:
+      PYTHONUTF8: "1"  # 英語Windowsでも日本語ログを出力できるようにする
     strategy:
       fail-fast: false
       matrix:
