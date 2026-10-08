@@ -4,6 +4,15 @@
 
 過去の件数・実行環境・予定は記録時点のもの。現行仕様や現在の件数として使わない。過去の評価や方針と、今回確認した事実を区別して読む。
 
+## 2026-10-08 Python を 3.14 に統一（PR #3）
+
+- **理由**: ローカル .venv と Windows CI の Python 3.10 が 2026-10-01 でサポート終了。依存が 3.10 対応をやめると Dependabot 更新PRが Windows CI で通らず更新を取り込めなくなる。本番収集・Linux CI の 3.11（2027-10 まで）も含めて 3.14（2030-10 まで）へ揃え、手元と本番の版差をなくした（ユーザーが「全部揃える案A」を選択）。
+- **変更**: 収集ワークフロー2本・回帰CI（Windows / Linux）の `python-version` を 3.14 に、BAT 2本の代替を `py -3.14` に（CP932 / CRLF 維持）。requirements.txt はコメントのみ（版・ハッシュは不変。3.14 用 wheel のハッシュは固定済み）。`.gitignore` に `.venv-*/`。
+- **ローカル**: 旧環境を `.venv-py310` に改名して保持し、Python 3.14.6 で `.venv` を再作成。ハッシュ検証付きインストール・pip check、回帰テスト13件成功・1件スキップ（シンボリックリンク権限。従来と同じ）、build_static は変更なし、全スクリプトの py_compile と DeprecationWarning を error 扱いにした import、serve_admin の起動と許可/拒否（200/403/404）を確認。
+- **PR CI**: [37767853088](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/37767853088) で Windows / Linux とも CPython 3.14.7、インストール・pip check・14件のテストが成功してから squash マージ（9033d43）。PR 経由にしたのは、本番ワークフローの変更をマージ前に両 OS で検証するため。
+- **本番収集**: マージ後に手動実行。[登録チャンネル 37768335778](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/37768335778)（1件追加・push 成功 de2d912）、[検索 37768339550](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/37768339550)（新着なし）とも CPython 3.14.7 で成功。ログに APIキー形式の混入なし。
+- **ローカル検証時の注意**: Claude Code の実行環境には `NoDefaultCurrentDirectoryInExePath=1` が設定され、テストが BAT を `cmd /c 名前` で起動できず失敗する（ユーザー・システム環境変数には無いので、通常のダブルクリック運用には影響しない）。その環境でテストするときはこの変数を外す。また、BAT の「中断する」ことを確かめる2件は、BAT が起動できなかった場合にも成功扱いになる弱点がある（未対応）。
+
 ## 2026-10-08 検索収集の既定窓を6時間→12時間に拡大
 
 - **理由**: search.yml の cron は1時間ごとだが、09-04〜10-08 の定時実行200回のうち22回は前回から6時間超空き、最大8.7時間だった（GitHub 側の間引き。今回の変更前から同じ傾向）。窓（6時間）を超えた分の時間に公開された未登録投稿者の動画を取りこぼし得た。
