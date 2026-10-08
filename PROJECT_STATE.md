@@ -7,29 +7,29 @@
 
 ## 現在の状態
 
-公開サイト・登録チャンネル収集・検索収集は運用中。管理ツールはローカル専用。2026-10-07〜08 のセキュリティ実装計画は、公開・本番実行・検証まで完了。
+公開サイト・登録チャンネル収集・検索収集は運用中。管理ツールはローカル専用。2026-10-07〜08 のセキュリティ実装計画は、公開・本番実行・検証まで完了。10-08 にレビュー後の追加対応（検索の既定窓12時間、Python 3.14 への統一、保存用BATの未コミット変更チェック、公開サイトのエラー文の閲覧者向け化）も公開・検証まで完了。
 
 | 項目 | 状態・確認日 |
 |---|---|
 | 公開 | [ゴ魔乙 動画索引](https://irregularprime-source.github.io/gomaotsu-videos/)、GitHub Pages: main /docs、HTTPS強制（10-08確認） |
 | 収集 | 登録チャンネル6時間ごと、検索1時間ごと。同じ concurrency グループで直列化 |
-| Python | ローカル .venv・回帰CI（Windows / Linux）・収集 Actions すべて 3.14（10-08 に 3.10 / 3.11 から移行）。旧環境 .venv-py310 は問題がないと確認できるまで残す。依存は版・wheel SHA256固定 |
+| Python | ローカル .venv・回帰CI（Windows / Linux）・収集 Actions すべて 3.14（10-08 に 3.10 / 3.11 から移行）。旧環境 .venv-py310 は 10-08 に削除（ごみ箱へ移動）。依存は版・wheel SHA256固定 |
 | セキュリティ設定 | Dependabot alerts・セキュリティ更新、Secret scanning・push protection が有効（10-08確認） |
-| 検証 | 文書整理前の公開コミット 9a00eb3 の[回帰CI](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/37644320327)・[Pages](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/37644319728)成功 |
+| 検証 | 最新の公開コミット bc97277 で[回帰CI](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/37769514764)（Python 3.14）成功・Pages 反映を確認（10-08） |
 
-回帰CIは Windows 14件成功、Linux 11件成功・Windows BAT専用3件スキップ。収集2本の本番実行、公開JS・データの一致、CSP・SRI、非公開パス404、ログにキーが出ないことを確認済み。
+回帰CIは Windows 17件成功、Linux 13件成功・Windows BAT専用4件スキップ。収集2本の本番実行（Python 3.14）、公開JS・データの一致、CSP・SRI、非公開パス404、ログにキーが出ないことを確認済み。
 自動ブラウザで GoatCounter スクリプトの直接取得が失敗した件は原因未確定。HTTP取得・SRI一致・取得応答を使った初期化は確認済み。詳細・実行IDは CHANGELOG を参照。
 
 ### データのスナップショット
 
-元データ: `docs/videos.json`、updated: `2026-10-08T00:21:22+09:00`。件数はこの時点のスナップショットで、自動収集やレビューにより変わる。
+元データ: `docs/videos.json`、updated: `2026-10-08T20:10:47+09:00`。件数はこの時点のスナップショットで、自動収集やレビューにより変わる。
 
 | 項目 | 件数 |
 |---|---:|
-| 動画 | 3,021 |
-| 確認済み / 未確認 | 2,941 / 80 |
-| 「未分類」タグ付き | 408 |
-| source: auto / search | 2,318 / 703 |
+| 動画 | 3,025 |
+| 確認済み / 未確認 | 2,941 / 84 |
+| 「未分類」タグ付き | 409 |
+| source: auto / search | 2,319 / 706 |
 | 登録チャンネル / フィルタ用タグ定義 | 59 / 14 |
 
 ## 1. 元の依頼（原文に近い形で保持。書き換え禁止）
@@ -58,7 +58,7 @@
 - **分類**: 確認済み・手動登録を再分類で上書きしない。イベント辞書は data/event_tags.json、スコア大会にだけ適用。スコア大会とギルドバトル(通常)の誤併記を防ぐガードを維持。
 - **静的索引**: build_static.py が BUILD:STATIC マーカー間と sitemap.xml を生成。一覧の JSON-LD は CollectionPage + ItemList（直近50件）、VideoObject は付けない。
 - **管理キー・サーバー**: 環境変数優先、手入力はページのメモリのみ。localStorageへ保存しない。ループバック待ち受け、Host/Origin検査、必要ファイル限定、no-store・フレーム埋め込み禁止。同じ端末のプロセスからのアクセスは信頼する。
-- **保存**: 保存用BATは対象5ファイル以外がステージ済みなら中断し、勝手にステージ解除しない。main以外・rebase途中、生成やGitの失敗も中断。管理起動BATは pull --ff-only 失敗時にサーバーを起動しない。
+- **保存**: 保存用BATは対象5ファイル以外がステージ済み、または未コミットの変更があれば中断し（後者はコミット後の pull --rebase 失敗を防ぐため）、勝手にステージ解除・変更しない。main以外・rebase途中、生成やGitの失敗も中断。管理起動BATは pull --ff-only 失敗時にサーバーを起動しない。
 - **依存・Actions**: 依存をハッシュ検証付きでインストール、ActionsはSHA固定。Dependabotの更新をレビューし、両環境CIが通ってから取り込む。
 - **APIキー制限**: YouTube Data API v3だけに制限。IP・HTTPリファラーによるアプリケーション制限は付けない方針（10-07にユーザーが確認）。キー自体はコード・Git・ログへ含めない。
 
@@ -85,6 +85,7 @@
 - この境界は許可済みの作業範囲を整理したもの。新たな要件や公開の承認を自動で与えるものではない。
 - ファイル変更・状態変更コマンドはユーザー承認後、読み取り・調査は承認不要。承認済み範囲を拡張しない。
 - Windows / PowerShellではプロジェクトの .venv を使い、グローバル環境へ pip install しない。
+- Claude Code などの実行環境では `NoDefaultCurrentDirectoryInExePath=1` が設定され、回帰テストが BAT を起動できずに失敗することがある。その環境でテストするときはこの変数を外す（ユーザー・システムの環境変数には無く、通常のダブルクリック運用には影響しない）。
 - JSONは ensure_ascii=False / indent=2 / 末尾改行。BATはCP932 / CRLFを維持。
 - 保存用BATは通常のデータ編集専用。コード・辞書・文書の変更は対象差分を確認して明示的にcommitする。
 - 自動収集の更新を消さないよう、push前にoriginを取得して統合する。競合時はデータを確認して解消する。
