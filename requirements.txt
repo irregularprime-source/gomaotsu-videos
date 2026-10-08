@@ -1,4 +1,4 @@
-# CI Python 3.11 / local Python 3.10. Update versions and wheel hashes together.
+# Python 3.14 (local / CI / Actions). Update versions and wheel hashes together.
 # Install with --require-hashes --only-binary=:all:.
 
 requests==2.34.2 \

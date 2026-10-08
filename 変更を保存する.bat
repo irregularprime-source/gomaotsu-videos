@@ -14,7 +14,7 @@ if exist ".git\rebase-apply" goto :stuck
 for /f "delims=" %%b in ('git rev-parse --abbrev-ref HEAD') do set "BRANCH=%%b"
 if not "%BRANCH%"=="main" goto :stuck
 
-set "PYCMD=py -3.10"
+set "PYCMD=py -3.14"
 if exist ".venv\Scripts\python.exe" set PYCMD=".venv\Scripts\python.exe"
 %PYCMD% -B "scripts/check_staged.py"
 if errorlevel 1 goto :stagefail
@@ -54,7 +54,7 @@ exit /b 0
 
 :stagefail
 echo [中断] ステージ済みファイルの確認に失敗しました。上の表示を確認してください。
-echo Python が使えない場合は、Python 3.10 またはプロジェクトの仮想環境を確認してください。
+echo Python が使えない場合は、Python 3.14 またはプロジェクトの仮想環境を確認してください。
 pause
 exit /b 1
 

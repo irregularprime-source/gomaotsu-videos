@@ -4,6 +4,8 @@
 _local/
 
 .venv/
+# Python 移行時に残す旧環境（例: .venv-py310）
+.venv-*/
 
 __pycache__/
 *.pyc

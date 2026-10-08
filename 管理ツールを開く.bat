@@ -12,7 +12,7 @@ if errorlevel 1 goto :pullfail
 echo.
 echo [2/2] サーバーを起動してブラウザで管理ツールを開きます。
 echo       終了するには、このウィンドウを閉じるか Ctrl+C を押してください。
-set "PYCMD=py -3.10"
+set "PYCMD=py -3.14"
 if exist ".venv\Scripts\python.exe" set PYCMD=".venv\Scripts\python.exe"
 %PYCMD% -B "scripts/serve_admin.py" --open
 if errorlevel 1 goto :serverfail
@@ -28,6 +28,6 @@ exit /b 1
 
 :serverfail
 echo [中断] サーバーの起動または実行に失敗しました。
-echo Python 3.10 またはプロジェクトの仮想環境と、上のエラーを確認してください。
+echo Python 3.14 またはプロジェクトの仮想環境と、上のエラーを確認してください。
 pause
 exit /b 1

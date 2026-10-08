@@ -27,7 +27,7 @@
 Windows / PowerShell で、リポジトリ直下から初回に実行する：
 
 ```powershell
-py -3.10 -m venv ".venv"
+py -3.14 -m venv ".venv"
 ```
 
 上の環境作成後、依存をインストールする：
@@ -38,8 +38,12 @@ py -3.10 -m venv ".venv"
 ```
 
 以降は `& ".\.venv\Scripts\python.exe"` を使う。グローバル環境へはインストールしない。
-2本の起動・保存用 BAT も `.venv` を優先し、無い場合だけ `py -3.10` を使う。
+2本の起動・保存用 BAT も `.venv` を優先し、無い場合だけ `py -3.14` を使う。
 `.venv/` は Git の管理対象外。
+
+Python はローカル・回帰CI・収集 Actions のすべてで 3.14 に揃えている（3.14 のサポート期限は 2030-10）。
+次に版を上げるときも、ローカルの `.venv`、BAT 2本の `py -3.x`、ワークフロー3本の `python-version` を同時に変える。
+旧環境を残すなら `.venv-py310` のように `.venv-` で始まる名前にする（Git の管理対象外）。
 
 ## 管理ツール（ローカル専用）
 
@@ -317,7 +321,7 @@ Windows のシンボリックリンク作成権限が無い場合、その1件�
 
 依存を更新するときは Dependabot PR を確認し、`requirements.txt` の直接・間接依存を
 整合する版に更新する。手動更新では、対象版の PyPI JSON に掲載された wheel の SHA256 を
-固定値へ反映する。ハッシュ検証を外して更新を通さない。Windows/Python 3.10 と Linux/Python 3.11
+固定値へ反映する。ハッシュ検証を外して更新を通さない。Windows と Linux（どちらも Python 3.14）
 の両方でインストール・`pip check`・回帰検証が成功してからマージする。
 
 Dependabot alerts とセキュリティ更新で新たに判明した脆弱性を追跡する。
@@ -371,7 +375,7 @@ tools/
 .github/workflows/
   collect.yml         … 登録チャンネル収集のワークフロー（6時間ごと）
   search.yml          … 検索収集のワークフロー（1時間ごと）
-  security-check.yml  … Windows/Python 3.10 と Linux/Python 3.11 の回帰検証
+  security-check.yml  … Windows と Linux（Python 3.14）の回帰検証
 .github/dependabot.yml … Actions と Python 依存の更新PRを週1回作る設定
 requirements.txt      … requests と間接依存のバージョン・wheel SHA256 の固定
 README.md             … 操作・保守手順
