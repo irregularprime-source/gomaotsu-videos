@@ -232,6 +232,28 @@ class GitSecurityTests(unittest.TestCase):
         self.git("add", "docs/tags.json")
         self.assertEqual(self.check_staged().returncode, 0)
 
+    def commit_tracked_note(self):
+        (self.repo / "notes.txt").write_text("fixture", encoding="utf-8")
+        self.git("add", "notes.txt")
+        self.git("commit", "-m", "fixture notes")
+        return self.git("rev-parse", "HEAD").stdout.strip()
+
+    def test_unstaged_change_to_unlisted_tracked_file_is_rejected_without_changing_it(self):
+        head = self.commit_tracked_note()
+        (self.repo / "notes.txt").write_text("WORK_IN_PROGRESS", encoding="utf-8")
+        (self.repo / "docs/videos.json").write_text('{"updated":"2026-10-08T00:00:00+09:00","videos":[]}', encoding="utf-8")
+        result = self.check_staged()
+        self.assertEqual(result.returncode, 1)
+        self.assertIn(b"notes.txt", result.stderr)
+        self.assertEqual((self.repo / "notes.txt").read_text(encoding="utf-8"), "WORK_IN_PROGRESS")
+        self.assertEqual(self.git("diff", "--cached", "--name-only").stdout, b"")
+        self.assertEqual(self.git("rev-parse", "HEAD").stdout.strip(), head)
+
+    def test_untracked_file_does_not_block_save(self):
+        (self.repo / "memo.txt").write_text("untracked", encoding="utf-8")
+        (self.repo / "docs/videos.json").write_text('{"updated":"2026-10-08T00:00:00+09:00","videos":[]}', encoding="utf-8")
+        self.assertEqual(self.check_staged().returncode, 0)
+
     def batch(self, name):
         subprocess.run([sys.executable, "-m", "venv", "--without-pip", str(self.repo / ".venv")],
                        env=self.env, check=True, capture_output=True)
@@ -261,6 +283,25 @@ class GitSecurityTests(unittest.TestCase):
         changed = set(self.git("diff", "--name-only", self.initial, "HEAD").stdout.splitlines())
         self.assertEqual(changed, {b"docs/videos.json", b"docs/index.html", b"docs/sitemap.xml"})
         self.assertEqual(self.git("rev-parse", "HEAD").stdout, self.git("rev-parse", "origin/main").stdout)
+
+    @unittest.skipUnless(os.name == "nt", "Windows batch regression")
+    def test_save_batch_stops_before_commit_for_unstaged_unlisted_change(self):
+        remote = self.root / "remote.git"
+        subprocess.run(["git", "init", "--bare", str(remote)], env=self.env, check=True, capture_output=True)
+        self.git("remote", "add", "origin", str(remote))
+        head = self.commit_tracked_note()
+        self.git("push", "-u", "origin", "main")
+        (self.repo / "notes.txt").write_text("WORK_IN_PROGRESS", encoding="utf-8")
+        (self.repo / "docs/videos.json").write_text('{"updated":"2026-10-08T00:00:00+09:00","videos":[]}', encoding="utf-8")
+        before = (self.repo / "docs/index.html").read_bytes()
+        result = self.batch("変更を保存する.bat")
+        self.assertNotEqual(result.returncode, 0)
+        # BAT が起動できなかった場合も非0になるため、中断メッセージまで出たことを確かめる。
+        self.assertIn("保存前の確認で止めました".encode("cp932"), result.stdout)
+        self.assertEqual((self.repo / "docs/index.html").read_bytes(), before)
+        self.assertEqual(self.git("rev-parse", "HEAD").stdout.strip(), head)
+        self.assertEqual(self.git("rev-parse", "origin/main").stdout.strip(), head)
+        self.assertEqual((self.repo / "notes.txt").read_text(encoding="utf-8"), "WORK_IN_PROGRESS")
 
     @unittest.skipUnless(os.name == "nt", "Windows batch regression")
     def test_admin_batch_does_not_start_server_after_pull_failure(self):

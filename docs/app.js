@@ -79,9 +79,10 @@ async function loadData() {
   } catch (e) {
     const box = document.createElement("div");
     box.className = "error-box";
-    box.textContent = `videos.json を読み込めませんでした（${e.message}）。` +
-      `ローカルで開いている場合は「管理ツールを開く.bat」で起動し、/docs/index.html を開いてください。` +
-      `以下は内蔵サンプルの表示です。`;
+    // 公開サイトの閲覧者向けの文面。ローカル確認の手順は README に書く（閲覧者には BAT が無い）。
+    box.textContent = `動画データを読み込めませんでした（${e.message}）。` +
+      `時間をおいてページを再読み込みしてください。` +
+      `下の「収録動画の全一覧」は表示できます（カード表示は内蔵サンプルです）。`;
     $("error-area").replaceChildren(box);
     // グリッドが本物のデータを描けないので、HTML に埋め込んである静的索引を見せて内容を失わせない
     document.documentElement.classList.remove("js");
