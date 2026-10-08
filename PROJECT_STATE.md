@@ -13,7 +13,7 @@
 |---|---|
 | 公開 | [ゴ魔乙 動画索引](https://irregularprime-source.github.io/gomaotsu-videos/)、GitHub Pages: main /docs、HTTPS強制（10-08確認） |
 | 収集 | 登録チャンネル6時間ごと、検索1時間ごと。同じ concurrency グループで直列化 |
-| Python | ローカル .venv: 3.10.6、CI: Windows 3.10 / Linux 3.11。依存は版・wheel SHA256固定 |
+| Python | ローカル .venv・回帰CI（Windows / Linux）・収集 Actions すべて 3.14（10-08 に 3.10 / 3.11 から移行）。旧環境 .venv-py310 は問題がないと確認できるまで残す。依存は版・wheel SHA256固定 |
 | セキュリティ設定 | Dependabot alerts・セキュリティ更新、Secret scanning・push protection が有効（10-08確認） |
 | 検証 | 文書整理前の公開コミット 9a00eb3 の[回帰CI](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/37644320327)・[Pages](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/37644319728)成功 |
 
