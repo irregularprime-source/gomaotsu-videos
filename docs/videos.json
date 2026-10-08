@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-08T20:10:47+09:00",
+  "updated": "2026-10-09T01:10:10+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -47186,6 +47186,36 @@
       "publishedAt": "2026-10-08T09:58:14Z",
       "registeredAt": "2026-10-08T20:10:47+09:00",
       "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第592回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "OjuZgFAa-Nw",
+      "title": "【ゴ魔乙 プレイ動画】 旧火有利ブレイク 最後に日和るようじゃ無理かぁ",
+      "channel": "初",
+      "description": "",
+      "publishedAt": "2026-10-08T13:39:35Z",
+      "registeredAt": "2026-10-09T01:10:10+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(通常)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "qxLSECZPXfU",
+      "title": "ゴ魔乙 第592回スコア大会9.3M mk2ビッグバン サ範レ",
+      "channel": "NAO ER34",
+      "description": "魔力1992 mk2\n魔力1925 ビッグバン\n魔力1738 1512%サーチ\n魔力1864 1812%範囲\n魔力2026 1712%レーザー設置",
+      "publishedAt": "2026-10-08T13:24:05Z",
+      "registeredAt": "2026-10-09T01:10:10+09:00",
+      "source": "search",
       "tags": [
         "スコア大会",
         "スコア大会(週末)",
