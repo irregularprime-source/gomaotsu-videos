@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-09T21:45:02+09:00",
+  "updated": "2026-10-09T21:52:48+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -49052,9 +49052,10 @@
       "registeredAt": "2026-10-09T21:16:52+09:00",
       "source": "auto",
       "tags": [
-        "未分類"
+        "未分類",
+        "イベントステージ"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49068,7 +49069,7 @@
       "tags": [
         "ギルドバトル(通常)"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49084,7 +49085,7 @@
         "スコア大会(イベント)",
         "ゴライコウ襲来"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49098,7 +49099,7 @@
       "tags": [
         "未分類"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49113,7 +49114,7 @@
         "スコア大会",
         "スコア大会(イベント)"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49125,9 +49126,10 @@
       "registeredAt": "2026-10-09T21:44:36+09:00",
       "source": "search",
       "tags": [
-        "未分類"
+        "未分類",
+        "ギルドバトル(イベント)"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49143,7 +49145,7 @@
         "スコア大会(週末)",
         "第575回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49157,7 +49159,7 @@
       "tags": [
         "ガチャ"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49173,7 +49175,7 @@
         "スコア大会(週末)",
         "第575回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49189,7 +49191,7 @@
         "スコア大会(週末)",
         "第575回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49205,7 +49207,7 @@
         "スコア大会(週末)",
         "第575回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49221,7 +49223,7 @@
         "スコア大会(週末)",
         "第575回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49237,7 +49239,7 @@
         "スコア大会(週末)",
         "第575回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49253,7 +49255,7 @@
         "スコア大会(週末)",
         "第575回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49269,7 +49271,7 @@
         "スコア大会(週末)",
         "第575回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49285,7 +49287,7 @@
         "スコア大会(週末)",
         "第575回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49301,7 +49303,7 @@
         "スコア大会(週末)",
         "第575回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49317,7 +49319,7 @@
         "スコア大会(週末)",
         "第575回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49333,7 +49335,7 @@
         "スコア大会(週末)",
         "第575回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49349,7 +49351,7 @@
         "スコア大会(週末)",
         "第575回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49365,7 +49367,7 @@
         "スコア大会(週末)",
         "第575回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49381,7 +49383,7 @@
         "スコア大会(週末)",
         "第575回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49397,21 +49399,7 @@
         "スコア大会(週末)",
         "第545回"
       ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "vI29L7-1-YI",
-      "title": "ゴ魔乙の難しい方のやつ",
-      "channel": "皐月雨",
-      "description": "練習プレイ中。大変ヘタなので参考にするとトイレに1人でいけなくなりますよ",
-      "publishedAt": "2026-06-12T05:33:44Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49427,7 +49415,7 @@
         "スコア大会(週末)",
         "第575回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49443,7 +49431,7 @@
         "スコア大会(週末)",
         "第575回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49459,7 +49447,7 @@
         "スコア大会(週末)",
         "第567回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49471,9 +49459,10 @@
       "registeredAt": "2026-10-09T21:44:36+09:00",
       "source": "search",
       "tags": [
-        "未分類"
+        "未分類",
+        "イベントステージ"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49489,7 +49478,7 @@
         "スコア大会(イベント)",
         "煩悶"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49501,359 +49490,10 @@
       "registeredAt": "2026-10-09T21:44:36+09:00",
       "source": "search",
       "tags": [
-        "未分類"
+        "未分類",
+        "ギルドバトル(イベント)"
       ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "TKjXJF3VuH0",
-      "title": "【#アリスギア】ゴ魔乙コラボ終了前の撮影会！【むなかた亮牙/Vtuber】",
-      "channel": "むなかた亮牙",
-      "description": "さぁたくさん撮るぞぉ～！\nチャンネル登録よろしくね☆ \n\n#alicegearaegis \n#むなかた亮牙\n#Vtuber\n\n☆ーーーーーーーーーーーーーーーーーーー☆\n\nTwiiter:https://twitter.com/e_crow1111\n\nマシュマロ：https://marshmallow-qa.com/e_crow1111?utm\n\n☆ーーーーーーーーーーーーーーーーーーー☆\nコメント用アプリ【わんコメ】\nhttps://onecomme.com/\n☆ーーーーーーーーーーーーーーーーーーー☆\n\nアリス・ギア・アイギス公式HP\nhttps://colopl.co.jp/alicegearaegis/\n\nアリスギアマガジン\nhttps://www.field-y.co.jp/alicegearmagazine/\n\n☆ーーーーーーーーーーーーーーーーーーー☆\nLive2D　あすた様\n@asta_risk723\n☆ーーーーーーーーーーーーーーーーーーー☆",
-      "publishedAt": "2026-06-07T15:50:07Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "QcuCUhazM4g",
-      "title": "【アリスギア】イア・レトナソロノーダメ@ごまおつコラボ D.MAX",
-      "channel": "moss",
-      "description": "ごまおつ×ダライアスコラボ…ってコト!?\nディコトマ：0:08　蜂：1:44　亀：3:41　土偶：4:16　薔薇：5:23",
-      "publishedAt": "2026-06-07T14:50:02Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "oTLJERXdGJI",
-      "title": "安全運動はごまおつコラボ　新居目安里",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T13:44:55Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "IAFNv69ba5s",
-      "title": "安全運動はごまおつコラボ　村尾未羅",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T13:41:00Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "v5neVT8mXyQ",
-      "title": "安全運動はごまおつコラボ　仁紀藤奏",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T13:38:33Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "Xd2YYicgmvM",
-      "title": "安全運動はごまおつコラボ　一条綾香",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T13:33:57Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "B4HSOaCZE5s",
-      "title": "安全運動はごまおつコラボ　小芦睦海",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T13:35:59Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "XiZiYRBmpRw",
-      "title": "安全運動はごまおつコラボ　兼志谷シタラ",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T13:31:47Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "US95yxnOvY4",
-      "title": "安全運動はごまおつコラボ　金潟すぐみ",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T13:17:05Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "C8Kw9KLo22U",
-      "title": "安全運動はごまおつコラボ　叶屋寧里",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T13:14:49Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "qbq9MwHt91s",
-      "title": "安全運動はごまおつコラボ　君影唯",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T13:13:22Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "Gy7VRdSfegg",
-      "title": "安全運動はごまおつコラボ　州天頃椎奈",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T13:11:26Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "NtZsXKya5oU",
-      "title": "安全運動はごまおつコラボ　シャーリー・オークレイ",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T13:09:48Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "htm7SdzO4pE",
-      "title": "安全運動はごまおつコラボ　ファティマ・ベトロラム",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T13:08:07Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "bufzelC_KRw",
-      "title": "安全運動はごまおつコラボ　ノエル・フランシスカ",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T12:38:50Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "e1b9LhN3z24",
-      "title": "安全運動はごまおつコラボ　駒添絵伝",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T12:36:54Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "d3Al412APTE",
-      "title": "安全運動はごまおつコラボ　琴村天音",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T12:32:29Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "0TtFHxGixtI",
-      "title": "安全運動はごまおつコラボ　須賀乙莉",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T12:30:38Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "Tdm-M9ni5G4",
-      "title": "安全運動はごまおつコラボ　大関小結",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T12:27:58Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "vqWAeKUt22w",
-      "title": "安全運動はごまおつコラボ　下落合桃歌",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T12:26:08Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "oRmt1J3sFFA",
-      "title": "安全運動はごまおつコラボ　相河愛花",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T12:20:29Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "QIBXhbPiFhM",
-      "title": "安全運動はごまおつコラボ　ニコル・フランシスカ",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T12:16:58Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "1GconLH603I",
-      "title": "安全運動はごまおつコラボ　紺堂地衛理",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T12:14:49Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "z6kz_Wwf47o",
-      "title": "安全運動はごまおつコラボ　籠目深沙希",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T12:05:55Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "qwJJaF81bHg",
-      "title": "安全運動はごまおつコラボ　新谷芹菜",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T12:03:13Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -49865,149 +49505,10 @@
       "registeredAt": "2026-10-09T21:44:36+09:00",
       "source": "search",
       "tags": [
-        "未分類"
+        "未分類",
+        "イベントステージ"
       ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "o0LNJ1NKTWk",
-      "title": "安全運動はごまおつコラボ　伊戸倉音緒",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T11:59:51Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "OCOL3PgCiSE",
-      "title": "安全運動はごまおつコラボ　二子玉舞",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T11:58:04Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "Aj2WNncXDrY",
-      "title": "安全運動はごまおつコラボ　小鳥遊怜",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T11:51:45Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "ADWaBjsaH5M",
-      "title": "安全運動はごまおつコラボ　米良渕花浪",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T11:45:18Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "4h2Q7Ejnehg",
-      "title": "安全運動はごまおつコラボ　蛙坂来弥",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T11:41:57Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "Pkgb_Z27PQE",
-      "title": "安全運動はごまおつコラボ　藤野やよい",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T11:37:19Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "xZ0xhE962xI",
-      "title": "安全運動はごまおつコラボ　バージニア・グリンベレー",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T11:35:23Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "NxvWf757DLs",
-      "title": "安全運動はごまおつコラボ　吾妻楓",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T11:23:36Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "HFBWPFJO68A",
-      "title": "安全運動はごまおつコラボ　比良坂夜露",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T11:19:22Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "c8p7S6gcf9I",
-      "title": "成子坂事務所　ごまおつコラボ",
-      "channel": "97式",
-      "description": "",
-      "publishedAt": "2026-06-07T09:51:56Z",
-      "registeredAt": "2026-10-09T21:44:36+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50023,7 +49524,7 @@
         "スコア大会(週末)",
         "第574回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50037,7 +49538,7 @@
       "tags": [
         "未分類"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50051,7 +49552,7 @@
       "tags": [
         "未分類"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50067,7 +49568,7 @@
         "スコア大会(週末)",
         "第574回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50083,7 +49584,7 @@
         "スコア大会(週末)",
         "第574回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50099,7 +49600,7 @@
         "スコア大会(週末)",
         "第574回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50115,7 +49616,7 @@
         "スコア大会(週末)",
         "第574回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50131,7 +49632,7 @@
         "スコア大会(週末)",
         "第574回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50147,7 +49648,7 @@
         "スコア大会(週末)",
         "第574回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50161,7 +49662,7 @@
       "tags": [
         "ギルドバトル(通常)"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50177,7 +49678,7 @@
         "スコア大会(週末)",
         "第574回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50193,7 +49694,7 @@
         "スコア大会(週末)",
         "第574回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50209,7 +49710,7 @@
         "スコア大会(週末)",
         "第574回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50225,7 +49726,7 @@
         "スコア大会(週末)",
         "第574回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50239,7 +49740,7 @@
       "tags": [
         "未分類"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50254,7 +49755,7 @@
         "スコア大会",
         "スコア大会(イベント)"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50270,7 +49771,7 @@
         "スコア大会(週末)",
         "第574回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50286,7 +49787,7 @@
         "スコア大会(週末)",
         "第574回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50302,7 +49803,7 @@
         "スコア大会(週末)",
         "第574回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50318,7 +49819,7 @@
         "スコア大会(週末)",
         "第574回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50333,7 +49834,7 @@
         "ゴシック道",
         "第42回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50347,7 +49848,7 @@
       "tags": [
         "未分類"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50363,7 +49864,7 @@
         "スコア大会(週末)",
         "第574回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50379,7 +49880,7 @@
         "スコア大会(週末)",
         "第574回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50393,7 +49894,7 @@
       "tags": [
         "未分類"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50409,7 +49910,7 @@
         "スコア大会(イベント)",
         "アリスギアコラボ"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50423,7 +49924,7 @@
       "tags": [
         "ギルドバトル(通常)"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50439,7 +49940,7 @@
         "スコア大会(週末)",
         "第573回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50455,7 +49956,7 @@
         "スコア大会(週末)",
         "第573回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50471,7 +49972,7 @@
         "スコア大会(週末)",
         "第573回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50487,7 +49988,7 @@
         "スコア大会(週末)",
         "第573回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50503,7 +50004,7 @@
         "スコア大会(週末)",
         "第573回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50519,7 +50020,7 @@
         "スコア大会(週末)",
         "第573回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50535,7 +50036,7 @@
         "スコア大会(週末)",
         "第573回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50549,7 +50050,7 @@
       "tags": [
         "未分類"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50565,7 +50066,7 @@
         "スコア大会(週末)",
         "第573回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50581,7 +50082,7 @@
         "スコア大会(週末)",
         "第573回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50597,7 +50098,7 @@
         "スコア大会(週末)",
         "第573回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50611,7 +50112,7 @@
       "tags": [
         "未分類"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50627,7 +50128,7 @@
         "スコア大会(週末)",
         "第567回"
       ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     },
     {
@@ -50643,49 +50144,7 @@
         "スコア大会(週末)",
         "第573回"
       ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "G6Qq5JDPFX0",
-      "title": "【アリスギア】ゴ魔乙コラボイベ「安全運動はごまおつコラボ」進行編その2",
-      "channel": "長尾兎chミンツ",
-      "description": "ごきげんよ。独り言のような枠だよ。--2026年05月26日\n\n2026年5月アリスギア×ゴ魔乙コラボイベント「安全運動はごまおつコラボ」の後半を始めていきますよ。\n高難度ヘクスもあるらしいのでちょっと楽しみ。\nコラボタイトルをしれっと直す勇気。\n\nアリスギア配信アーカイブ\nhttps://www.youtube.com/playlist?list=PLQsRhQaD9WWTU3L8lwiAMQNHOkFoqF8YI\n\nアリス・ギア・アイギス公式↓\nhttps://colopl.co.jp/alicegearaegis/\n\n#アリスギア #ゲーム実況 #実況プレイ動画 #ゲーム #アリスギアアイギス #livestream #gaming \n告知等は以下\nTwitter（現X）：https://twitter.com/mntshrn\nBluesky　　　：https://bsky.app/profile/mntshrn.bsky.social\n各種リンクまとめ\nLit.Link　　　  ：https://lit.link/mntshrn\n\nBGM\nOP：今日はお散歩日和。（のるさん。https://dova-s.jp/bgm/play14830.html）\nED：MainTheme（Lizardryさん。RefindSelf Soundtrack）",
-      "publishedAt": "2026-05-27T01:56:40Z",
-      "registeredAt": "2026-10-09T21:45:02+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "7TPsnd7kVM4",
-      "title": "【アリス・ギア・アイギス】　イベントチェンジマイマインド　＆　ごまおつコラボ衣装",
-      "channel": "サクラハルカ　ちゃんねる❀",
-      "description": "🌸視聴者参加について🌸\n１、視聴者参加型に参加希望の方は「参加希望」とコメントしてください。\n２、参加をキャンセルする場合は　必ず　「キャンセル」と入力してください！！\n３、アリスギアの戦闘が終わり次第、次の参加者のお名前を配信画面に映すので\n　　お衣装の紹介している時間に参加の準備をしてください。\n　　（順番が来ても参加されない場合は、少し待ちますが場合によっては次の方を\n　　　優先します！！）\n４、最後戦闘にて、参加者が３人そろわない場合は先着順で参加募集することもあります！！\n　　参加募集するよと声かけがあってから参加希望のコメントください！\n　　（配信途中で初参加の方がいましたら、最終戦闘で優先しますのでコメントしてください）\n\n🌸「アリス・ギア・アイギス」\nX：https://x.com/colopl_alice\nYouTube：https://www.youtube.com/@alicegear_official\n公式HP：https://colopl.co.jp/alicegearaegis/\n\n❀❀❀❀❀❀皆様へのお願い❀❀❀❀❀❀\n初見・初コメントをしてくれる皆様へ…\nチャンネルを見てくれて本当ありがとうございます！！\n折角こんなチャンネルを見てく出さる皆様ともっと距離を縮めたい…お名前を覚えたい…\n初見の方にももっと入りやすいチャンネルのしたいとの思いまして\n申し訳ございませんが「初見です」や「初コメ」などコメントして頂けると幸いです！\n（絶対ではないですが反応しやすいので）\n\n見てくれる方が不愉快な気持ちになるようなコメント\n配信の流れを止めるようなコメントなどもやめてください\nひどい様ならブロックやミュートにさせていただきます。\n\n励みになりますので高評価と共有・チャンネル登録ボタンぽちりお願いします！\n政治・宗教の話の禁止！！\n私は日本語しかわかりません！！\n\nTo everyone giving their first view or comment...\nThank you so much for checking out the channel!!\nI really want to get closer to all of you who take the time to watch this channel... I want to remember your names...\nTo make the channel more welcoming for first-time viewers,\nI’d be grateful if you could comment something like “First time here” or “First comment”!\n(It’s not mandatory, but it makes it easier for me to respond.)Please refrain from comments that might make viewers feel uncomfortable\nor disrupt the flow of the stream.\nIn severe cases, I may have to block or mute.  Your likes, shares, and channel subscriptions really motivate me, so please hit those buttons!\nPolitical and religious topics are strictly prohibited!!\nI only understand Japanese!!\n\nYouTube community guidelines\n\nsocial media etiquette\n\n❀❀❀❀❀❀❀❀❀❀❀❀❀❀❀❀❀❀❀\n\n励みになりますので、コメントやチャンネル登録もよろしくお願いします！！(*^▽^*)\n\n日常のどうでもいい事～配信のお知らせなど…\nhttps://twitter.com/springvoiceharu\n合わせてフォローしてくださるとうれしいです！！\n\n❀イラスト・キャラデザ\nしゅか＊　様\n❀サムネイラスト\nNei　様\nほたるん【Vtuber】くそげーを愛する会　様\nぐっちMAX　様\n❀２Dモデリング\nうにもり　様　\n鳴 聖奈　様（新衣装）\n❀名前ロゴ\nusagi@可愛いものクリエイター　様\n❀シーンチェンジOP\nやさを　様　@yasao0830\n❀シーンチェンジED　\nお茶処　様\n❀配信背景\n柚子呀owo　様　【Vtuber向け】【背景素材】配信背景全8色兔子卧室Rabbit bedroom\n❀時計\nテリー@VTuber　様\n❀高評価・同接カウンター\nめりぃぱめりぃ　様　https://twitter.com/merrypamerry\n❀アサルトライフル\n堕天使カーク/KIRK JP/EN　様　（X：@karkdikson）\n❀チャンネル登録者カウンター\nかるあ｜配信素材やツール類を作りし者　様\n❀配信者のためのコメントアプリ「わんコメ」\nhttps://onecomme.com\n❀OP・ED　 BGM\npoyori musi 様　\nしゅがーたいむ　（https://www.youtube.com/watch?v=DAul9jusdkk）\nおやすみオルゴール　（https://www.youtube.com/channel/UCfV48tlsB2ohHz05g5U-frw）\n#vtuber #スマホゲームアプリ #アリスギア",
-      "publishedAt": "2026-05-26T15:18:33Z",
-      "registeredAt": "2026-10-09T21:45:02+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
-      "note": ""
-    },
-    {
-      "videoId": "hSu2cjgbG8w",
-      "title": "ラナン 560億/PS4版デススマイルズ I・II MBL 1.1 ゴ魔乙",
-      "channel": "コイズミ製麺所",
-      "description": "省略(道中各3→神殿→冥界城)→サキュラのパパ→ティラノ→サキュラの父ちゃん途中まで",
-      "publishedAt": "2026-05-26T14:08:50Z",
-      "registeredAt": "2026-10-09T21:45:02+09:00",
-      "source": "search",
-      "tags": [
-        "未分類"
-      ],
-      "status": "自動分類",
+      "status": "確認済み",
       "note": ""
     }
   ]
