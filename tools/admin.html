@@ -356,6 +356,13 @@ function makeTagEditor(initial, onChange){
   const chips = el("div","a-chips");
   const adds  = el("div","a-adds");
   function fire(){ if(onChange) onChange(tags.slice()); }
+  // 分類タグ（tags.json の定義済みタグ）を付けたら「未分類」を外す。
+  // Why: 両方付いたままだと、絞り込みの「未分類」に分類済みの動画まで数えられてしまう。自由タグでは外さない。
+  function addKnown(n){
+    tags.push(n);
+    const i = n==="未分類" ? -1 : tags.indexOf("未分類");
+    if(i>=0) tags.splice(i,1);
+  }
   function render(){
     chips.innerHTML="";
     tags.forEach(t=>{
@@ -370,7 +377,7 @@ function makeTagEditor(initial, onChange){
     adds.innerHTML="";
     knownTagNames().filter(n=>!tags.includes(n)).forEach(n=>{
       const b = el("button","a-addbtn","+ "+n);
-      b.onclick=()=>{ tags.push(n); render(); fire(); };
+      b.onclick=()=>{ addKnown(n); render(); fire(); };
       adds.appendChild(b);
     });
     const inp = el("input","a-free"); inp.type="text"; inp.placeholder="自由タグ";

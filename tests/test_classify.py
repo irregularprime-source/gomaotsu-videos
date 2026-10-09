@@ -96,6 +96,12 @@ class ScoreSubcategoryTests(unittest.TestCase):
         self.assertIn("スコア大会(週末)", weekend)
         self.assertNotIn("ドラグーン", weekend)
 
+    def test_gothic_march_is_guild_event(self):
+        tags = collect.make_tags("【ゴ魔乙 プレイ動画】 ゴシックマーチ：3部 hard ブレイク 159,598ジュエル 風有利 #ごまおつ", "")
+        self.assertEqual(tags, ["ギルドバトル(イベント)"])
+        # 焼肉祭はユーザー判断で現時点では対象外
+        self.assertEqual(collect.make_tags("むちむち焼肉祭：3食 金曜 光有利 100k→177k", ""), ["未分類"])
+
     def test_ether_has_priority(self):
         self.assert_sub("エーテルスコア大会 第3回", "エーテルスコア大会")
 
