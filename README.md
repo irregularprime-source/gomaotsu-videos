@@ -276,17 +276,22 @@ push が他の更新と競合して弾かれた場合は `git pull --rebase` で
 
 スコア大会(イベント)のイベント名タグは **コードではなくデータ（`data/event_tags.json`）で管理**する。イベントを増やしたいときの手順:
 
-1. `data/event_tags.json` の `events` 配列に1件追記する。書式は `{ "tag": "表示名", "keywords": ["検索語", ...] }`（`note` は任意メモでコードは無視）。
+定期的な見直し（月1回など、依頼されたときに Claude が行う）は次の手順で進める。
+
+1. 候補を出す: `& ".\.venv\Scripts\python.exe" "scripts/event_name_report.py"`（表示だけ）。
+   辞書エントリごとの一致数、辞書の名前タグを追加できるイベント動画、名前の付かないイベント動画と「○○スコアタ／○○アタ」の○○の出現数を表示する。
+2. `data/event_tags.json` の `events` 配列に追記する。書式は `{ "tag": "表示名", "keywords": ["検索語", ...] }`（`note` は任意メモでコードは無視）。
    - `keywords` は NFKC正規化＋小文字化した**タイトルへの部分一致**で判定。いずれか1つ含めば一致。
-   - **短語・汎用語は誤爆に注意**。「スコアタ」を付ける等で限定一致させる（例: `"うまるスコアタ"`, `"Xmasスコアタ"`）。
+   - **短語・汎用語は誤爆に注意**。「スコアタ」を付ける等で限定一致させる（例: `"うまるスコアタ"`, `"ドラグーンスコアタ"`）。
    - **「○○限定」形式は入れない**。既存 `EVENT_RE`（collect.py）が「○○」を自動抽出するため重複する。
-2. リポジトリ直下から `& ".\.venv\Scripts\python.exe" "scripts/reclassify.py" --dry-run` で既存動画への影響（付与/昇格の差分）を確認。
-3. 問題なければ `& ".\.venv\Scripts\python.exe" "scripts/reclassify.py"` で本反映（`status:"確認済み"`・手動登録は保護される）。
-4. videos.json と event_tags.json の差分を確認して明示的に commit / push（保存用 BAT は event_tags.json を対象に含めない）。
+   - タイトルに「スコアタ」等が付かないイベント名（ゴライコウ襲来・必ず死なすっ・煩悶）は `"score": true` を付ける。その語自体がスコア大会の根拠になり、週末の根拠が無ければスコア大会(イベント)になる。
+3. 未確認の動画: `& ".\.venv\Scripts\python.exe" "scripts/reclassify.py" --dry-run` で差分を確認し、`reclassify.py` で反映する（確認済み・手動登録は保護される）。
+4. 確認済みの動画: `& ".\.venv\Scripts\python.exe" "scripts/event_name_report.py" --apply` で、スコア大会(イベント)の動画に辞書の名前タグを**追加だけ**する（分類・状態・ほかのタグは変えず、削除もしない）。
+5. `build_static.py` を実行し、videos.json・index.html・event_tags.json の差分を確認して明示的に commit / push（保存用 BAT は event_tags.json を対象に含めない）。
 
-**仕組み（collect.py）**: `make_tags` が `classify` で下位タグを決めたあと、結果が「スコア大会(イベント)」のときだけ `match_event_tags(ntitle)` の辞書一致を表示専用タグとして付与する（ガチャ/アリーナ等への季節名や、週末の動画への武器名「HYCレーザー」の誤爆を抑止）。辞書の一致だけでは週末→イベントにしない（2026-10-09〜。週末の根拠が無いスコア動画は辞書に関係なくイベントになる）。reclassify.py は collect.py の `make_tags` を import して共用するため、**改修は collect.py 側だけでよい**。
+**仕組み（collect.py）**: `make_tags` が `classify` で下位タグを決めたあと、結果が「スコア大会(イベント)」のときだけ `match_event_tags(ntitle)` の辞書一致を表示専用タグとして付与する（ガチャ/アリーナ等への季節名や、週末の動画への武器名「HYCレーザー」の誤爆を抑止）。辞書の一致だけでは週末→イベントにしない（2026-10-09〜。週末の根拠が無いスコア動画は辞書に関係なくイベントになる）。`"score": true` のエントリの keywords は `EVENT_SCORE_KEYWORDS` として、`SCORE_MARKERS` と同じくスコア大会の根拠に使う。reclassify.py は collect.py の `make_tags` を import して共用するため、**改修は collect.py 側だけでよい**。
 
-**注意**: `data/event_tags.json` はゲーム内スクショ（`_local/スコア大会（イベント）名称参考用/`・約210MB・個人実績付き）のOCRから作成。**元スクショは `_local/` 配下＝.gitignore でリポジトリ非同梱**。カタカナ固有名にOCR誤読が残り得るため、追加時は実タイトルとの一致で裏取りするのが確実（`ゴシパ`/`HYCレーザー`/`20thレコ` は既存動画一致で確認済み）。候補の全体像は [docs/event_names_candidates.md](docs/event_names_candidates.md)（Tier A/B/C）を参照。
+**注意**: `data/event_tags.json` はゲーム内スクショ（`_local/スコア大会（イベント）名称参考用/`・約210MB・個人実績付き）のOCRから作成。**元スクショは `_local/` 配下＝.gitignore でリポジトリ非同梱**。カタカナ固有名にOCR誤読が残り得るため、追加時は実タイトルとの一致で裏取りするのが確実（`ゴシパ`/`HYCレーザー`/`20thレコ` は既存動画一致で確認済み。OCRの「輝昏ショット」は実タイトルでは「輝亡ショット」）。スクショは 2026-07-22 時点でユーザーが参加したイベントだけなので、それ以降のイベントや未参加のイベントは実タイトルから追加する。候補の全体像は [docs/event_names_candidates.md](docs/event_names_candidates.md)（Tier A/B/C）を参照。
 
 ## 収集ルールを変えたとき（再分類）
 
