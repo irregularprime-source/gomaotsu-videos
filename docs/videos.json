@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-09T21:05:37+09:00",
+  "updated": "2026-10-09T21:16:52+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -48873,6 +48873,20 @@
       "publishedAt": "2026-06-16T11:26:54Z",
       "registeredAt": "2026-10-09T21:05:37+09:00",
       "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "FTU6d5gCxE0",
+      "title": "【ゴ魔乙プレイ動画】1日1回!SPステージ!",
+      "channel": "安満沢ライナー",
+      "description": "",
+      "publishedAt": "2026-10-09T10:47:34Z",
+      "registeredAt": "2026-10-09T21:16:52+09:00",
+      "source": "auto",
       "tags": [
         "未分類"
       ],
