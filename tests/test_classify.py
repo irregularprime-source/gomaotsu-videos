@@ -74,6 +74,28 @@ class ScoreSubcategoryTests(unittest.TestCase):
         ]:
             self.assertEqual(subcategories(title), [], title)
 
+    def test_event_names_without_score_word_are_event(self):
+        for title, name in [
+            ("【ゴ魔乙 プレイ動画】 ゴライコウ襲来！ death 506,831,013点　ハイパレ/ジーナ　ラバラ", "ゴライコウ襲来"),
+            ("【ゴ魔乙プレイ動画】必ず死なすっ！！真セセリ 比較的お手軽撃破 黒天津風単騎", "必ず死なすっ"),
+            ("【ゴ魔乙】煩悶・水 death", "煩悶"),
+        ]:
+            tags = collect.make_tags(title, "")
+            self.assertEqual(subcategories(title), ["スコア大会(イベント)"], title)
+            self.assertIn(name, tags, title)
+
+    def test_attack_words_are_event(self):
+        self.assert_sub("[ゴ魔乙]07/25 イベアタちょっと回りましょう[プレイ動画]", "スコア大会(イベント)")
+        self.assert_sub("ゴ魔乙 オンゲキコラボ記念アタ 闇アストラルゲート単騎 バララ 19.83億", "スコア大会(イベント)")
+        self.assert_sub("【ゴ魔乙 プレイ動画】クリスマスアタ 3.14億 風ランサー＋テンペスト", "スコア大会(イベント)")
+
+    def test_new_dictionary_names(self):
+        self.assertIn("弾幕神", collect.make_tags("【ゴ魔乙 プレイ動画】弾幕神スコアタC 1.61億", ""))
+        self.assertIn("むちむちポーク", collect.make_tags("【ゴ魔乙】むちポスコアタざっくりやって一番気になった箇所(最後)", ""))
+        weekend = collect.make_tags("【ゴ魔乙 プレイ動画】 第525回 hard 131,618,685 ハイパーレーザー／△ドラグーン改 ランクS", "")
+        self.assertIn("スコア大会(週末)", weekend)
+        self.assertNotIn("ドラグーン", weekend)
+
     def test_ether_has_priority(self):
         self.assert_sub("エーテルスコア大会 第3回", "エーテルスコア大会")
 
@@ -112,6 +134,31 @@ class ChannelFilterTests(unittest.TestCase):
 
     def test_no_keyword_is_rejected(self):
         self.assertFalse(collect.is_channel_target(self.entry("第553回 24.5億", "")))
+
+
+class EventNameApplyTests(unittest.TestCase):
+    def test_apply_only_adds_names_to_event_videos(self):
+        import json
+        import tempfile
+        from unittest import mock
+        import event_name_report
+
+        doc = {"updated": "", "videos": [
+            {"videoId": "a" * 11, "title": "アリスギアコラボ記念スコアタ 11.97億", "status": "確認済み",
+             "tags": ["スコア大会", "スコア大会(イベント)", "手動タグ"]},
+            {"videoId": "b" * 11, "title": "第580回スコア大会 HYCレーザーA", "status": "確認済み",
+             "tags": ["スコア大会", "スコア大会(週末)", "第580回"]},
+        ]}
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "videos.json"
+            with mock.patch.object(event_name_report, "VIDEOS_PATH", path), \
+                    mock.patch("sys.stdout"):
+                event_name_report.apply(doc)
+            saved = json.loads(path.read_text(encoding="utf-8"))
+        event, weekend = saved["videos"]
+        self.assertEqual(event["tags"], ["スコア大会", "スコア大会(イベント)", "手動タグ", "アリスギアコラボ"])
+        self.assertEqual(event["status"], "確認済み")
+        self.assertEqual(weekend["tags"], ["スコア大会", "スコア大会(週末)", "第580回"])
 
 
 if __name__ == "__main__":

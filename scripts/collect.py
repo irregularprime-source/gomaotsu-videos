@@ -29,7 +29,8 @@ GOMA_KEYWORDS = ["ゴ魔乙", "ごまおつ", "ゴシックは魔法乙女", "�
 # --- タグ自動分類の語彙 ---
 # Why not「降臨」「復刻」: 発注者の指示によりイベントステージ判定には使わない。
 # スコア大会系を示す語（略語含む）。ドヨアタ＝土曜アタック＝週末スコア大会。
-SCORE_MARKERS = ["スコア大会", "スコアタ", "ドヨアタ", "どよあた", "ドョアタ", "土アタ"]
+SCORE_MARKERS = ["スコア大会", "スコアタ", "ドヨアタ", "どよあた", "ドョアタ", "土アタ",
+                 "イベアタ", "記念アタ", "クリスマスアタ"]
 # スコア大会の下位分類の判定語。優先順はエーテル→リアル→リーグ→月間→イベント→週末（classify 参照）。
 LEAGUE_WORDS = ["リーグ"]
 MONTHLY_WORDS = ["更なる高みへ", "さらなる高みへ", "月間スコアタ", "月間スコア大会"]
@@ -94,20 +95,25 @@ EVENT_RE = re.compile(r"([一-鿿ぁ-んァ-ヿー々〆]+)限定")
 
 
 def load_event_tags():
-    """スコア大会(イベント)のイベント名辞書を [(tag, [正規化済みkeyword, ...]), ...] で返す。
+    """スコア大会(イベント)のイベント名辞書を読み、
+    ([(tag, [正規化済みkeyword, ...]), ...], [スコア大会の根拠にする正規化済みkeyword, ...]) を返す。
+    "score": true のエントリ（ゴライコウ襲来など「スコアタ」の語が付かないイベント名）は、
+    keyword 自体をスコア大会の根拠にする。
     『○○限定』形式は EVENT_RE が自動抽出するため辞書には入れない（重複回避）。"""
     data = json.loads(EVENT_TAGS_PATH.read_text(encoding="utf-8"))
-    result = []
+    result, score_keywords = [], []
     for ev in data.get("events", []):
         tag = ev.get("tag")
         kws = [norm(k) for k in ev.get("keywords", []) if k]
         if tag and kws:
             result.append((tag, kws))
-    return result
+            if ev.get("score") is True:
+                score_keywords.extend(kws)
+    return result, score_keywords
 
 
 # イベント名辞書（モジュール読込時に1回だけロード。reclassify も import 経由で共用）。
-EVENT_TAGS = load_event_tags()
+EVENT_TAGS, EVENT_SCORE_KEYWORDS = load_event_tags()
 
 
 def match_event_tags(ntitle):
@@ -126,7 +132,8 @@ def classify(ntitle, has_round=False):
     （「第579回 9,903万」のようにスコアタ表記が無くても回数付きは定期スコア大会のため）。
     回数はイベント名辞書の一致より優先する（週末の動画にも武器名「HYCレーザー」等が出るため）。"""
     tags = []
-    has_score_marker = any(norm(m) in ntitle for m in SCORE_MARKERS)
+    has_score_marker = (any(norm(m) in ntitle for m in SCORE_MARKERS)
+                        or any(k in ntitle for k in EVENT_SCORE_KEYWORDS))
     if has_round and not has_score_marker and any(norm(w) in ntitle for w in NON_SCORE_ROUND_WORDS):
         has_round = False
 
