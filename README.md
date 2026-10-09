@@ -215,14 +215,19 @@ push が他の更新と競合して弾かれた場合は `git pull --rebase` で
 
 ## 過去動画の一括登録（バックフィル）
 
-定期収集は最新分しか拾わないため、過去動画は次の2経路で少しずつ登録する（いずれも巨大な差分になるためローカル実行推奨）。
+定期収集は最新分しか拾わないため、過去動画は次の2経路で少しずつ登録する。
 
-- **登録チャンネルの過去分**: `& ".\.venv\Scripts\python.exe" "scripts/collect.py" --backfill`
+- **登録チャンネルの過去分**（ローカル実行）: `& ".\.venv\Scripts\python.exe" "scripts/collect.py" --backfill`
   各チャンネルのアップロードを `nextPageToken` で全件たどり、未登録分を `source: "auto"` で追記する。
-- **検索でひっかかる過去分**（未登録投稿者を含む）: `& ".\.venv\Scripts\python.exe" "scripts/search_collect.py" --after 2025-01-01 --before 2025-01-08`
-  公開期間を区切って（1週間・1か月など）窓をずらしながら少しずつ実行する。レビュー負荷・ノイズ・API コストを平準化するため。
+- **検索でひっかかる過去分**（未登録投稿者を含む）: 公開期間を区切って（1週間など）窓をずらしながら少しずつ実行する。レビュー負荷・ノイズ・API コストを平準化するため。
+  - **Actions で実行（推奨）**: GitHub の Actions →「検索収集」→ Run workflow で `after` / `before`（YYYY-MM-DD、UTC）と `dry_run` を指定する。
+    コマンドなら `gh workflow run search.yml -f after=2025-01-01 -f before=2025-01-08 -f dry_run=true`。
+    定時の収集と同じ concurrency グループで順番に動くため、videos.json の push が自動収集とぶつからず、APIキーを手元で扱う必要もない。
+    追加があれば「検索収集（2025-01-01〜2025-01-08）: 動画N件を追加」としてコミットされる。dry_run のときは追加予定がログに出るだけ。
+  - ローカルで実行する場合: `& ".\.venv\Scripts\python.exe" "scripts/search_collect.py" --after 2025-01-01 --before 2025-01-08`
+    （自動収集の push と videos.json が競合しやすいので、取得後すぐ保存する）
 
-どちらも `--dry-run` で追加予定を確認してから実行する。件数が増えたら `docs/videos.json` のサイズを見て分割の要否を判断する。
+どちらも `--dry-run`（`dry_run`）で追加予定を確認してから実行する。検索は1ページ（最大50件）ごとに100ユニットを使い、1回の検索で取れるのは約500件までなので、窓は広げすぎない。件数が増えたら `docs/videos.json` のサイズを見て分割の要否を判断する。
 
 ## タグの仕組み
 

@@ -3,6 +3,20 @@ on:
   schedule:
     - cron: "0 * * * *"   # 1時間ごと（直近分の常時スイープ）
   workflow_dispatch:
+    # 手動実行で公開期間を区切って過去分を取り込む（README「過去動画の一括登録」）。空なら定時と同じ直近12時間。
+    inputs:
+      after:
+        description: "この日以降に公開された動画（YYYY-MM-DD、UTC）。空なら直近12時間"
+        required: false
+        default: ""
+      before:
+        description: "この日より前に公開された動画（YYYY-MM-DD、UTC）。after と組み合わせる"
+        required: false
+        default: ""
+      dry_run:
+        description: "書き込まず、追加予定の一覧をログに出すだけにする"
+        type: boolean
+        default: false
 permissions:
   contents: write
 
@@ -13,6 +27,11 @@ concurrency:
 jobs:
   search:
     runs-on: ubuntu-latest
+    env:
+      # 入力はスクリプトに直接埋め込まず環境変数で渡す（シェルへの注入を防ぐ。形式は search_collect.py が検査）
+      AFTER: ${{ inputs.after }}
+      BEFORE: ${{ inputs.before }}
+      DRY_RUN: ${{ inputs.dry_run }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
@@ -22,7 +41,12 @@ jobs:
       - name: 検索収集を実行
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-        run: python scripts/search_collect.py
+        run: |
+          args=()
+          if [ -n "$AFTER" ]; then args+=(--after "$AFTER"); fi
+          if [ -n "$BEFORE" ]; then args+=(--before "$BEFORE"); fi
+          if [ "$DRY_RUN" = "true" ]; then args+=(--dry-run); fi
+          python scripts/search_collect.py "${args[@]}"
       - name: 差分があればコミット＆プッシュ
         run: |
           if git diff --quiet docs/videos.json; then
@@ -30,6 +54,8 @@ jobs:
             exit 0
           fi
           added=$(git diff docs/videos.json | grep -c '^+ *"videoId"')
+          period=""
+          if [ -n "$AFTER" ]; then period="（${AFTER}〜${BEFORE}）"; fi
 
           # 検索エンジン・AIクローラー向けの静的索引を videos.json から作り直す。
           # （下の rebase リトライ後は作り直していないが、その場合も次回実行で追いつく）
@@ -38,7 +64,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/videos.json docs/index.html docs/sitemap.xml
-          git commit -m "検索収集: 動画${added}件を追加"
+          git commit -m "検索収集${period}: 動画${added}件を追加"
 
           # push失敗時にpull --rebaseしてリトライ
           for i in 1 2 3 4 5; do

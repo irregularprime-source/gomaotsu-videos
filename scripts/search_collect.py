@@ -18,7 +18,7 @@ import argparse
 import json
 import os
 import sys
-from datetime import datetime, timezone, timedelta
+from datetime import date, datetime, timezone, timedelta
 
 import requests
 
@@ -156,6 +156,17 @@ def collect_search(dry_run, published_after, published_before):
     return 0
 
 
+def date_arg(text):
+    """YYYY-MM-DD だけを受け付ける（Actions の手動実行の入力をそのまま渡すため）。"""
+    try:
+        date.fromisoformat(text)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"日付は YYYY-MM-DD で指定してください: {text!r}")
+    if len(text) != 10:
+        raise argparse.ArgumentTypeError(f"日付は YYYY-MM-DD で指定してください: {text!r}")
+    return text
+
+
 def main():
     parser = argparse.ArgumentParser(description="ゴ魔乙動画の検索収集")
     parser.add_argument("--dry-run", action="store_true",
@@ -165,11 +176,15 @@ def main():
     # Why not 24h: 24h内の公開が最大43本あり、50件/ページを超えて2ページ（200ユニット）になり得る。
     parser.add_argument("--since-hours", type=int, default=12,
                         help="直近この時間内に公開された動画を対象（既定12h。実行間隔の遅延による取りこぼし防止で広め）")
-    parser.add_argument("--after",
+    parser.add_argument("--after", type=date_arg,
                         help="この日付以降(YYYY-MM-DD, UTC基準)。過去分の期間区切りバックフィル用。指定時は --since-hours を無視")
-    parser.add_argument("--before",
+    parser.add_argument("--before", type=date_arg,
                         help="この日付より前(YYYY-MM-DD, UTC基準)。--after と組み合わせて期間を区切る")
     args = parser.parse_args()
+    if args.before and not args.after:
+        parser.error("--before は --after と組み合わせて指定してください")
+    if args.before and args.before <= args.after:
+        parser.error("--before は --after より後の日付にしてください")
 
     if args.after:
         published_after = args.after + "T00:00:00Z"
