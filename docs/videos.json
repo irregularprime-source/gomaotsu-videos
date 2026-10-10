@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-10T09:30:41+09:00",
+  "updated": "2026-10-10T12:20:03+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -55837,6 +55837,65 @@
       "publishedAt": "2026-10-09T22:15:14Z",
       "registeredAt": "2026-10-10T09:30:41+09:00",
       "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第592回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "geyHDWBH7J8",
+      "title": "【ゴ魔乙プレイ動画】ｶﾚﾝｽﾃｰｼﾞ(前半)",
+      "channel": "安満沢ライナー",
+      "description": "",
+      "publishedAt": "2026-10-10T03:17:58Z",
+      "registeredAt": "2026-10-10T12:20:03+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "l15ILyd8oto",
+      "title": "【ゴ魔乙プレイ動画】1日1回!SPステージ!",
+      "channel": "安満沢ライナー",
+      "description": "2回目",
+      "publishedAt": "2026-10-10T02:17:12Z",
+      "registeredAt": "2026-10-10T12:20:03+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "h41xcFOSgOg",
+      "title": "【ゴ魔乙プレイ動画】ファントムスコアタ",
+      "channel": "安満沢ライナー",
+      "description": "",
+      "publishedAt": "2026-10-10T02:12:50Z",
+      "registeredAt": "2026-10-10T12:20:03+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(イベント)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "SiEpYt13AfY",
+      "title": "[ゴ魔乙]10/10 第592回スコア大会mk風ヘルギガントmk2モルフォ89.3MM[プレイ動画]",
+      "channel": "KGR",
+      "description": "キッツいけどもうちょっと伸ばせれね？\n\nゴシックは魔法乙女",
+      "publishedAt": "2026-10-10T03:00:27Z",
+      "registeredAt": "2026-10-10T12:20:03+09:00",
+      "source": "auto",
       "tags": [
         "スコア大会",
         "スコア大会(週末)",
