@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-10T20:19:14+09:00",
+  "updated": "2026-10-10T20:34:27+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -76266,6 +76266,22 @@
         "スコア大会",
         "スコア大会(イベント)",
         "リリー"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "ew7usUMFx-A",
+      "title": "【ゴ魔乙 プレイ動画】 第592回スコア大会 normal 103,858,215点",
+      "channel": "CCT-OER",
+      "description": "",
+      "publishedAt": "2026-10-10T09:19:50Z",
+      "registeredAt": "2026-10-10T20:34:27+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第592回"
       ],
       "status": "自動分類",
       "note": ""
