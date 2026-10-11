@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-11T10:35:27+09:00",
+  "updated": "2026-10-11T11:53:24+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -88571,6 +88571,22 @@
       "publishedAt": "2026-10-10T14:58:27Z",
       "registeredAt": "2026-10-11T10:35:27+09:00",
       "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第592回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "G8CoSktxKwU",
+      "title": "【ゴ魔乙プレイ動画】第592回スコア大会(復習)",
+      "channel": "安満沢ライナー",
+      "description": "",
+      "publishedAt": "2026-10-11T01:56:33Z",
+      "registeredAt": "2026-10-11T11:53:24+09:00",
+      "source": "auto",
       "tags": [
         "スコア大会",
         "スコア大会(週末)",
