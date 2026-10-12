@@ -96,6 +96,25 @@ class ScoreSubcategoryTests(unittest.TestCase):
         self.assertIn("スコア大会(週末)", weekend)
         self.assertNotIn("ドラグーン", weekend)
 
+    def test_dictionary_names_added_2026_10_12(self):
+        for title, name in [
+            ("【ゴ魔乙 プレイ動画】空の旅スコアタ 625M 火ピカトリ/ジナコレ/ララ", "空の旅"),
+            ("【ゴ魔乙】ファントムスコアタ 4被弾", "ファントム"),
+            ("【ゴ魔乙 プレイ動画】 黄金の光スコアタ death 575,201,468点 ランクS", "黄金の光"),
+            ("【ゴ魔乙 プレイ動画】 サマー総合スコアタB easy 24,159,245点 ランク弩S", "サマー総合"),
+            ("ゴシックは魔法乙女 始めたてスコアタ", "始めたて"),
+            ("ゴ魔乙 初心者スコアタ29位（2025/12/12時点）", "初心者"),
+            ("[ゴ魔乙]12/16 学園編最終日 急いで回って…あ、ウェッハスコアタ[プレイ動画]", "20thマダラ"),
+            ("【ゴ魔乙 プレイ動画】マダラスコアタ death 472M", "20thマダラ"),
+            ("【ゴ魔乙】オリジンスコアタ 598M ニードルプラズマレイ", "オリジンショット"),
+            ("ゴ魔乙【プレイ動画】かならず死なす　真セセリあり無被弾ミッション全てクリア", "必ず死なすっ"),
+        ]:
+            tags = collect.make_tags(title, "")
+            self.assertIn("スコア大会(イベント)", tags, title)
+            self.assertIn(name, tags, title)
+        # 一般語は「スコアタ」付きのときだけ
+        self.assertNotIn("初心者", collect.make_tags("【ゴ魔乙】初心者向けスコアタ解説", ""))
+
     def test_gothic_march_is_guild_event(self):
         tags = collect.make_tags("【ゴ魔乙 プレイ動画】 ゴシックマーチ：3部 hard ブレイク 159,598ジュエル 風有利 #ごまおつ", "")
         self.assertEqual(tags, ["ギルドバトル(イベント)"])
