@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-13T22:04:16+09:00",
+  "updated": "2026-10-13T22:10:20+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -148784,6 +148784,90 @@
         "スコア大会",
         "スコア大会(週末)",
         "第444回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "I-Ds3eyaf5E",
+      "title": "ゴ魔乙　ギルドイベント「ゴシックマーチ」20261012闇有利　break",
+      "channel": "-XperiArk-P",
+      "description": "ボス凸91038→175418（Hard70位）\n大型を延命させたいけど等倍属性なのでなかなか延命が難しいステージ\n今週のステージ傾向は箱ステなのか、はたまたそれ以外か…？",
+      "publishedAt": "2026-10-13T12:32:12Z",
+      "registeredAt": "2026-10-13T22:10:20+09:00",
+      "source": "auto",
+      "tags": [
+        "ギルドバトル(イベント)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "VZ_tnWhnUQo",
+      "title": "【ゴ魔乙プレイ動画】ﾙﾍﾞﾘｽｽﾃｰｼﾞ(後半)",
+      "channel": "安満沢ライナー",
+      "description": "",
+      "publishedAt": "2026-10-13T12:37:00Z",
+      "registeredAt": "2026-10-13T22:10:20+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "4DbGzqZ00z0",
+      "title": "【ゴ魔乙プレイ動画】ｱﾝｾﾞﾘｶｽﾃｰｼﾞ(後半)",
+      "channel": "安満沢ライナー",
+      "description": "",
+      "publishedAt": "2026-10-13T12:30:56Z",
+      "registeredAt": "2026-10-13T22:10:20+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "biwxtqinczc",
+      "title": "【ゴ魔乙プレイ動画】ｶﾓﾐｰﾙｽﾃｰｼﾞ(後半)",
+      "channel": "安満沢ライナー",
+      "description": "",
+      "publishedAt": "2026-10-13T11:03:17Z",
+      "registeredAt": "2026-10-13T22:10:20+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "6r0KQTfYAw0",
+      "title": "【ゴ魔乙プレイ動画】ﾁｺｽﾃｰｼﾞ(後半)",
+      "channel": "安満沢ライナー",
+      "description": "",
+      "publishedAt": "2026-10-13T10:58:56Z",
+      "registeredAt": "2026-10-13T22:10:20+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "IsufE4TamRA",
+      "title": "【ゴ魔乙プレイ動画】ｶﾚﾝｽﾃｰｼﾞ(後半)",
+      "channel": "安満沢ライナー",
+      "description": "",
+      "publishedAt": "2026-10-13T10:52:42Z",
+      "registeredAt": "2026-10-13T22:10:20+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
       ],
       "status": "自動分類",
       "note": ""
