@@ -108,6 +108,7 @@ class ScoreSubcategoryTests(unittest.TestCase):
             ("【ゴ魔乙 プレイ動画】マダラスコアタ death 472M", "20thマダラ"),
             ("【ゴ魔乙】オリジンスコアタ 598M ニードルプラズマレイ", "オリジンショット"),
             ("ゴ魔乙【プレイ動画】かならず死なす　真セセリあり無被弾ミッション全てクリア", "必ず死なすっ"),
+            ("【ゴ魔乙 プレイ動画】弾幕五重奏スコアタ 273M デストロイヤー 魔力+850", "弾幕五重奏"),
         ]:
             tags = collect.make_tags(title, "")
             self.assertIn("スコア大会(イベント)", tags, title)
