@@ -89,6 +89,19 @@ class ScoreSubcategoryTests(unittest.TestCase):
         self.assert_sub("ゴ魔乙 オンゲキコラボ記念アタ 闇アストラルゲート単騎 バララ 19.83億", "スコア大会(イベント)")
         self.assert_sub("【ゴ魔乙 プレイ動画】クリスマスアタ 3.14億 風ランサー＋テンペスト", "スコア大会(イベント)")
 
+    def test_event_round_is_not_weekend(self):
+        # イベントの開催回（回数の直後が辞書のイベント名）は週末にしない（2026-10-14 ユーザー指示）
+        for title in [
+            "【ゴ魔乙 プレイ動画】第2回 コンボブレイクスコアタ 1,603,331,211点 ランクS",
+            "【ゴ魔乙 プレイ動画】第2回ｺﾝﾎﾞﾌﾞﾚｲｸｽｺｱﾀ 25億 ハイパービッグバン 特特範",
+        ]:
+            tags = collect.make_tags(title, "")
+            self.assertEqual(subcategories(title), ["スコア大会(イベント)"], title)
+            self.assertIn("コンボブレイクスコアタ", tags, title)
+            self.assertNotIn("第2回", tags, title)
+        # 回数のあとにイベント名以外が続く週末の動画は従来どおり
+        self.assert_sub("【ゴ魔乙 プレイ動画】第580回スコア大会 HYCレーザーA", "スコア大会(週末)")
+
     def test_new_dictionary_names(self):
         self.assertIn("弾幕神", collect.make_tags("【ゴ魔乙 プレイ動画】弾幕神スコアタC 1.61億", ""))
         self.assertIn("むちむちポーク", collect.make_tags("【ゴ魔乙】むちポスコアタざっくりやって一番気になった箇所(最後)", ""))
