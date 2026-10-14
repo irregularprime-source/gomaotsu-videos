@@ -89,6 +89,19 @@ class ScoreSubcategoryTests(unittest.TestCase):
         self.assert_sub("ゴ魔乙 オンゲキコラボ記念アタ 闇アストラルゲート単騎 バララ 19.83億", "スコア大会(イベント)")
         self.assert_sub("【ゴ魔乙 プレイ動画】クリスマスアタ 3.14億 風ランサー＋テンペスト", "スコア大会(イベント)")
 
+    def test_event_round_is_not_weekend(self):
+        # イベントの開催回（回数の直後が辞書のイベント名）は週末にしない（2026-10-14 ユーザー指示）
+        for title in [
+            "【ゴ魔乙 プレイ動画】第2回 コンボブレイクスコアタ 1,603,331,211点 ランクS",
+            "【ゴ魔乙 プレイ動画】第2回ｺﾝﾎﾞﾌﾞﾚｲｸｽｺｱﾀ 25億 ハイパービッグバン 特特範",
+        ]:
+            tags = collect.make_tags(title, "")
+            self.assertEqual(subcategories(title), ["スコア大会(イベント)"], title)
+            self.assertIn("コンボブレイクスコアタ", tags, title)
+            self.assertNotIn("第2回", tags, title)
+        # 回数のあとにイベント名以外が続く週末の動画は従来どおり
+        self.assert_sub("【ゴ魔乙 プレイ動画】第580回スコア大会 HYCレーザーA", "スコア大会(週末)")
+
     def test_new_dictionary_names(self):
         self.assertIn("弾幕神", collect.make_tags("【ゴ魔乙 プレイ動画】弾幕神スコアタC 1.61億", ""))
         self.assertIn("むちむちポーク", collect.make_tags("【ゴ魔乙】むちポスコアタざっくりやって一番気になった箇所(最後)", ""))
@@ -112,6 +125,11 @@ class ScoreSubcategoryTests(unittest.TestCase):
             ("【ゴ魔乙 プレイ動画】乙女の契りスコアタ 634M 魔力+750 火鏡雷/ラ吸ラ", "乙女の契り"),
             ("【ゴ魔乙 プレイ動画】堕落ショットスコアタ 505M 火モルフォ/ラ吸ラ", "堕落ショット"),
             ("【ゴ魔乙 プレイ動画】 狂炎スコアタ hard 45,193,735点 ランク超S", "狂炎"),
+            ("CBスコアタ2nd⭐️21億点パターン再現【ゴ魔乙 プレイ動画】 ｺﾝﾎﾞﾌﾞﾚｲｸｽｺｱﾀ death 20.3億点 ランク弩S", "コンボブレイクスコアタ"),
+            ("【ゴ魔乙 プレイ動画】 ﾆﾙｳﾞｧｰﾅｽｺｱﾀ death 344,494,863点 ランク弩S", "ニルヴァーナスコアタ"),
+            ("【ゴ魔乙 プレイ動画】 ケイブシュースコアタ hard 73,570,952点 ランクS", "ケイブシュースコアタ"),
+            ("【ゴ魔乙 プレイ動画】グリフォンスコアタ death 422M ヘルパー/ラララ", "グリフォンスコアタ"),
+            ("【ゴ魔乙 プレイ動画】 前夜祭スコアタ death 477,884,044点 ランクB", "8th前夜祭"),
         ]:
             tags = collect.make_tags(title, "")
             self.assertIn("スコア大会(イベント)", tags, title)

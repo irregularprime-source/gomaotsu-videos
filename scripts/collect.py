@@ -178,13 +178,25 @@ def classify(ntitle, has_round=False):
     return tags or ["未分類"]
 
 
-def extract_round(ntitle):
-    """タイトルから回数（整数）を1つ返す。無ければ None。"""
+def _round_match(ntitle):
     for pat in ROUND_PATTERNS:
         m = pat.search(ntitle)
         if m:
-            return int(m.group(1))
+            return m
     return None
+
+
+def extract_round(ntitle):
+    """タイトルから回数（整数）を1つ返す。無ければ None。
+    回数の直後（空白を挟んでもよい）がイベント名辞書の語なら、イベントの開催回
+    （「第2回 コンボブレイクスコアタ」等）なので週末の回数にしない（2026-10-14 ユーザー指示）。"""
+    m = _round_match(ntitle)
+    if m is None:
+        return None
+    rest = ntitle[m.end():].lstrip()
+    if any(rest.startswith(k) for _, kws in EVENT_TAGS for k in kws):
+        return None
+    return int(m.group(1))
 
 
 def make_tags(title, description):
