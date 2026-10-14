@@ -132,7 +132,8 @@ def classify(ntitle, has_round=False):
     週末/イベントの判別は、説明文の別動画への言及を拾わないようタイトルのみで行う。
     has_round=True（回数「第○回」が取れた）はそれ自体を週末スコア大会の判定材料にする
     （「第579回 9,903万」のようにスコアタ表記が無くても回数付きは定期スコア大会のため）。
-    回数はイベント名辞書の一致より優先する（週末の動画にも武器名「HYCレーザー」等が出るため）。"""
+    回数はイベント名辞書の一致より優先する（週末の動画にも武器名「HYCレーザー」等が出るため）。
+    ただし回数の直後が辞書の語なら、extract_round の段階で回数にしない（イベントの開催回）。"""
     tags = []
     has_score_marker = (any(norm(m) in ntitle for m in SCORE_MARKERS)
                         or any(k in ntitle for k in EVENT_SCORE_KEYWORDS))
