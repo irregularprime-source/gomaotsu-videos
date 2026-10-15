@@ -40,6 +40,12 @@ EVENT_WORDS = ["限定", "記念", "コラボ", "周年", "xmas", "クリスマ�
 # Why: 以前は「イベント語が無ければ週末」としていたため、弾幕神スコアタ等のイベントが週末に落ちていた。
 # 週末は根拠があるときだけにし、根拠の無いスコア動画はイベントにする。
 WEEKEND_WORDS = ["ドヨアタ", "どよあた", "ドョアタ", "土アタ", "週末", "今週"]
+# リアルスコア大会の予選。リアル＋イベントの両方に分類し、名前タグは辞書（団体戦予選）で付ける。
+# ただし週末の根拠（3桁の回数か週末の語）もあれば週末だけにする（2026-10-15 ユーザー指示）。
+# Why: リアル大会の予選ステージが過去のスコアタの流用で、週末の動画と見分けられず目視で処理するため。
+# 3桁に限るのは「第3回ごまおつスコア大会 団体戦予選」のような大会自体の開催回を週末にしないため。
+REAL_QUALIFIER = "団体戦予選"
+WEEKEND_ROUND_MIN = 100
 # 「第○回」があってもスコア大会の回数ではないカテゴリ（第42回裏ゴシック道・第34回ギルイベ・アリーナバトル第64回）。
 # タイトルにスコア大会を示す語が無ければ、回数をスコア大会の根拠にしない。
 NON_SCORE_ROUND_WORDS = ["ゴシック道", "裏ゴシック", "ギルイベ", "ギルドイベント", "アリーナ"]
@@ -127,13 +133,15 @@ def match_event_tags(ntitle):
     return matched
 
 
-def classify(ntitle, has_round=False):
+def classify(ntitle, has_round=False, round_no=None):
     """正規化タイトルからカテゴリタグ一覧を返す。該当なしは ['未分類']。
     週末/イベントの判別は、説明文の別動画への言及を拾わないようタイトルのみで行う。
     has_round=True（回数「第○回」が取れた）はそれ自体を週末スコア大会の判定材料にする
     （「第579回 9,903万」のようにスコアタ表記が無くても回数付きは定期スコア大会のため）。
     回数はイベント名辞書の一致より優先する（週末の動画にも武器名「HYCレーザー」等が出るため）。
-    ただし回数の直後が辞書の語なら、extract_round の段階で回数にしない（イベントの開催回）。"""
+    ただし回数の直後が辞書の語なら、extract_round の段階で回数にしない（イベントの開催回）。
+    「団体戦予選」はリアル＋イベントの両方にする。週末の根拠（round_no が3桁以上か週末の語）も
+    あれば週末だけにする（REAL_QUALIFIER 参照）。"""
     tags = []
     has_score_marker = (any(norm(m) in ntitle for m in SCORE_MARKERS)
                         or any(k in ntitle for k in EVENT_SCORE_KEYWORDS))
@@ -143,6 +151,10 @@ def classify(ntitle, has_round=False):
     # スコア大会ファミリー：親「スコア大会」＋下位1つ（エーテル/リアル/リーグ/月間/イベント/週末）
     is_ether = norm("エーテルスコア") in ntitle
     is_real = norm("団体戦") in ntitle            # リアルスコア大会（現状は団体戦のみ）
+    is_real_qualifier = norm(REAL_QUALIFIER) in ntitle
+    if is_real_qualifier and ((round_no is not None and round_no >= WEEKEND_ROUND_MIN)
+                              or any(norm(w) in ntitle for w in WEEKEND_WORDS)):
+        is_real = is_real_qualifier = False     # 週末の根拠もある → 週末として下へ
     is_league = any(norm(w) in ntitle for w in LEAGUE_WORDS)
     is_monthly = any(norm(w) in ntitle for w in MONTHLY_WORDS)
     is_score = is_ether or is_real or is_league or is_monthly or has_round or has_score_marker
@@ -152,6 +164,8 @@ def classify(ntitle, has_round=False):
             tags.append("エーテルスコア大会")
         elif is_real:
             tags.append("リアルスコア大会")
+            if is_real_qualifier:
+                tags.append("スコア大会(イベント)")
         elif is_league:
             tags.append("スコア大会(リーグ)")
         elif is_monthly:
@@ -205,7 +219,7 @@ def make_tags(title, description):
     分類はタイトル基準（description は収集判定 is_gomaotsu でのみ使う）。"""
     ntitle = norm(title)
     r = extract_round(ntitle)
-    tags = classify(ntitle, has_round=r is not None)
+    tags = classify(ntitle, has_round=r is not None, round_no=r)
     if r is not None:
         tags.append(f"第{r}回")
     e = EVENT_RE.search(ntitle)
