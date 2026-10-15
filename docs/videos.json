@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-15T21:56:41+09:00",
+  "updated": "2026-10-15T22:07:58+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -238713,6 +238713,38 @@
         "第593回"
       ],
       "status": "確認済み",
+      "note": ""
+    },
+    {
+      "videoId": "zaQpLa0wMnU",
+      "title": "【#ゴ魔乙 プレイ動画】593回スコア大会予習 22.75億 解説つき ルナティックガン/ジーナ 爆BAラ",
+      "channel": "七瀬九鷹",
+      "description": "#ゲーム #ゴ魔乙 #ごまおつ #ごまビデオ",
+      "publishedAt": "2026-10-15T11:00:33Z",
+      "registeredAt": "2026-10-15T22:07:58+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第593回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "JFrFmTUB3-U",
+      "title": "【ゴ魔乙 プレイ動画】 第593回スコア大会 death 536,418,619点 ランクS",
+      "channel": "ahoahomanz",
+      "description": "",
+      "publishedAt": "2026-10-15T09:46:10Z",
+      "registeredAt": "2026-10-15T22:07:58+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第593回"
+      ],
+      "status": "自動分類",
       "note": ""
     }
   ]
