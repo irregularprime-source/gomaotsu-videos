@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-15T18:52:59+09:00",
+  "updated": "2026-10-15T19:33:27+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -238612,6 +238612,22 @@
       "source": "search",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "YPRHJ1NqFDo",
+      "title": "【ゴ魔乙プレイ動画】第593回スコア大会(予習)",
+      "channel": "安満沢ライナー",
+      "description": "#ゴシックは魔法乙女 #ゴ魔乙 #ごまおつ",
+      "publishedAt": "2026-10-15T09:53:23Z",
+      "registeredAt": "2026-10-15T19:33:27+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第593回"
       ],
       "status": "自動分類",
       "note": ""
