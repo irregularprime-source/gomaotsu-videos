@@ -102,6 +102,36 @@ class ScoreSubcategoryTests(unittest.TestCase):
         # 回数のあとにイベント名以外が続く週末の動画は従来どおり
         self.assert_sub("【ゴ魔乙 プレイ動画】第580回スコア大会 HYCレーザーA", "スコア大会(週末)")
 
+    def test_dictionary_names_added_2026_10_15(self):
+        for title, name in [
+            ("【ゴ魔乙 プレイ動画】 ｳｪﾃﾞｨﾝｸﾞ総合ｽｺｱﾀB death 744,201,219点 ランクS", "ウェディング総合"),
+            ("【ゴ魔乙 プレイ動画】 鋳薔薇総合スコアタA hard 105,428,854点 ランクS", "鋳薔薇総合"),
+            ("13.9億点→豪華客船スコアタ(前半)【ゴ魔乙プレイ動画】", "豪華客船"),
+            ("優勝【#ゴ魔乙 プレイ動画】妖精王スコアタ 15.40億 ララバ", "妖精王"),
+            ("【ゴ魔乙】【限定】ﾗｲｵｯﾄｶﾞﾝｽｺｱﾀ 412M ヘルパーのみアイテム無", "ライオットガンスコアタ"),
+            ("【ゴ魔乙 プレイ動画】 ビッグバンｽｺｱﾀ death 123,562,266点 ランクC", "ビッグバンスコアタ"),
+            ("【ゴ魔乙 プレイ動画】祝砲スコア death 181M ナデシコ", "祝砲スコアタ"),
+            ("[ゴ魔乙]03/08 イベアタなガルドラスコアタやっていきます[プレイ動画]", "ガルドラスコアタ"),
+        ]:
+            tags = collect.make_tags(title, "")
+            self.assertIn("スコア大会(イベント)", tags, title)
+            self.assertIn(name, tags, title)
+        self.assertNotIn("妖精", collect.make_tags("優勝【#ゴ魔乙 プレイ動画】妖精王スコアタ 15.40億 ララバ", ""))
+
+    def test_real_qualifier(self):
+        # 団体戦予選はリアル＋イベント＋名前タグ。週末の根拠（3桁の回数・週末の語）もあれば週末だけ（2026-10-15 ユーザー指示）
+        for title in ["【ゴ魔乙】団体戦予選160M",
+                      "【ゴ魔乙 プレイ動画】第3回ごまおつスコア大会 団体戦予選 normal 154M"]:
+            tags = collect.make_tags(title, "")
+            self.assertEqual(subcategories(title), ["リアルスコア大会", "スコア大会(イベント)"], title)
+            self.assertIn("団体戦予選", tags, title)
+        self.assertIn("第3回", collect.make_tags("【ゴ魔乙 プレイ動画】第3回ごまおつスコア大会 団体戦予選 normal 154M", ""))
+        weekend = "[ごまおつ]8/25団体戦予選第586回スコア大会予習ステージ攻略[ゴシックは魔法乙女][Vtuber]"
+        self.assertEqual(subcategories(weekend), ["スコア大会(週末)"])
+        self.assertNotIn("団体戦予選", collect.make_tags(weekend, ""))
+        # 予選でない団体戦はリアルだけ（従来どおり）
+        self.assert_sub("このままだと「思春期ヴィマナBOYZ」が #ごまおつ リアルスコア大会団体戦に出場してしまう件", "リアルスコア大会")
+
     def test_new_dictionary_names(self):
         self.assertIn("弾幕神", collect.make_tags("【ゴ魔乙 プレイ動画】弾幕神スコアタC 1.61億", ""))
         self.assertIn("むちむちポーク", collect.make_tags("【ゴ魔乙】むちポスコアタざっくりやって一番気になった箇所(最後)", ""))
