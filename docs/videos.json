@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-16T00:57:44+09:00",
+  "updated": "2026-10-16T03:03:03+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -238792,6 +238792,38 @@
       "source": "auto",
       "tags": [
         "ギルドバトル(イベント)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "wu70J6oCUjw",
+      "title": "【ゴ魔乙 プレイ動画】第593回スコア大会予習 22.15億 剣気.ジーナ",
+      "channel": "ぱおー",
+      "description": "",
+      "publishedAt": "2026-10-15T15:49:56Z",
+      "registeredAt": "2026-10-16T03:03:03+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第593回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "86qQwA4QpBs",
+      "title": "【ゴ魔乙 プレイ動画】 第593回スコア大会 death 1,032,004,845点",
+      "channel": "村瀬くん",
+      "description": "",
+      "publishedAt": "2026-10-15T14:58:44Z",
+      "registeredAt": "2026-10-16T03:03:03+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第593回"
       ],
       "status": "自動分類",
       "note": ""
