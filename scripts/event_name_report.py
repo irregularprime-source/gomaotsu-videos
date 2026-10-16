@@ -6,7 +6,8 @@ data/event_tags.json（イベント名辞書）を定期的に見直すときに
   python scripts/event_name_report.py           # 集計を表示（辞書の一致数・名前の無いイベント動画・候補）
   python scripts/event_name_report.py --apply   # イベント動画に辞書の名前タグを追加して videos.json に書き込む
 
---apply は確認済みも含むスコア大会(イベント)の動画に、辞書に一致した名前タグを「追加だけ」する。
+--apply は確認済みも含むスコア大会(イベント)の動画に、辞書に一致した名前タグと「○○限定スコアタ」
+（『○○限定』の○○。表記ゆれは辞書の limited_aliases で寄せる）を「追加だけ」する。
 分類・状態・ほかのタグは変えず、タグの削除もしない（確認済みはユーザーの判断を保護する方針のため）。
 分類そのものの変更は reclassify.py（未確認だけが対象）で行う。
 """
@@ -16,7 +17,7 @@ import re
 import sys
 from collections import Counter
 
-from collect import VIDEOS_PATH, EVENT_RE, EVENT_TAGS, match_event_tags, norm
+from collect import VIDEOS_PATH, EVENT_RE, EVENT_TAGS, event_name_tags, norm
 
 EVENT = "スコア大会(イベント)"
 DICT_TAGS = {tag for tag, _ in EVENT_TAGS}
@@ -25,8 +26,8 @@ CANDIDATE_RE = re.compile(r"([一-鿿ぁ-んァ-ヿー々a-z0-9・]{2,12}?)(?:�
 
 
 def missing_names(video):
-    """イベント動画に付いていない、辞書に一致した名前タグ。"""
-    return [t for t in match_event_tags(norm(video.get("title", ""))) if t not in video["tags"]]
+    """イベント動画に付いていない名前タグ（辞書の一致・○○限定スコアタ）。"""
+    return [t for t in event_name_tags(norm(video.get("title", ""))) if t not in video["tags"]]
 
 
 def has_name(video):
@@ -51,7 +52,7 @@ def report(videos, limit):
     adds = [(v, missing_names(v)) for v in events]
     adds = [(v, m) for v, m in adds if m]
     by_status = Counter(v["status"] for v, _ in adds)
-    print(f"\n## 辞書の名前タグを追加できるイベント動画: {len(adds)}件 {dict(by_status)}（--apply で追加）")
+    print(f"\n## 名前タグ（辞書・○○限定スコアタ）を追加できるイベント動画: {len(adds)}件 {dict(by_status)}（--apply で追加）")
     for v, m in adds[:limit]:
         print(f"  [{v['status'][:2]}] +{m}  {v['title'][:60]}")
 
@@ -80,7 +81,7 @@ def apply(doc):
 def main():
     parser = argparse.ArgumentParser(description="イベント名タグの見直し")
     parser.add_argument("--apply", action="store_true",
-                        help="イベント動画に辞書の名前タグを追加して書き込む（追加だけ。削除・分類変更はしない）")
+                        help="イベント動画に名前タグ（辞書・○○限定スコアタ）を追加して書き込む（追加だけ。削除・分類変更はしない）")
     parser.add_argument("--limit", type=int, default=40, help="一覧に出す件数（既定40）")
     args = parser.parse_args()
     doc = json.loads(VIDEOS_PATH.read_text(encoding="utf-8"))
