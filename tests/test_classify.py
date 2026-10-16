@@ -118,6 +118,40 @@ class ScoreSubcategoryTests(unittest.TestCase):
             self.assertIn(name, tags, title)
         self.assertNotIn("妖精", collect.make_tags("優勝【#ゴ魔乙 プレイ動画】妖精王スコアタ 15.40億 ララバ", ""))
 
+    def test_limited_score_tag(self):
+        # イベントの「○○限定」には ○○ と ○○限定スコアタ の両方。表記ゆれは寄せる（2026-10-16 ユーザー指示）
+        tags = collect.make_tags("【ゴ魔乙 プレイ動画】縋憶限定スコアタ闇　death 257,026,039点", "")
+        self.assertIn("縋憶", tags)
+        self.assertIn("縋憶限定スコアタ", tags)
+        self.assertIn("縋憶限定スコアタ", collect.make_tags("[ゴ魔乙]02/04 縋憶スコアタやってみましょう、ピカトリクスはガンガン攻める⁉[プレイ動画]", ""))
+        for title, name in [
+            ("【ゴ魔乙 プレイ動画】縋憶編限定スコアタ　7.79億　グリモワール固定", "縋憶"),
+            ("[ゴ魔乙]11/25 ラナンちゃ限定スコアタ！サクサクっとミッション達成[プレイ動画]", "ラナン"),
+            ("[ゴ魔乙]09/23 イベアタは希亡ショット限定⁉報酬使い魔使えますよ[プレイ動画]", "希亡ショット"),
+        ]:
+            tags = collect.make_tags(title, "")
+            self.assertIn(name, tags, title)
+            self.assertIn(f"{name}限定スコアタ", tags, title)
+        # 大蛇限定はスコアタの語が無くてもイベント
+        tags = collect.make_tags("【ゴ魔乙 プレイ動画】 大蛇限定 death 875,559,749点 ランク弩S", "")
+        self.assertIn("スコア大会(イベント)", tags)
+        self.assertIn("大蛇限定スコアタ", tags)
+        # 週末の動画の武器名「大蛇」には付けない
+        self.assertNotIn("大蛇限定スコアタ", collect.make_tags("【ゴ魔乙】第579回スコア大会 99.28M ピカトリクス&大蛇　オ範爆", ""))
+        # イベント以外の「○○限定」には付けない（属性限定は除外語でもある）
+        self.assertNotIn("属性限定スコアタ", collect.make_tags("属性限定ガチャ", ""))
+
+    def test_dictionary_names_added_2026_10_16(self):
+        for title, name in [
+            ("【ゴ魔乙 プレイ動画】 ごまおつｳｨｰｸｽｺｱﾀ normal 78,673,843点 ランク弩S", "ごまおつウィーク"),
+            ("【ゴ魔乙 プレイ動画】 白ロリスコアタ hard 120,806,378点 ランク弩S", "白ロリ"),
+            ("【ゴ魔乙 プレイ動画】 ロロデミースコアタ death 599,413,682点 ランク超S", "ロロデミー"),
+            ("【ゴ魔乙 プレイ動画】雪まつりスコアタ 583M 光リヴァ/火クロブレ/ラ", "雪まつり"),
+            ("【ゴ魔乙 プレイ動画】ゲッチュビームスコアタ 5611万 魔2873 ダ吸波", "ゲッチュビームスコアタ"),
+        ]:
+            self.assertIn(name, collect.make_tags(title, ""), title)
+        self.assertNotIn("ヘルズバードスコアタ", collect.make_tags("【ゴ魔乙 プレイ動画】 第455回スコア大会 hard 97,094,074点 ランクA 風ヘルズバード単騎 爆ダ爆", ""))
+
     def test_real_qualifier(self):
         # 団体戦予選はリアル＋イベント＋名前タグ。週末の根拠（3桁の回数・週末の語）もあれば週末だけ（2026-10-15 ユーザー指示）
         for title in ["【ゴ魔乙】団体戦予選160M",

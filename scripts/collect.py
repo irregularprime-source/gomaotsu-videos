@@ -104,7 +104,8 @@ EVENT_RE = re.compile(r"([一-鿿ぁ-んァ-ヿー々〆]+)限定")
 
 def load_event_tags():
     """スコア大会(イベント)のイベント名辞書を読み、
-    ([(tag, [正規化済みkeyword, ...]), ...], [スコア大会の根拠にする正規化済みkeyword, ...]) を返す。
+    ([(tag, [正規化済みkeyword, ...]), ...], [スコア大会の根拠にする正規化済みkeyword, ...],
+     {『○○限定』の○○の表記ゆれ: 寄せる名前}, {『○○限定スコアタ』を付けない○○}) を返す。
     "score": true のエントリ（ゴライコウ襲来など「スコアタ」の語が付かないイベント名）は、
     keyword 自体をスコア大会の根拠にする。
     『○○限定』形式は EVENT_RE が自動抽出するため辞書には入れない（重複回避）。"""
@@ -117,11 +118,36 @@ def load_event_tags():
             result.append((tag, kws))
             if ev.get("score") is True:
                 score_keywords.extend(kws)
-    return result, score_keywords
+    aliases = {norm(k): v for k, v in data.get("limited_aliases", {}).items() if not k.startswith("_")}
+    no_score_tag = {norm(n) for n in data.get("limited_no_score_tag", [])}
+    return result, score_keywords, aliases, no_score_tag
 
 
 # イベント名辞書（モジュール読込時に1回だけロード。reclassify も import 経由で共用）。
-EVENT_TAGS, EVENT_SCORE_KEYWORDS = load_event_tags()
+EVENT_TAGS, EVENT_SCORE_KEYWORDS, LIMITED_ALIASES, LIMITED_NO_SCORE_TAG = load_event_tags()
+
+
+def limited_name(ntitle):
+    """『○○限定』の○○（表記ゆれは辞書の limited_aliases で寄せる）。無ければ None。"""
+    e = EVENT_RE.search(ntitle)
+    if e is None:
+        return None
+    return LIMITED_ALIASES.get(e.group(1), e.group(1))
+
+
+def event_name_tags(ntitle):
+    """スコア大会(イベント)の動画に付ける名前タグ（○○・○○限定スコアタ・辞書の一致）を重複排除で返す。
+    『○○限定』のイベントには「○○限定スコアタ」も表示する（2026-10-16 ユーザー指示。属性限定などは除く）。"""
+    names = []
+    name = limited_name(ntitle)
+    if name:
+        names.append(name)
+        if name not in LIMITED_NO_SCORE_TAG:
+            names.append(f"{name}限定スコアタ")
+    for t in match_event_tags(ntitle):
+        if t not in names:
+            names.append(t)
+    return names
 
 
 def match_event_tags(ntitle):
@@ -222,13 +248,13 @@ def make_tags(title, description):
     tags = classify(ntitle, has_round=r is not None, round_no=r)
     if r is not None:
         tags.append(f"第{r}回")
-    e = EVENT_RE.search(ntitle)
-    if e:
-        tags.append(e.group(1))
-    # 辞書由来のイベント名タグは「スコア大会(イベント)」の動画のときだけ付与する
+    name = limited_name(ntitle)
+    if name:
+        tags.append(name)
+    # 辞書由来のイベント名タグと「○○限定スコアタ」は「スコア大会(イベント)」の動画のときだけ付与する
     # （ガチャ/アリーナ等への季節名や、週末の動画への武器名「HYCレーザー」の誤爆を防ぐ）。
     if "スコア大会(イベント)" in tags:
-        for t in match_event_tags(ntitle):
+        for t in event_name_tags(ntitle):
             if t not in tags:
                 tags.append(t)
     return tags
