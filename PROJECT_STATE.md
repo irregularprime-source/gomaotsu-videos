@@ -15,14 +15,14 @@
 | 収集 | 登録チャンネル6時間ごと、検索1時間ごと。同じ concurrency グループで直列化 |
 | Python | ローカル .venv・回帰CI（Windows / Linux）・収集 Actions すべて 3.14（10-08 に 3.10 / 3.11 から移行）。旧環境 .venv-py310 は 10-08 に削除（ごみ箱へ移動）。依存は版・wheel SHA256固定 |
 | セキュリティ設定 | Dependabot alerts・セキュリティ更新、Secret scanning・push protection が有効（10-08確認） |
-| 検証 | イベント名辞書と団体戦予選の分類の PR #13 で[回帰CI](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/38725836908)（Python 3.14）成功（10-15）。セキュリティ対応は bc97277 の[回帰CI](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/37769514764)成功・Pages 反映を確認（10-08） |
+| 検証 | イベント名辞書と「○○限定スコアタ」の PR #15 で[回帰CI](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/38891202851)（Python 3.14）成功（10-16）。セキュリティ対応は bc97277 の[回帰CI](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/37769514764)成功・Pages 反映を確認（10-08） |
 
-回帰CIは Windows 45件成功、Linux 41件成功・Windows BAT専用4件スキップ（10-15。分類テストを含む）。収集2本の本番実行（Python 3.14）、公開JS・データの一致、CSP・SRI、非公開パス404、ログにキーが出ないことを確認済み。
+回帰CIは Windows 47件成功、Linux 43件成功・Windows BAT専用4件スキップ（10-16。分類テストを含む）。収集2本の本番実行（Python 3.14）、公開JS・データの一致、CSP・SRI、非公開パス404、ログにキーが出ないことを確認済み。
 自動ブラウザで GoatCounter スクリプトの直接取得が失敗した件は原因未確定。HTTP取得・SRI一致・取得応答を使った初期化は確認済み。詳細・実行IDは CHANGELOG を参照。
 
 ### データのスナップショット
 
-元データ: `docs/videos.json`（updated: `2026-10-16T19:47:46+09:00`、10-16 の取り込み・再分類・名前タグ追加の試算で集計）。件数はこの時点のスナップショットで、自動収集やレビューにより変わる。
+元データ: `docs/videos.json`（updated: `2026-10-16T19:47:46+09:00`、10-16 の取り込み・再分類・名前タグ追加後に集計（反映後の実データで確認））。件数はこの時点のスナップショットで、自動収集やレビューにより変わる。
 
 | 項目 | 件数 |
 |---|---:|

@@ -295,7 +295,7 @@ push が他の更新と競合して弾かれた場合は `git pull --rebase` で
    - `○○限定` の○○の表記ゆれ（「縋憶編」「ラナンちゃ」等）は `limited_aliases` に「元の表記: 寄せる名前」で足す。
    - タイトルに「スコアタ」等が付かないイベント名（ゴライコウ襲来・必ず死なすっ・煩悶）は `"score": true` を付ける。その語自体がスコア大会の根拠になり、週末の根拠が無ければスコア大会(イベント)になる。
 3. 未確認の動画: `& ".\.venv\Scripts\python.exe" "scripts/reclassify.py" --dry-run` で差分を確認し、`reclassify.py` で反映する（確認済み・手動登録は保護される）。名前タグを足すだけなら、次の `--apply` でも未確認の動画に付く。
-4. 確認済みの動画: `& ".\.venv\Scripts\python.exe" "scripts/event_name_report.py" --apply` で、スコア大会(イベント)の動画に辞書の名前タグを**追加だけ**する（分類・状態・ほかのタグは変えず、削除もしない）。
+4. 確認済みの動画: `& ".\.venv\Scripts\python.exe" "scripts/event_name_report.py" --apply` で、スコア大会(イベント)の動画に辞書の名前タグと「○○限定スコアタ」を**追加だけ**する（分類・状態・ほかのタグは変えず、削除もしない）。
 5. `build_static.py` を実行し、videos.json・index.html・event_tags.json の差分を確認して明示的に commit / push（保存用 BAT は event_tags.json を対象に含めない）。
 
 **仕組み（collect.py）**: `make_tags` が `classify` で下位タグを決めたあと、結果が「スコア大会(イベント)」のときだけ `match_event_tags(ntitle)` の辞書一致を表示専用タグとして付与する（ガチャ/アリーナ等への季節名や、週末の動画への武器名「HYCレーザー」の誤爆を抑止）。辞書の一致だけでは週末→イベントにしない（2026-10-09〜。週末の根拠が無いスコア動画は辞書に関係なくイベントになる）。例外として、`extract_round` は回数の直後（空白可）が辞書の語なら回数を返さない（2026-10-14〜。「第2回 コンボブレイクスコアタ」等のイベントの開催回）。「団体戦予選」は `classify` が `REAL_QUALIFIER` でリアル＋イベントにし、週末の根拠（`round_no` が `WEEKEND_ROUND_MIN`=100 以上か週末の語）があれば週末だけにする（2026-10-15〜）。`"score": true` のエントリの keywords は `EVENT_SCORE_KEYWORDS` として、`SCORE_MARKERS` と同じくスコア大会の根拠に使う。reclassify.py は collect.py の `make_tags` を import して共用するため、**改修は collect.py 側だけでよい**。
