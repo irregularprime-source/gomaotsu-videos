@@ -152,6 +152,23 @@ class ScoreSubcategoryTests(unittest.TestCase):
             self.assertIn(name, collect.make_tags(title, ""), title)
         self.assertNotIn("ヘルズバードスコアタ", collect.make_tags("【ゴ魔乙 プレイ動画】 第455回スコア大会 hard 97,094,074点 ランクA 風ヘルズバード単騎 爆ダ爆", ""))
 
+    def test_dictionary_names_added_2026_10_17(self):
+        for title, name in [
+            ("【ゴ魔乙】バランス調整テストスコアタ 14.92億 水パイル", "テストスコアタ"),
+            ("【ゴ魔乙 プレイ動画】 ｻﾊﾞｲﾊﾞﾙｽｺｱﾀ前半 hard 91,561,302点 ランクS", "サバイバル前半"),
+            ("【ゴ魔乙 プレイ動画】サバイバルスコアタ後半 194M 火ィィソ/ドラバナ/吸波ラ", "サバイバル後半"),
+            ("【ゴ魔乙 プレイ動画】マジカルゾーン体験スコアタ2 1026M 光ブリキ/ダララ", "マジカルゾーン体験"),
+            ("【ゴ魔乙 プレイ動画】黄金の水スコアタ 104M ヘルパヘルギガ2/バラバ", "黄金の水"),
+            ("【ゴ魔乙 プレイ動画】 ルシフェルスコアタ death 635,807,051点 吸ババ ランク弩S", "ルシフェルスコアタ"),
+            ("【ゴ魔乙】和ｶﾌｪLOVE★魅せｽｺｱﾀ 62.6M ラブボン 範ラダ", "LOVE★魅せ"),
+            ("【ゴ魔乙 プレイ動画】 6周年★ﾋﾞｷﾞﾅｰｽｺｱﾀ hard 3,997,314点 ランクF", "6周年★ビギナー"),
+            ("【ゴ魔乙 プレイ動画】【0章】限定スコアタ 266M バレットストーム", "0章限定スコアタ"),
+        ]:
+            tags = collect.make_tags(title, "")
+            self.assertIn("スコア大会(イベント)", tags, title)
+            self.assertIn(name, tags, title)
+        self.assertNotIn("サバイバル前半", collect.make_tags("【ゴ魔乙 プレイ動画】サバイバルスコアタ後半 194M", ""))
+
     def test_real_qualifier(self):
         # 団体戦予選はリアル＋イベント＋名前タグ。週末の根拠（3桁の回数・週末の語）もあれば週末だけ（2026-10-15 ユーザー指示）
         for title in ["【ゴ魔乙】団体戦予選160M",
