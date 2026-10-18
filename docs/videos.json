@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-18T11:06:26+09:00",
+  "updated": "2026-10-18T12:23:43+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -327323,6 +327323,48 @@
       "publishedAt": "2026-10-18T00:28:56Z",
       "registeredAt": "2026-10-18T11:06:26+09:00",
       "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "lOJVtsqufE8",
+      "title": "（ゴ魔乙プレイ動画）怨撃激難ステージ hard 1.50億",
+      "channel": "胃酸過多ばろんてっど",
+      "description": "無被弾クリアはムリでした(ฅ•ω•ฅ)",
+      "publishedAt": "2026-10-18T00:20:45Z",
+      "registeredAt": "2026-10-18T12:23:43+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "s-SXVBTbagA",
+      "title": "【ゴ魔乙】カレンボーナス",
+      "channel": "くらん",
+      "description": "",
+      "publishedAt": "2026-10-18T00:16:32Z",
+      "registeredAt": "2026-10-18T12:23:43+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "TaRef4s3mdQ",
+      "title": "【ゴ魔乙】アンゼリカボーナス",
+      "channel": "くらん",
+      "description": "",
+      "publishedAt": "2026-10-18T00:12:47Z",
+      "registeredAt": "2026-10-18T12:23:43+09:00",
+      "source": "search",
       "tags": [
         "未分類"
       ],
