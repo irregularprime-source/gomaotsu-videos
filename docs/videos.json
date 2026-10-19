@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-20T02:57:06+09:00",
+  "updated": "2026-10-20T04:04:39+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -417389,6 +417389,38 @@
       "source": "auto",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "JlZNz-kpK08",
+      "title": "【ゴ魔乙 プレイ動画】 スゥイーツスコアタ death 217,458,432点 ランクS",
+      "channel": "ahoahomanz",
+      "description": "",
+      "publishedAt": "2026-10-19T17:44:26Z",
+      "registeredAt": "2026-10-20T04:04:39+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(イベント)",
+        "スゥイーツ"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "iQRS1zwpXZs",
+      "title": "【ゴ魔乙】ファントムスコアタ　弩Death  18.5億",
+      "channel": "Kゴ魔乙",
+      "description": "#ゴ魔乙　#ごまおつ　#ファントム　#弩Death",
+      "publishedAt": "2026-10-19T14:12:37Z",
+      "registeredAt": "2026-10-20T04:04:39+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(イベント)",
+        "ファントム"
       ],
       "status": "自動分類",
       "note": ""
