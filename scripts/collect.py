@@ -34,6 +34,9 @@ SCORE_MARKERS = ["スコア大会", "スコアタ", "ドヨアタ", "どよあ�
 # スコア大会の下位分類の判定語。優先順はエーテル→リアル→リーグ→月間→イベント→週末（classify 参照）。
 LEAGUE_WORDS = ["リーグ"]
 MONTHLY_WORDS = ["更なる高みへ", "さらなる高みへ", "月間スコアタ", "月間スコア大会"]
+# 「1月スコアタ」「6月 スコアタ」のような月の呼び方も月間にする（2026-10-20 ユーザー指示）。
+# 「6月のスコアタ」「○月総合スコアタ」は含めない。
+MONTHLY_RE = re.compile(r"(?<!\d)\d{1,2}月 ?スコアタ")
 # 明示的にイベントを示す語。
 EVENT_WORDS = ["限定", "記念", "コラボ", "周年", "xmas", "クリスマス"]
 # 週末と判定する根拠の語（回数が取れた場合も週末の根拠になる）。
@@ -182,7 +185,7 @@ def classify(ntitle, has_round=False, round_no=None):
                               or any(norm(w) in ntitle for w in WEEKEND_WORDS)):
         is_real = is_real_qualifier = False     # 週末の根拠もある → 週末として下へ
     is_league = any(norm(w) in ntitle for w in LEAGUE_WORDS)
-    is_monthly = any(norm(w) in ntitle for w in MONTHLY_WORDS)
+    is_monthly = any(norm(w) in ntitle for w in MONTHLY_WORDS) or bool(MONTHLY_RE.search(ntitle))
     is_score = is_ether or is_real or is_league or is_monthly or has_round or has_score_marker
     if is_score:
         tags.append("スコア大会")
