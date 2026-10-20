@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-21T03:58:23+09:00",
+  "updated": "2026-10-21T05:59:43+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -458594,6 +458594,22 @@
       "source": "search",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "NjmhzkWBZcA",
+      "title": "第594回スコア大会 131M 俳句A NEO レ設・爆貫・オプ 【ゴ魔乙 プレイ動画】",
+      "channel": "フライングエース",
+      "description": "",
+      "publishedAt": "2026-10-20T17:44:37Z",
+      "registeredAt": "2026-10-21T05:59:43+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第594回"
       ],
       "status": "自動分類",
       "note": ""
