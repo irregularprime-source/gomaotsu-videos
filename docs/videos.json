@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-20T19:52:47+09:00",
+  "updated": "2026-10-20T23:44:38+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -458420,6 +458420,34 @@
       "tags": [
         "スコア大会",
         "スコア大会(月間)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "WdUJYIurAVc",
+      "title": "【ゴ魔乙】スフレステージ(前半) death",
+      "channel": "くらん",
+      "description": "",
+      "publishedAt": "2026-10-20T14:36:42Z",
+      "registeredAt": "2026-10-20T23:44:38+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "68xwvJH_jeg",
+      "title": "【ゴ魔乙プレイ動画】1日1回!SPステージ!",
+      "channel": "安満沢ライナー",
+      "description": "#ゴシックは魔法乙女 #ゴ魔乙 #ごまおつ",
+      "publishedAt": "2026-10-20T12:02:17Z",
+      "registeredAt": "2026-10-20T23:44:38+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
       ],
       "status": "自動分類",
       "note": ""
