@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-20T23:44:38+09:00",
+  "updated": "2026-10-21T01:01:22+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -458448,6 +458448,22 @@
       "source": "search",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "b1SukA06yZM",
+      "title": "[ごまおつ]10/20第594回スコア大会予習ステージ攻略[ゴシックは魔法乙女][Vtuber]",
+      "channel": "《komaki》",
+      "description": "火・闇ネオインフェルノガチャ希望\n\nTwitch: https://www.twitch.tv/komaki1122\nX:https://x.com/komaki1122\n\nコメント読み上げはワンコメを使用してます。\nhttps://onecomme.com/\n\nvtuber,game,実況,ゴシックは魔法乙女,ごまおつ,ゴ魔乙,ゴシック道,シューティング,STG",
+      "publishedAt": "2026-10-20T14:50:52Z",
+      "registeredAt": "2026-10-21T01:01:22+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第594回"
       ],
       "status": "自動分類",
       "note": ""
