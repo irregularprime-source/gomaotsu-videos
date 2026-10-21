@@ -303,11 +303,15 @@ class ScoreSubcategoryTests(unittest.TestCase):
             ("【ゴ魔乙 プレイ動画】 ﾆﾙｳﾞｧｰﾅｽｺｱﾀ death 344,494,863点 ランク弩S", "ニルヴァーナスコアタ"),
             ("【ゴ魔乙 プレイ動画】 ケイブシュースコアタ hard 73,570,952点 ランクS", "ケイブシュースコアタ"),
             ("【ゴ魔乙 プレイ動画】グリフォンスコアタ death 422M ヘルパー/ラララ", "グリフォンスコアタ"),
-            ("【ゴ魔乙 プレイ動画】 前夜祭スコアタ death 477,884,044点 ランクB", "8th前夜祭"),
+            ("【ゴ魔乙 プレイ動画】8th前夜祭スコアタ death 1,117,643,315点 ハイパービッグバン ラ吸ラ", "8th前夜祭"),
+            ("【ゴ魔乙 プレイ動画】 7th前夜祭スコアタ death 1,448,497,008点 ランクS", "7th前夜祭"),
         ]:
             tags = collect.make_tags(title, "")
             self.assertIn("スコア大会(イベント)", tags, title)
             self.assertIn(name, tags, title)
+        # 7th と 8th の前夜祭は別。番号なしの前夜祭スコアタには付けない（2026-10-21 ユーザー判断）
+        self.assertNotIn("8th前夜祭", collect.make_tags("【ゴ魔乙 プレイ動画】 7th前夜祭スコアタ death 1,448,497,008点 ランクS", ""))
+        self.assertNotIn("8th前夜祭", collect.make_tags("【ゴ魔乙 プレイ動画】 前夜祭スコアタ death 477,884,044点 ランクB", ""))
         # 一般語は「スコアタ」付きのときだけ
         self.assertNotIn("初心者", collect.make_tags("【ゴ魔乙】初心者向けスコアタ解説", ""))
 
