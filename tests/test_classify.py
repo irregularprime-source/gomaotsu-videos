@@ -60,6 +60,7 @@ class ScoreSubcategoryTests(unittest.TestCase):
         self.assert_sub("【ゴ魔乙 プレイ動画】1月スコアタ 804M ガンソード", "スコア大会(月間)")
         self.assert_sub("【ゴ魔乙ﾌﾟﾚｲ動画】20'3月ｽｺｱﾀdeathｱｲﾃﾑ使用366,849,203点 ランクS", "スコア大会(月間)")
         self.assert_sub("6月 スコアタ 9.6億【ゴ魔乙 プレイ動画】", "スコア大会(月間)")
+        self.assert_sub("【ゴ魔乙 プレイ動画】 7月スコア大会 2.48億 ドーン スプ改", "スコア大会(月間)")
 
     def test_other_category_rounds_are_not_score(self):
         for title in [
@@ -242,6 +243,24 @@ class ScoreSubcategoryTests(unittest.TestCase):
             self.assertIn(name, tags, title)
         self.assertNotIn("太正浪漫スコアタ・乙", collect.make_tags("【ゴ魔乙】太正浪漫スコアタ・甲 6.81億", ""))
         self.assertNotIn("お姫様スコアタ", collect.make_tags("【ゴ魔乙】姫様メイドスコアタhard", ""))
+
+    def test_dictionary_names_added_2026_10_21(self):
+        for title, name in [
+            ("【ゴ魔乙 プレイ動画】 闇の怠神スコアタ death 130,321,802点", "闇の怠神"),
+            ("【ゴ魔乙 プレイ動画】 水の猛神スコアタ death 81,306,508点", "水の猛神"),
+            ("【ゴ魔乙 プレイ動画】 レギュラースコアタ death 156,600,040点", "レギュラースコアタ"),
+            ("【ゴ魔乙 プレイ動画】 スコアタ・乱戦 hard 16,931,784点", "乱戦"),
+            ("【ゴ魔乙】お菓子をどうぞスコアタ: デモホマンは範囲の置き方がわからない312.5M（吸/範/ラ）", "お菓子"),
+            ("お菓子をスコアタ。2.1億【ゴ魔乙 プレイ動画】", "お菓子"),
+            ("【ゴ魔乙】 プル願スコアタ_D  4.27億", "プルメリアの願いスコアタ"),
+            ("【ゴ魔乙 プレイ動画】 エスプスコアタ", "エスプガルーダ"),
+            ("【ゴ魔乙 プレイ動画】 妖怪スコアタ フォトンレイ 適当なリハビリ", "妖怪夏祭り"),
+        ]:
+            tags = collect.make_tags(title, "")
+            self.assertIn("スコア大会(イベント)", tags, title)
+            self.assertIn(name, tags, title)
+        self.assertIn("魔法騎士", collect.make_tags("【ゴ魔乙 プレイ動画】 魔法騎士スコアタ death 100M", ""))
+        self.assertNotIn("魔法騎士", collect.make_tags("【ゴ魔乙 プレイ動画】魔法騎士ボーナス 2.16億", ""))
 
     def test_real_qualifier(self):
         # 団体戦予選はリアル＋イベント＋名前タグ。週末の根拠（3桁の回数・週末の語）もあれば週末だけ（2026-10-15 ユーザー指示）
