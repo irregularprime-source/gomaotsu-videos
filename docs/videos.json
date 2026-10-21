@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-22T01:18:07+09:00",
+  "updated": "2026-10-22T03:26:11+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -498123,6 +498123,38 @@
       "source": "auto",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "719TDcc5gCk",
+      "title": "【ゴ魔乙 プレイ動画】 第594回スコア大会 hard 76,117,182点 ランクS アラクネ",
+      "channel": "ahoahomanz",
+      "description": "",
+      "publishedAt": "2026-10-21T17:52:25Z",
+      "registeredAt": "2026-10-22T03:26:11+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第594回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "i-_oESAo-9Q",
+      "title": "【ゴ魔乙 プレイ動画】 第594回スコア大会 hard 135,100,748点 ランク弩S 操作ミスあり",
+      "channel": "creria",
+      "description": "",
+      "publishedAt": "2026-10-21T16:33:57Z",
+      "registeredAt": "2026-10-22T03:26:11+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第594回"
       ],
       "status": "自動分類",
       "note": ""
