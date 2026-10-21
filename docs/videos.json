@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-21T22:30:44+09:00",
+  "updated": "2026-10-22T01:18:07+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -498019,6 +498019,108 @@
       "publishedAt": "2026-10-21T10:52:55Z",
       "registeredAt": "2026-10-21T22:30:44+09:00",
       "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "GU_pEKnuLrs",
+      "title": "第594回スコア大会 142M 俳句A NEO レ設・特殊・オプ 【ゴ魔乙 プレイ動画】",
+      "channel": "フライングエース",
+      "description": "",
+      "publishedAt": "2026-10-21T16:07:25Z",
+      "registeredAt": "2026-10-22T01:18:07+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第594回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "95ITY4PPklQ",
+      "title": "【ゴ魔乙プレイ動画】第594回スコア大会(予習)",
+      "channel": "安満沢ライナー",
+      "description": "#ゴシックは魔法乙女 #ゴ魔乙 #ごまおつ",
+      "publishedAt": "2026-10-21T13:55:25Z",
+      "registeredAt": "2026-10-22T01:18:07+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第594回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "6Bmv1yZ6hN0",
+      "title": "【ゴ魔乙プレイ動画】ﾛｻﾞﾘｰｽﾃｰｼﾞ(前半)",
+      "channel": "安満沢ライナー",
+      "description": "2回目\n#ゴシックは魔法乙女 #ゴ魔乙 #ごまおつ",
+      "publishedAt": "2026-10-21T13:51:11Z",
+      "registeredAt": "2026-10-22T01:18:07+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "wOt03ZPYOK8",
+      "title": "【ゴ魔乙プレイ動画】ﾌﾟﾙﾒﾘｱｽﾃｰｼﾞ(前半)",
+      "channel": "安満沢ライナー",
+      "description": "2回目\n#ゴシックは魔法乙女 #ゴ魔乙 #ごまおつ",
+      "publishedAt": "2026-10-21T13:46:43Z",
+      "registeredAt": "2026-10-22T01:18:07+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "5kU8KEpC_7k",
+      "title": "【ゴ魔乙プレイ動画】ｽﾌﾚｽﾃｰｼﾞ(前半)",
+      "channel": "安満沢ライナー",
+      "description": "2回目\n#ゴシックは魔法乙女 #ゴ魔乙 #ごまおつ",
+      "publishedAt": "2026-10-21T13:41:59Z",
+      "registeredAt": "2026-10-22T01:18:07+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "7FyyXD1OOLA",
+      "title": "【ゴ魔乙プレイ動画】ｶﾄﾚｱｽﾃｰｼﾞ(前半)",
+      "channel": "安満沢ライナー",
+      "description": "2回目\n#ゴシックは魔法乙女 #ゴ魔乙 #ごまおつ",
+      "publishedAt": "2026-10-21T13:37:17Z",
+      "registeredAt": "2026-10-22T01:18:07+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "RHEGMY0X6OA",
+      "title": "【ゴ魔乙プレイ動画】ﾗﾅﾝｽﾃｰｼﾞ(前半)",
+      "channel": "安満沢ライナー",
+      "description": "2回目\n#ゴシックは魔法乙女 #ゴ魔乙 #ごまおつ",
+      "publishedAt": "2026-10-21T13:30:56Z",
+      "registeredAt": "2026-10-22T01:18:07+09:00",
+      "source": "auto",
       "tags": [
         "未分類"
       ],
