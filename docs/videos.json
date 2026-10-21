@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-21T19:49:26+09:00",
+  "updated": "2026-10-21T22:30:44+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -497975,6 +497975,50 @@
       "publishedAt": "2026-10-21T09:54:54Z",
       "registeredAt": "2026-10-21T19:49:26+09:00",
       "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "2ZuHKsPjD_4",
+      "title": "【ゴ魔乙】プルメリアステージ(前半) death",
+      "channel": "くらん",
+      "description": "",
+      "publishedAt": "2026-10-21T11:07:41Z",
+      "registeredAt": "2026-10-21T22:30:44+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "s6wZAZeCHoY",
+      "title": "【ゴ魔乙 プレイ動画】 第594回スコア大会 hard 104,949,774点 （スキル枠全部無凸なので今週はこれで勘弁）ランク超S【予習】",
+      "channel": "御陵 樹",
+      "description": "ゴシックは魔法乙女（ごまおつ） \n第594回スコア大会 hard\n104,949,774点\nハイパーレーザー\nディオネア\nランク超S \n#ゴ魔乙 #ごまおつ #スコアタ \nhttps://gomaotsu.jp",
+      "publishedAt": "2026-10-21T10:54:13Z",
+      "registeredAt": "2026-10-21T22:30:44+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第594回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "0OoNKAWMZbw",
+      "title": "【ゴ魔乙プレイ動画】ﾛｻﾞﾘｰｽﾃｰｼﾞ(前半)",
+      "channel": "安満沢ライナー",
+      "description": "#ゴシックは魔法乙女 #ゴ魔乙 #ごまおつ",
+      "publishedAt": "2026-10-21T10:52:55Z",
+      "registeredAt": "2026-10-21T22:30:44+09:00",
+      "source": "search",
       "tags": [
         "未分類"
       ],
