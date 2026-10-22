@@ -291,6 +291,19 @@ class ScoreSubcategoryTests(unittest.TestCase):
         self.assertNotIn("光輝のスコアタ", collect.make_tags("【ゴ魔乙 プレイ動画】光輝スコアタ 35M mk2 モルフォ 爆爆特", ""))
         self.assertNotIn("クリアカード", collect.make_tags("【ゴ魔乙 プレイ動画】 クリアカードボーナス death 105,390,393点", ""))
 
+    def test_dictionary_names_added_2026_10_22_extra(self):
+        for title, name in [
+            ("【ゴ魔乙】激難スコアタに挑戦！hard", "激難スコアタに挑戦"),
+            ("ゴシックは魔法乙女　激ムズスコアタに挑戦　司唱姫シャンルー", "激難スコアタに挑戦"),
+            ("【ゴ魔乙】サイクロンスコアタ 2.3億", "サイクロンスコアタ"),
+            ("【ゴ魔乙】バウンドスコアタ 10.6M", "バウンドスコアタ"),
+            ("【ゴ魔乙】むちむちスコアタ：難 2.60億 風ドラドン+ワイバーン", "むちむちスコアタ"),
+            ("【ゴ魔乙】ムチムチスコアタ(難)【デスモード】", "むちむちスコアタ"),
+        ]:
+            tags = collect.make_tags(title, "")
+            self.assertIn("スコア大会(イベント)", tags, title)
+            self.assertIn(name, tags, title)
+
     def test_real_words(self):
         # 第1回・第2回のリアルスコア大会（「団体戦」が無い書き方）もリアルにする（2026-10-22 ユーザー指示）
         for title in ["【ゴ魔乙】第1回リアルスコア大会用激難ステージ 予選 レンタル使い魔限定サポート無しカオスウィング",
