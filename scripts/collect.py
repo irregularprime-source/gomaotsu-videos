@@ -48,6 +48,10 @@ WEEKEND_WORDS = ["ドヨアタ", "どよあた", "ドョアタ", "土アタ", "�
 # Why: リアル大会の予選ステージが過去のスコアタの流用で、週末の動画と見分けられず目視で処理するため。
 # 3桁に限るのは「第3回ごまおつスコア大会 団体戦予選」のような大会自体の開催回を週末にしないため。
 REAL_QUALIFIER = "団体戦予選"
+# 第1回（2017）・第2回（2021）のリアルスコア大会は「団体戦」の語が無いため、これらの語でもリアルにする
+# （2026-10-22 ユーザー指示）。週末の根拠（3桁の回数か週末の語）もあれば週末にする。
+# Why not「リアアタ」: 「バリアアタック」に一致するため（リアアタの動画は「団体戦」でも拾える）。
+REAL_WORDS = ["リアルスコア", "ごまおつスコア大会"]
 WEEKEND_ROUND_MIN = 100
 # 「第○回」があってもスコア大会の回数ではないカテゴリ（第42回裏ゴシック道・第34回ギルイベ・アリーナバトル第64回）。
 # タイトルにスコア大会を示す語が無ければ、回数をスコア大会の根拠にしない。
@@ -179,10 +183,12 @@ def classify(ntitle, has_round=False, round_no=None):
 
     # スコア大会ファミリー：親「スコア大会」＋下位1つ（エーテル/リアル/リーグ/月間/イベント/週末）
     is_ether = norm("エーテルスコア") in ntitle
-    is_real = norm("団体戦") in ntitle            # リアルスコア大会（現状は団体戦のみ）
+    has_weekend_evidence = ((round_no is not None and round_no >= WEEKEND_ROUND_MIN)
+                            or any(norm(w) in ntitle for w in WEEKEND_WORDS))
+    is_real = (norm("団体戦") in ntitle             # リアルスコア大会
+               or (any(norm(w) in ntitle for w in REAL_WORDS) and not has_weekend_evidence))
     is_real_qualifier = norm(REAL_QUALIFIER) in ntitle
-    if is_real_qualifier and ((round_no is not None and round_no >= WEEKEND_ROUND_MIN)
-                              or any(norm(w) in ntitle for w in WEEKEND_WORDS)):
+    if is_real_qualifier and has_weekend_evidence:
         is_real = is_real_qualifier = False     # 週末の根拠もある → 週末として下へ
     is_league = any(norm(w) in ntitle for w in LEAGUE_WORDS)
     is_monthly = any(norm(w) in ntitle for w in MONTHLY_WORDS) or bool(MONTHLY_RE.search(ntitle))
