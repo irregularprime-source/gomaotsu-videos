@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-22T19:15:05+09:00",
+  "updated": "2026-10-22T19:15:32+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -513895,6 +513895,835 @@
       "source": "search",
       "tags": [
         "ガチャ"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "2Bz2P8qBBEk",
+      "title": "ごまおつ 完凸 ステラ",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-02-06T18:39:05Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "rCl8_81L-4A",
+      "title": "ごまおつ 完凸 タリス",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-02-06T18:38:04Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "S2O1WNQJu8k",
+      "title": "ゴ魔乙 ギルバト 三色混合 非ブレ 39726 81848",
+      "channel": "朝霧朝霧",
+      "description": "火ツイクロ、水バフォ",
+      "publishedAt": "2018-02-06T13:41:33Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(通常)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "MzSFVfGXE1A",
+      "title": "ごまおつ ギルバト 三色混合 火有利 ブレイク 66-107",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-02-06T13:38:44Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(通常)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "n88gTVNY0FE",
+      "title": "ごまおつ 完凸 カモミール",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-02-06T12:05:21Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "nbv-gKpkxs0",
+      "title": "【ゴ魔乙】火焔のスコアタ 1億2880万 【血戒イベント ウロボロス デスアタ】",
+      "channel": "simiraaaa_gomaotsu",
+      "description": "開幕は範囲設置で紫岩を横に誘導してから元の位置に戻る\n宝箱にショットを巻き込みつつ紫岩も巻き込む\n大型1はできるだけアイテム回収を意識する\n道中は、ショットの端の方を当てて紫岩を延命しつつキャラオーバーと、ケツ回収を狙っていく\n大型2は、大型本体にできるだけショットを当てないようにして、なおかつアイテム回収を意識して動く\n第2波ぐらいでバリア特攻がベスト\n吸収スキルの無敵時間もアイテムを回収する\nくるみ地帯は、上下に動くと高くなるが安定を取って左下でじっとしている\n大型3は岩にショットを絡めつつ微妙に炙ると良いが、今回は炙りそこねてしかも倒し損ねて約4〜5Mほど落としている",
+      "publishedAt": "2018-02-05T15:24:05Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(イベント)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "DmSCYjysmhE",
+      "title": "【ゴ魔乙】火焔のスコアタ　火ウロボロス　87.4M（吸／吸／ラ）",
+      "channel": "Doppel",
+      "description": "アイテム使用",
+      "publishedAt": "2018-02-05T14:19:14Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(イベント)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "NyIpJtvN8gY",
+      "title": "ごまおつ 火焔のスコアタ 68,439,528",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-02-05T12:24:31Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(イベント)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "MUzF7Hsdhq8",
+      "title": "ゴ魔乙 ピュアラブバレンタインガチャ",
+      "channel": "teresa",
+      "description": "☆5確率3倍",
+      "publishedAt": "2018-02-05T04:07:39Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ガチャ"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "QckJGXR5OA4",
+      "title": "ロザリー狙い【ゴシックは魔法乙女】ツン恋バレンタインガチャ11連+1【ゴ魔乙ガチャ】",
+      "channel": "プチ☆ショコラ621のパズドラ動画",
+      "description": "ゴシックは魔法少女の『ツン恋バレンタインガチャ』11連+1動画です。\n10連から11連ガチャになったようです。\n狙いはチャージカノンの昏好ロザリー！\n\n【ごまおつ関連】\n迎春SPロザリーガチャ\nhttps://youtu.be/G3b7-9V4_xo\nロザリーバースデーガチャ20連\nhttps://youtu.be/xRpf_yxckeQ\nロザリークローゼットガチャ\nhttps://youtu.be/VZstjUIIYMk\nうまるコラボガチャ10連\nhttps://youtu.be/I3ECb6wo8EA\nリゼロコラボガチャ21連\nhttps://youtu.be/P4hKs9WN9bM\n血戒乙女ガチャ41連\nhttps://youtu.be/gY9nS3nBC_8\n初音ミクコラボ21連\nhttps://youtu.be/ZC3w_fQqnV8\n\nTwitter\nhttps://twitter.com/chocora621\nプチ☆ショコラ621（メインサイト）\nhttp://chocora.anime.coocan.jp/\nブログ（ここ以外にもあります）\nhttp://pazudorablog.seesaa.net/\npixiv\nhttp://pixiv.me/chocora621",
+      "publishedAt": "2018-02-04T15:58:48Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ガチャ"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "_WCvZ17JDv4",
+      "title": "ごまおつ ギルバト 闇有利 ブレイク あやしい動き",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-02-04T13:50:50Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(通常)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "WU0M9SZHufM",
+      "title": "ごまおつ ギルバト 闇有利 36-71",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-02-04T13:41:14Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(通常)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "s-TdCYK0Ytk",
+      "title": "ごまおつ 火焔のスコアタ 55,523,295",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-02-04T06:15:51Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(イベント)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "HO3G-EzT5A8",
+      "title": "【ゴ魔乙】火焔のスコアタ8423万【レンタルスコアタ】",
+      "channel": "狂",
+      "description": "2018/02/04〜05 火焔のスコアタ\n有利属性：火\nショット：ウロボロス\nスキル：ラブマ×2/吸収\n備考：アイテム有り\n\n更新したらまたあげます",
+      "publishedAt": "2018-02-03T16:39:07Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(イベント)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "cRp6wZ2LlPA",
+      "title": "ごまおつ 第139回スコア大会 13,431,573",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-02-03T10:11:25Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第139回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "3PghinBT3lA",
+      "title": "【ゴ魔乙】第139回スコアタ: 要するに魔力よなぁランサー＆ロクビ18M（追/範/特）",
+      "channel": "金色のファルコ2世",
+      "description": "泥交換でレコちゃん完凸した記念。\n光は凸できてる子が少なくて頭痛い。\nランサーでのコンボ稼ぎやり方忘れてるし。\n今月のスコアタはヤル気出ねえなー\n\nhttps://play.lobi.co/video/e91d1fb7b4277be5d9c2e229e453e7b65a82845c\n※この動画はLobi REC SDKを使って撮影しました。\n\nゴシックは魔法乙女 の人気プレイ動画をLobi Playで探す\n↓↓↓↓↓↓↓↓↓↓\nhttps://play.lobi.co/videos?app=a74e5f31444c8498df30de2cd8d31a0d03db4f55&amp;sort=hot\n\nゴシックは魔法乙女 の攻略情報をLobiで探す\n↓↓↓↓↓↓↓↓↓↓\nhttps://web.lobi.co/game/mahouotome\n\n\n-----関連リンク-----\n\n■ Lobi Web\nゲーム攻略情報をコミュニティでチェック！\nhttps://web.lobi.co/\n\n■ Lobi App\n - iPhone/iPadの方\n https://itunes.apple.com/jp/app/id405548206\n\n - Androidの方\n https://play.google.com/store/apps/details?id=com.kayac.nakamap&hl=ja\n\n■ Lobi Developerサイト\nゲーム開発者の方へ、Lobi SDKの開発サイトです\nhttps://developer.lobi.co/ja\n\n■ Lobi Twitterアカウント\nhttps://twitter.com/lobi_ja",
+      "publishedAt": "2018-02-03T09:52:35Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第139回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "_8BH1tW1CaU",
+      "title": "【ゴ魔乙】第139回スコアタ　光クロスブレード　19.7M（設／範／特）",
+      "channel": "Doppel",
+      "description": "魔力2646、アイテム使用",
+      "publishedAt": "2018-02-03T08:55:58Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第139回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "iCLfUa8JbS0",
+      "title": "【ゴ魔乙】学園3-3-2hard 103M",
+      "channel": "Yumushi 2016",
+      "description": "音無し+低画質です",
+      "publishedAt": "2018-02-03T07:44:31Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "kW5kTr9xn4w",
+      "title": "【ゴ魔乙】第139回スコアタ 21.0M 光クロブレ",
+      "channel": "のらねこ",
+      "description": "追尾・範囲・特殊、アイテム有",
+      "publishedAt": "2018-02-03T07:26:24Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第139回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "AbpW5RFn02k",
+      "title": "ごまおつ ギルバト 光有利 31-66",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-02-03T03:47:46Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(通常)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "e_2GZS7MysY",
+      "title": "ゴ魔乙 ツン恋バレンタインガチャ",
+      "channel": "teresa",
+      "description": "☆5確率3倍",
+      "publishedAt": "2018-02-03T00:02:21Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ガチャ"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "lQmIdgowlsM",
+      "title": "【ゴ魔乙】第139回スコアタ19.8M 光クロブレ",
+      "channel": "のらねこ",
+      "description": "特殊・範囲・全体\n処理落ち・アイテム有\n\nショットは何でも良さそうかな(´ω｀)スキル撃って魔力で殴るって感じですかね(｡-ω-)\n\nヘルパーで有利属性以外が選択出来ないのは不便かも('_'?)ボスで粘るつもりなら集中か拡散枠どっちか潰さないとですね(´・ω・｀)",
+      "publishedAt": "2018-02-02T18:44:56Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第139回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "60lRqV1c3QY",
+      "title": "ごまおつ ギルバト 新闇有利 ブレイク 68-112",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-02-02T13:42:54Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(通常)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "fbq9glN3PTY",
+      "title": "ごまおつ 半神竜&超乙女ガチャ",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-02-02T10:21:38Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ガチャ"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "Bu1Xcrgw8ps",
+      "title": "ごまおつ 半神竜&超乙女ガチャ",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-02-02T04:03:44Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ガチャ"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "oNSVjoTcBmc",
+      "title": "ごまおつ 完凸 ファラウェイ",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-02-02T03:37:37Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "Vorb1mwo2GI",
+      "title": "ごまおつ 完凸 イセカ",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-02-01T22:31:53Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "w5tXI-0_Ryc",
+      "title": "ごまおつ 完凸 アルスター",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-02-01T22:30:55Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "hZ3ggfbpLOY",
+      "title": "もっと癖が欲しい！新ショット『ウロボロス』の感想【ゴ魔乙】",
+      "channel": "はまはま",
+      "description": "こんにちは、はまはまです。\n今回は新ショット『ウロボロス』を使ってみた感想をまとめました。\n良かったら見ていって下さい。\n\n--------------------------------------------------\n＜Twitter＞\n@Hama_Tube\nhttps://twitter.com/hama_tube\n\n＜Lobi＞\nアカウント名「guest388264」でゴ魔乙のプレイ動画をあげています。\nhttps://play.lobi.co/user/91bed9c66dde7ceecf45fa2657f53988e97faf09\n\n--------------------------------------------------\n＜使用音源＞\nDOVA-SYNDROME（ http://dova-s.jp/ ）\nMusic is VFR（ http://musicisvfr.com/ ）\nMusMus（ http://musmus.main.jp/bgm.html ）",
+      "publishedAt": "2018-02-01T10:00:05Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "VlwExRipoEM",
+      "title": "ゴ魔乙 半神竜＆超乙女ガチャ",
+      "channel": "teresa",
+      "description": "☆5確率5倍",
+      "publishedAt": "2018-02-01T00:17:00Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ガチャ"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "Fk4ciMPh7EU",
+      "title": "ゴ魔乙 血戒乙女ガチャ",
+      "channel": "teresa",
+      "description": "新ショット ウロボロス",
+      "publishedAt": "2018-02-01T00:13:49Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ガチャ"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "v0ECsgmLf8Y",
+      "title": "ごまおつ 完凸 リリー",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-01-31T22:10:32Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "4gz9Fvzr3jc",
+      "title": "ごまおつ ギルバト 水有利 29-59",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-01-31T13:35:56Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(通常)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "fDEu4280dZs",
+      "title": "【ごまおつ】ウロボロス",
+      "channel": "CAVE Official",
+      "description": "喰らいついたら離さない\nウロボロス\n久遠に続く蛇が敵を喰らいつくす\n\nシューティングゲームアプリ「ゴシックは魔法乙女」\niPhone、Androidにて好評配信中\n[iOS] https://goo.gl/7R5AEI\n[Android] https://goo.gl/11TWUz\n[公式サイト]http://gomaotsu.jp/\n[公式Twitter]https://twitter.com/mahouotome_info",
+      "publishedAt": "2018-01-31T09:11:48Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "UvMk4yZ4TpY",
+      "title": "ゲーム内不正について【ゴ魔乙】",
+      "channel": "はまはま",
+      "description": "こんにちは、はまはまです。\n今回はゴ魔乙のゲーム内不正について話をさせてもらいました。\n\n好きなゲームで不正はやめよう。\n\n良かったら見ていって下さい。\n\n＜Twitter＞\n@Hama_Tube\nhttps://twitter.com/hama_tube\n\n＜Lobi＞\nアカウント名「guest388264」でゴ魔乙のプレイ動画をあげています。\nhttps://play.lobi.co/user/91bed9c66dde7ceecf45fa2657f53988e97faf09",
+      "publishedAt": "2018-01-29T16:30:00Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "v2f326-59WE",
+      "title": "ごまおつ ギルバト 新火有利 35-68",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-01-29T13:42:14Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(通常)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "1CKYN6-XMfM",
+      "title": "【ゴシックは魔法乙女】 プルメリアの願い death Razer Phone 120fps",
+      "channel": "mkz-kaze",
+      "description": "Razer Phone\nAndroid 7.1.1\nゴ魔乙 2.2.2",
+      "publishedAt": "2018-01-28T06:26:48Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "JWXIq_PRaFs",
+      "title": "ごまおつ ギルバト 闇有利 39-71",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-01-28T04:10:05Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(通常)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "hfyqdSBP7L4",
+      "title": "ゴ魔乙 投票券2倍ガチャ",
+      "channel": "teresa",
+      "description": "☆5確率3倍",
+      "publishedAt": "2018-01-28T01:28:41Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ガチャ"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "Yb8bU3uaJNw",
+      "title": "ごまおつ 完凸 キースネリス",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-01-27T23:23:26Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "uIhulEIPbjQ",
+      "title": "【ゴ魔乙】第138回スコアタ: これで提出デモホカオウ23.6M（特/範/ラ）",
+      "channel": "金色のファルコ2世",
+      "description": "これ以来スコア上がらなくなったのでAP尽きたし終了。範囲あるとホント闇有利が楽になるよね。あとはカシャーンリリー完凸頑張る〜\n\nhttps://play.lobi.co/video/09ef6828e0e4c70a65a5c2e9feacfb9852dfc376\n※この動画はLobi REC SDKを使って撮影しました。\n\nゴシックは魔法乙女 の人気プレイ動画をLobi Playで探す\n↓↓↓↓↓↓↓↓↓↓\nhttps://play.lobi.co/videos?app=a74e5f31444c8498df30de2cd8d31a0d03db4f55&amp;sort=hot\n\nゴシックは魔法乙女 の攻略情報をLobiで探す\n↓↓↓↓↓↓↓↓↓↓\nhttps://web.lobi.co/game/mahouotome\n\n\n-----関連リンク-----\n\n■ Lobi Web\nゲーム攻略情報をコミュニティでチェック！\nhttps://web.lobi.co/\n\n■ Lobi App\n - iPhone/iPadの方\n https://itunes.apple.com/jp/app/id405548206\n\n - Androidの方\n https://play.google.com/store/apps/details?id=com.kayac.nakamap&hl=ja\n\n■ Lobi Developerサイト\nゲーム開発者の方へ、Lobi SDKの開発サイトです\nhttps://developer.lobi.co/ja\n\n■ Lobi Twitterアカウント\nhttps://twitter.com/lobi_ja",
+      "publishedAt": "2018-01-27T14:57:21Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第138回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "G5Fe98U-Q9s",
+      "title": "ゴ魔乙 5悪魔ピックアップガチャ",
+      "channel": "teresa",
+      "description": "☆5確率5倍",
+      "publishedAt": "2018-01-27T14:50:10Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ガチャ"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "YcXBjAlvUzg",
+      "title": "ごまおつ 第138回スコア大会 15,543,138",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-01-27T14:41:44Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第138回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "_EJIpaAO1wc",
+      "title": "ゴ魔乙の音ゲーが面白い！本格的なアプリでほしいな【ゴ魔乙】",
+      "channel": "はまはま",
+      "description": "こんにちは、はまはまです。\n今回はゴ魔フェス（ダチュラ生誕祭）にある音ゲーで遊んでみました。\n良かったら見ていって下さい。\n\n＜ゴ魔フェス（ダチュラ生誕祭）＞\nhttp://promo.ghm.cave.co.jp/gomafes9/\n\n＜BGM＞\nDon’t be afraid!! （written by t.tam）\nhttps://dova-s.jp/bgm/play4529.html\n\n＜Twitter＞\n@Hama_Tube\nhttps://twitter.com/hama_tube\n\n＜Lobi＞\nアカウント名「guest388264」でゴ魔乙のプレイ動画をあげています。\nhttps://play.lobi.co/user/91bed9c66dde7ceecf45fa2657f53988e97faf09",
+      "publishedAt": "2018-01-27T13:30:00Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "CAhdkIWqhjQ",
+      "title": "【ゴ魔乙】第138回スコアタ: うーん取り敢えずデモホ！22.7M（特/設/範）",
+      "channel": "金色のファルコ2世",
+      "description": "ドーンクロブレが意味不明なレベルでスコア上がらなかったのでデモホ使ってみたら楽だった件。でも大型2が怖い。アイテム無しで練習してる時の録画なので完全に大型2でブルッちゃってるよ。\n\nhttps://play.lobi.co/video/0426b372bfeeed967b0f9f20328eabdfcfea0647\n※この動画はLobi REC SDKを使って撮影しました。\n\nゴシックは魔法乙女 の人気プレイ動画をLobi Playで探す\n↓↓↓↓↓↓↓↓↓↓\nhttps://play.lobi.co/videos?app=a74e5f31444c8498df30de2cd8d31a0d03db4f55&amp;sort=hot\n\nゴシックは魔法乙女 の攻略情報をLobiで探す\n↓↓↓↓↓↓↓↓↓↓\nhttps://web.lobi.co/game/mahouotome\n\n\n-----関連リンク-----\n\n■ Lobi Web\nゲーム攻略情報をコミュニティでチェック！\nhttps://web.lobi.co/\n\n■ Lobi App\n - iPhone/iPadの方\n https://itunes.apple.com/jp/app/id405548206\n\n - Androidの方\n https://play.google.com/store/apps/details?id=com.kayac.nakamap&hl=ja\n\n■ Lobi Developerサイト\nゲーム開発者の方へ、Lobi SDKの開発サイトです\nhttps://developer.lobi.co/ja\n\n■ Lobi Twitterアカウント\nhttps://twitter.com/lobi_ja",
+      "publishedAt": "2018-01-27T08:27:59Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第138回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "CvN6-CNghfk",
+      "title": "【ゴ魔乙】第138回スコアタ　闇クロスブレード　23M（特／設／範）",
+      "channel": "Doppel",
+      "description": "",
+      "publishedAt": "2018-01-27T05:29:08Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第138回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "leIqDvB0HFY",
+      "title": "【ゴ魔乙】第138回スコアタ 25.4M 闇ドーン+インフェルノ",
+      "channel": "のらねこ",
+      "description": "特殊・範囲・ラブマ(3覚醒)\n処理落ち・アイテム有\n\n中ボス1でコンボ稼ぐのがベストっぽいですね(￣ー￣)",
+      "publishedAt": "2018-01-27T00:42:06Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第138回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "QpGNAiwzWzQ",
+      "title": "ごまおつ 第138回スコア大会 13,947,753",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-01-26T22:48:09Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第138回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "baYeSZYLCVI",
+      "title": "ごまおつ 第138回スコア大会 8,013,419",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-01-26T22:22:29Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第138回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "f8MVRhAKpfo",
+      "title": "ごまおつ 第138回 スコア大会 7,030,560",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-01-26T21:43:35Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第138回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "SZIm146uHAA",
+      "title": "【ゴ魔乙】ギルド 3色混合 非ブレ ガトリング 70,501",
+      "channel": "agBx",
+      "description": "37098→70501\n全体/吸収/吸収",
+      "publishedAt": "2018-01-26T14:32:07Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "OlDIq81j54E",
+      "title": "ごまおつ ギルバト 三色混合 火有利 ブレイク 63-107",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-01-26T13:45:55Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(通常)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "E6Up4S8kyW8",
+      "title": "ごまおつ ギルバト 三色混合 火有利 29-62",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-01-26T13:38:59Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(通常)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "W7_QanSvw8Q",
+      "title": "【ゴシックは魔法乙女】ラブマガチャ2018年1月ver【ゴ魔乙ガチャ】",
+      "channel": "プチ☆ショコラ621のパズドラ動画",
+      "description": "ゴシックは魔法少女の『ラブマガチャ2018年1月ver』動画です。\n今月もロザリー狙いでポイント溜めました\n\n【ごまおつ関連】\n迎春ロザリーガチャ63連\nhttps://youtu.be/G3b7-9V4_xo\nロザリーバースデーガチャ20連\nhttps://youtu.be/xRpf_yxckeQ\nロザリークローゼットガチャ\nhttps://youtu.be/VZstjUIIYMk\nうまるコラボガチャ10連\nhttps://youtu.be/I3ECb6wo8EA\nリゼロコラボガチャ21連\nhttps://youtu.be/P4hKs9WN9bM\n血戒乙女ガチャ41連\nhttps://youtu.be/gY9nS3nBC_8\n初音ミクコラボ21連\nhttps://youtu.be/ZC3w_fQqnV8\n\nTwitter\nhttps://twitter.com/chocora621\nプチ☆ショコラ621（メインサイト）\nhttp://chocora.anime.coocan.jp/\nブログ（ここ以外にもあります）\nhttp://pazudorablog.seesaa.net/\npixiv\nhttp://pixiv.me/chocora621",
+      "publishedAt": "2018-01-26T07:23:29Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ガチャ"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "FJ-ZvXz7iX8",
+      "title": "ごまおつ ギルバト 風有利 29-61",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-01-25T13:43:05Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(通常)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "A4MC5deWs2Y",
+      "title": "【ゴ魔乙】ギルド 旧風有利 ブレイク ガトリング 129,992",
+      "channel": "agBx",
+      "description": "87,066→129,992\n吸収/吸収/吸収",
+      "publishedAt": "2018-01-25T13:44:14Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "ギルドバトル(通常)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "_SHOLz9srTU",
+      "title": "ごまおつ 完凸 アリア",
+      "channel": "すずむし",
+      "description": "",
+      "publishedAt": "2018-01-25T11:16:58Z",
+      "registeredAt": "2026-10-22T19:15:32+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
       ],
       "status": "自動分類",
       "note": ""
