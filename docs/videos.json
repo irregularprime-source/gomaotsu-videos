@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-22T19:47:44+09:00",
+  "updated": "2026-10-22T19:50:39+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -526233,6 +526233,22 @@
       "source": "search",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "ECOUEcN_ORE",
+      "title": "【ゴ魔乙 プレイ動画】第594回スコア大会 hard (予習) 146M ]-[|/34＜#!Δ改 レ特使",
+      "channel": "koshi yomogi",
+      "description": "#ゴ魔乙#スコアタ\n]-[|/34＜#!\nΔドラグーン改",
+      "publishedAt": "2026-10-22T09:44:41Z",
+      "registeredAt": "2026-10-22T19:50:39+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第594回"
       ],
       "status": "自動分類",
       "note": ""
