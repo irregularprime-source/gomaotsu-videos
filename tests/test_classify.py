@@ -320,6 +320,36 @@ class ScoreSubcategoryTests(unittest.TestCase):
             self.assertIn("スコア大会(イベント)", tags, title)
             self.assertIn(name, tags, title)
 
+    def test_dictionary_names_added_2026_10_23_extra(self):
+        for title, name in [
+            ("【ゴ魔乙】１周年スコア大会上級ステージ【ゴシックは魔法乙女】", "1周年スコア大会"),
+            ("ゴシックは魔法乙女　GW特別スコア大会　闇歌姫ロザリー", "GW特別スコア大会"),
+            ("ゴ魔乙 20160504 GWスコアタ 15.1M DDP", "GW特別スコア大会"),
+            ("【ゴ魔乙】制服コレクション　スコア大会：かかってこい！　hard バースト", "制服コレクション"),
+            ("【ゴ魔乙】 狙われた花嫁たちスコア大会 地獄の結婚D 【自分メモ】", "狙われた花嫁たち"),
+            ("【ゴ魔乙】 緑の暴風：スコアタ-ルチカの挑戦 【自分配置メモ】", "ルチカの挑戦"),
+        ]:
+            tags = collect.make_tags(title, "")
+            self.assertIn("スコア大会(イベント)", tags, title)
+            self.assertIn(name, tags, title)
+        self.assertNotIn("1周年スコア大会", collect.make_tags("【ゴ魔乙】11周年記念スコアタ hard", ""))
+
+    def test_guild_event_markers_added_2026_10_23(self):
+        # 実技試験・ギルドイベ・Gフェスタはギルドバトル(イベント)（2026-10-23 ユーザー指示）
+        for title in ["【ゴ魔乙】水有利 第２回ギルド実技試験 117k",
+                      "ゴ魔乙【第3回ギルドイベ光有利】リアラちゃんメインカンスト",
+                      "【ゴ魔乙 ギルド】 第14回Gフェスタ 火有利 134,601ジュエル 2日目"]:
+            tags = collect.make_tags(title, "")
+            self.assertIn("ギルドバトル(イベント)", tags, title)
+            self.assertNotIn("スコア大会", tags, title)
+
+    def test_gacha_round_is_not_score(self):
+        # 「ガチャに5回挑戦」の回数はスコア大会の回数にしない（2026-10-23 ユーザー承認）
+        for title in ["【ゴシックは魔法乙女】魔法乙女のガチャに５回挑戦　相変わらず全くでないですな・・・。",
+                      "【ゴ魔乙】入学おめでとう♥新学期ガチャ10連+1回"]:
+            self.assertEqual(collect.make_tags(title, "")[0], "ガチャ", title)
+        self.assertIn("スコア大会(週末)", collect.make_tags("[ごまおつ]9/26第538回スコア大会とシェアガチャります", ""))
+
     def test_guild_round_is_not_score(self):
         # ギルドの回数（第2回ギルド実技試験・第60回ギルバト）はスコア大会の回数にしない（2026-10-23 ユーザー承認）
         for title in ["【ゴ魔乙】水有利 第２回ギルド実技試験 117k",
