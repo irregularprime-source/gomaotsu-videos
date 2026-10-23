@@ -304,6 +304,39 @@ class ScoreSubcategoryTests(unittest.TestCase):
             self.assertIn("スコア大会(イベント)", tags, title)
             self.assertIn(name, tags, title)
 
+    def test_dictionary_names_added_2026_10_23(self):
+        for title, name in [
+            ("【ゴ魔乙】打ち上げスコアタステージ【ゴシックは魔法乙女】", "打ち上げスコアタ"),
+            ("ごまおつ　シンクロスコアタnormal　火DDP+水プラズマビーム", "シンクロスコアタ"),
+            ("ゴシックは魔法乙女　舞踏会スコアタハード　翠歌姫スフレ", "舞踏会スコアタ"),
+            ("【ゴ魔乙】白組スコアタ易: いつものサイクロンが戻って来た22M", "白組スコアタ"),
+            ("【ゴ魔乙】紅組スコアタ・難 36.1M", "紅組スコアタ"),
+            ("紅スコアタ_DDP_1608万【ゴ魔乙】", "紅組スコアタ"),
+            ("【ゴ魔乙】虫姫さまふたりコラボスコアタBGM", "虫姫コラボ"),
+            ("ゴ魔乙　メイドイベント　スコアタ　ドラゴンバーン", "姫様メイド"),
+            ("【ゴ魔乙】 ダチュラの悪夢 ブラスターだけの世界 【イベントスコアタ】", "ダチュラの悪夢"),
+        ]:
+            tags = collect.make_tags(title, "")
+            self.assertIn("スコア大会(イベント)", tags, title)
+            self.assertIn(name, tags, title)
+
+    def test_guild_round_is_not_score(self):
+        # ギルドの回数（第2回ギルド実技試験・第60回ギルバト）はスコア大会の回数にしない（2026-10-23 ユーザー承認）
+        for title in ["【ゴ魔乙】水有利 第２回ギルド実技試験 117k",
+                      "【ゴシックは魔法乙女】第60回ギルバト10月10日(火)",
+                      "【ゴ魔乙】第9回実技試験闇有利ブレ 復習用じゃなしにネタだよ稼げなさすぎるステージだったｗ",
+                      "ゴ魔乙【第3回ギルドイベ光有利】リアラちゃんメインカンスト"]:
+            self.assertNotIn("スコア大会", collect.make_tags(title, ""), title)
+        # スコア大会の語があれば従来どおり
+        self.assertEqual(subcategories("【ゴ魔乙】第104回スコアタ ギルドの皆と 20M"), ["スコア大会(週末)"])
+
+    def test_round_not_count_words(self):
+        # 「被弾2回」「5回収」は回数ではない（2026-10-23 ユーザー承認）
+        self.assertIsNone(collect.extract_round(collect.norm("ギルドバトル新風有利38→70(被弾2回)")))
+        self.assertIsNone(collect.extract_round(collect.norm("ゴ魔乙 夏休み終B-2 death 猫５回収")))
+        self.assertIsNone(collect.extract_round(collect.norm("スコアタ 被弾12回")))
+        self.assertEqual(collect.extract_round(collect.norm("ゴ魔乙 551回 ドヨアタ")), 551)
+
     def test_real_words(self):
         # 第1回・第2回のリアルスコア大会（「団体戦」が無い書き方）もリアルにする（2026-10-22 ユーザー指示）
         for title in ["【ゴ魔乙】第1回リアルスコア大会用激難ステージ 予選 レンタル使い魔限定サポート無しカオスウィング",
