@@ -4,6 +4,14 @@
 
 過去の件数・実行環境・予定は記録時点のもの。現行仕様や現在の件数として使わない。過去の評価や方針と、今回確認した事実を区別して読む。
 
+## 2026-10-24 certifi の更新（認証局 eMudhra の侵害への対応）
+
+- **背景（ユーザーの依頼で調査）**: 認証局 eMudhra（emSign）の中間CAの侵害を受けて、Python 公式が pip 26.2.2（同梱 certifi 2026.10.19）を含む 3.15.1・3.14.9・3.13.17 を前倒しで公開し、既存の仮想環境の pip・uv の更新を呼びかけた（10-21）。
+- **確認した事実**: 固定していた certifi 2026.7.22 の cacert.pem には emSign ECC Root CA - G3 が含まれ、2026.10.23 では外れていることを確認。Dependabot の pip 更新PRは出ていなかった（10-24 時点）。
+- **更新（ユーザー承認・指示）**: certifi を 2026.7.22 → 2026.10.23 に上げた。wheel の SHA256 は PyPI JSON の値と、ダウンロードした wheel の計算値の一致を確かめて差し替え。ローカルの .venv も同じ版にし、pip を 26.2.2 に上げた。
+- **反映**: PR #40（[回帰CI](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/39976077096) Windows 61件成功、Linux 57件成功・4件スキップ）を squash マージ（14d6261）。マージ後の main でも[回帰CI](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/40030470868)が Windows 61件成功、Linux 57件成功・4件スキップで、Pages の反映も成功。
+- **気づいた点（Claude）**: `test_save_batch_stops_before_build_or_commit_for_unrelated_staged_file` は返り値が0以外であることしか見ていないため、BAT が起動できなくても成功になる（10-24 のローカル検証で、NoDefaultCurrentDirectoryInExePath が残ったままでも成功していた）。ほかの1件と同じく中断メッセージまで確かめるかは保留事項に記録。
+
 ## 2026-10-23 過去分の取り込み（2015-10-14 まで、1か月窓）、イベント名辞書の追加、ギルドの回数の分類
 
 - **追加の8窓（ユーザー判断）**: 割り当て画面の使用量38%を見て、2015-10-14〜2016-06-14 の8窓を窓のあいだ3分あけて実行し、741件追加（1窓67〜144件）。8窓とも成功。残り6窓（リリースの 2015-04 まで）は翌日以降（使用量が80%近くになると 10-17 の HTTP 429 の例があるため。Claude の提案）。
