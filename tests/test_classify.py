@@ -334,6 +334,21 @@ class ScoreSubcategoryTests(unittest.TestCase):
             self.assertIn(name, tags, title)
         self.assertNotIn("1周年スコア大会", collect.make_tags("【ゴ魔乙】11周年記念スコアタ hard", ""))
 
+    def test_dictionary_names_added_2026_10_24(self):
+        for title, name in [
+            ("ゴシックは魔法乙女　狂詩曲二幕スコアタ1/3", "乙女の狂詩曲"),
+            ("ゴ魔乙 幻詩曲第一幕スコアタ450万", "乙女の狂詩曲"),
+            ("【ゴ魔乙】双髪の逆襲:終焉 ボス前43m【スコアタ】", "双髪の逆襲"),
+            ("【ゴ魔乙】激しき鎮魂歌スコアタ【ゴシックは魔法乙女】", "鎮魂歌"),
+            ("【ゴ魔乙】イベント「楽園の終焉」death 懐かしの設置稼ぎ【スコアタ】", "楽園の一幕"),
+            ("ゴシックは魔法乙女 2015/04/12 日曜スコアタ 206万", "日曜スコアタ"),
+            ("ゴシックは魔法乙女 祝日スコア大会 2回目", "祝日スコア大会"),
+            ("【 ゴ魔乙 】 スコアソウル ニードル編 3400万 【 death 】", "スコアソウル"),
+        ]:
+            tags = collect.make_tags(title, "")
+            self.assertIn("スコア大会(イベント)", tags, title)
+            self.assertIn(name, tags, title)
+
     def test_guild_event_markers_added_2026_10_23(self):
         # 実技試験・ギルドイベ・Gフェスタはギルドバトル(イベント)（2026-10-23 ユーザー指示）
         for title in ["【ゴ魔乙】水有利 第２回ギルド実技試験 117k",
