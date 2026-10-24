@@ -15,23 +15,23 @@
 | 収集 | 登録チャンネル6時間ごと、検索1時間ごと。同じ concurrency グループで直列化 |
 | Python | ローカル .venv・回帰CI（Windows / Linux）・収集 Actions すべて 3.14（10-08 に 3.10 / 3.11 から移行）。旧環境 .venv-py310 は 10-08 に削除（ごみ箱へ移動）。依存は版・wheel SHA256固定 |
 | セキュリティ設定 | Dependabot alerts・セキュリティ更新、Secret scanning・push protection が有効（10-08確認） |
-| 検証 | イベント名辞書とギルド・ガチャの分類の PR #37・#38 で[回帰CI](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/39945242666)（Python 3.14）成功（10-23）。セキュリティ対応は bc97277 の[回帰CI](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/37769514764)成功・Pages 反映を確認（10-08）。certifi 更新の PR #40 で[回帰CI](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/39976077096)成功、マージ後の main でも[回帰CI](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/40030470868)成功（10-24） |
+| 検証 | 2015年のイベント名辞書の PR #42 で[回帰CI](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/40074119956)（Python 3.14）成功（10-24）。セキュリティ対応は bc97277 の[回帰CI](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/37769514764)成功・Pages 反映を確認（10-08）。certifi 更新の PR #40 で[回帰CI](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/39976077096)成功、マージ後の main でも[回帰CI](https://github.com/irregularprime-source/gomaotsu-videos/actions/runs/40030470868)成功（10-24） |
 
-回帰CIは Windows 61件成功、Linux 57件成功・Windows BAT専用4件スキップ（10-24、PR #40。分類テストを含む）。収集2本の本番実行（Python 3.14）、公開JS・データの一致、CSP・SRI、非公開パス404、ログにキーが出ないことを確認済み。
+回帰CIは Windows 62件成功、Linux 58件成功・Windows BAT専用4件スキップ（10-24、PR #42。分類テストを含む）。収集2本の本番実行（Python 3.14）、公開JS・データの一致、CSP・SRI、非公開パス404、ログにキーが出ないことを確認済み。
 自動ブラウザで GoatCounter スクリプトの直接取得が失敗した件は原因未確定。HTTP取得・SRI一致・取得応答を使った初期化は確認済み。詳細・実行IDは CHANGELOG を参照。
 
 ### データのスナップショット
 
-元データ: `docs/videos.json`（updated: `2026-10-23T20:11:55+09:00`、10-23 の取り込み（追加の8窓を含む）と辞書・ギルド・ガチャの分類・個別修正の反映後に集計）。件数はこの時点のスナップショットで、自動収集やレビューにより変わる。
+元データ: `docs/videos.json`（updated: `2026-10-24T16:16:56+09:00`、10-24 の取り込み（配信開始まで完了）と2015年の辞書・個別修正の反映後に集計）。件数はこの時点のスナップショットで、自動収集やレビューにより変わる。
 
 | 項目 | 件数 |
 |---|---:|
-| 動画 | 37,124 |
-| 確認済み / 未確認 | 8,769 / 28,355 |
-| 「未分類」タグ付き | 10,021 |
-| source: auto / search | 2,483 / 34,641 |
+| 動画 | 37,734 |
+| 確認済み / 未確認 | 9,304 / 28,430 |
+| 「未分類」タグ付き | 10,382 |
+| source: auto / search | 2,482 / 35,252 |
 | 登録チャンネル / フィルタ用タグ定義 | 59 / 16 |
-| スコア大会 週末 / イベント / リーグ / 月間 / リアル | 15,967 / 3,384 / 526 / 498 / 48 |
+| スコア大会 週末 / イベント / リーグ / 月間 / リアル | 16,047 / 3,424 / 526 / 498 / 48 |
 
 ## 1. 元の依頼（原文に近い形で保持。書き換え禁止）
 
