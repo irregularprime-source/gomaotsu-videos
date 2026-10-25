@@ -221,6 +221,10 @@ push が他の更新と競合して弾かれた場合は `git pull --rebase` で
 
 - **登録チャンネルの過去分**（ローカル実行）: `& ".\.venv\Scripts\python.exe" "scripts/collect.py" --backfill`
   各チャンネルのアップロードを `nextPageToken` で全件たどり、未登録分を `source: "auto"` で追記する。
+  ゴ魔乙の語が無い動画の多いチャンネルは、1回だけ全件取り込んで違う動画を後から管理ツールで除外できる:
+  `& ".\.venv\Scripts\python.exe" "scripts/collect.py" --backfill --channel UC… --all --after 2015-04-01 --before 2018-09-16 --dry-run`
+  （`--channel` は channels.json にあるチャンネルIDだけ、`--all` はその回だけ判定語なし、`--after` / `--before` は公開日（UTC）の範囲。2026-10-26〜）。
+  `channels.json` の `gomaOnly` は立てない（定時収集が別の新着も入れ、除外した動画も戻るため）。同じコマンドをもう一度回すと、除外した動画がまた入る。
 - **検索でひっかかる過去分**（未登録投稿者を含む）: 公開期間を2週間ずつ区切って窓をずらしながら少しずつ実行する（動画が多い時期は1週間に縮め、少ない時期は広げる。2017-06 より前は1か月窓）。2026-10-24 に配信開始（2015-04-01）まで取り込み済み。レビュー負荷・ノイズ・API コストを平準化するため。
   - **Actions で実行（推奨）**: GitHub の Actions →「検索収集」→ Run workflow で `after` / `before`（YYYY-MM-DD、UTC）と `dry_run` を指定する。
     コマンドなら `gh workflow run search.yml -f after=2025-01-01 -f before=2025-01-08 -f dry_run=true`。

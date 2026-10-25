@@ -10,7 +10,7 @@ import os
 import re
 import sys
 import unicodedata
-from datetime import datetime, timezone, timedelta
+from datetime import date, datetime, timezone, timedelta
 from pathlib import Path
 
 import requests
@@ -352,13 +352,27 @@ def is_channel_target(entry):
     return is_gomaotsu(norm(entry["description"])) and entry["tags"] != ["未分類"]
 
 
-def collect(dry_run, backfill=False):
+def in_period(published, after=None, before=None):
+    """公開日（UTC の YYYY-MM-DD）が after 以上・before 未満か。指定が無い側は制限しない。"""
+    day = (published or "")[:10]
+    return (after is None or day >= after) and (before is None or day < before)
+
+
+def collect(dry_run, backfill=False, channel_id=None, take_all=False, after=None, before=None):
+    """channel_id を指定するとそのチャンネルだけ、take_all はその回だけ gomaOnly 扱いにする
+    （ゴ魔乙の語が無い動画の多いチャンネルを1回だけ全件取り込み、違う動画は後から除外するため。2026-10-26）。
+    Why not channels.json の gomaOnly: 立てたままだと定時収集が別ゲームの新着も入れ、除外した動画も戻ってくる。"""
     api_key = os.environ.get("YOUTUBE_API_KEY")
     if not api_key:
         print("環境変数 YOUTUBE_API_KEY が未設定です。", file=sys.stderr)
         return 1
 
     channels = load_channels()
+    if channel_id:
+        channels = [ch for ch in channels if ch["channelId"] == channel_id]
+        if not channels:
+            print(f"channels.json に無いチャンネルです: {channel_id}", file=sys.stderr)
+            return 1
     videos_doc = load_videos()
     existing_ids = {v["videoId"] for v in videos_doc["videos"]}
 
@@ -378,7 +392,9 @@ def collect(dry_run, backfill=False):
             entry = build_entry(item, ch["name"], now_iso)
             if not entry["videoId"] or entry["videoId"] in existing_ids:
                 continue  # 既存 videoId は手動修正保護のためスキップ
-            if not (ch.get("gomaOnly") or is_channel_target(entry)):
+            if not in_period(entry["publishedAt"], after, before):
+                continue
+            if not (take_all or ch.get("gomaOnly") or is_channel_target(entry)):
                 continue
             existing_ids.add(entry["videoId"])
             new_entries.append(entry)
@@ -409,14 +425,39 @@ def request_error_summary(error):
     return f"{type(error).__name__}" + (f" (HTTP {status})" if status is not None else "")
 
 
+def date_arg(text):
+    """YYYY-MM-DD だけを受け付ける。"""
+    try:
+        date.fromisoformat(text)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"日付は YYYY-MM-DD で指定してください: {text!r}")
+    if len(text) != 10:
+        raise argparse.ArgumentTypeError(f"日付は YYYY-MM-DD で指定してください: {text!r}")
+    return text
+
+
+def channel_arg(text):
+    if not (text.startswith("UC") and len(text) == 24):
+        raise argparse.ArgumentTypeError(f"チャンネルIDは UC で始まる24文字で指定してください: {text!r}")
+    return text
+
+
 def main():
     parser = argparse.ArgumentParser(description="ゴ魔乙動画の定期収集")
     parser.add_argument("--dry-run", action="store_true",
                         help="videos.json を書き換えず、追加予定の動画一覧を表示する")
     parser.add_argument("--backfill", action="store_true",
                         help="各チャンネルのアップロードを全件辿る（Phase3 過去動画一括登録・ローカル1回実行用）")
+    parser.add_argument("--channel", type=channel_arg,
+                        help="対象を channels.json のこのチャンネルIDだけにする")
+    parser.add_argument("--all", action="store_true",
+                        help="その回だけ判定語なしで全動画を取り込む（--channel と一緒に使う）")
+    parser.add_argument("--after", type=date_arg, help="この日以降に公開された動画だけ（YYYY-MM-DD、UTC）")
+    parser.add_argument("--before", type=date_arg, help="この日より前に公開された動画だけ（YYYY-MM-DD、UTC）")
     args = parser.parse_args()
-    sys.exit(collect(args.dry_run, args.backfill))
+    if args.all and not args.channel:
+        parser.error("--all は --channel と一緒に指定してください")
+    sys.exit(collect(args.dry_run, args.backfill, args.channel, args.all, args.after, args.before))
 
 
 if __name__ == "__main__":
