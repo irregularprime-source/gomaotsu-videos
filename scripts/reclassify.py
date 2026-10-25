@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""既存 videos.json のタグを最新の分類ルールで再計算する（バックフィル）。
+"""既存の動画データ（docs/videos/）のタグを最新の分類ルールで再計算する（バックフィル）。
 
 collect.py のキーワード表や抽出ルールを更新したとき、収集済みの自動分類エントリへ
 新ルールを反映するために使う。手動確認済み（status:"確認済み"）は上書きしない。
@@ -8,14 +8,14 @@ collect.py のキーワード表や抽出ルールを更新したとき、収集
   python scripts/reclassify.py --dry-run  # 変更予定だけ表示
 """
 import argparse
-import json
 import sys
 
-from collect import VIDEOS_PATH, make_tags
+import videos_store
+from collect import make_tags
 
 
 def reclassify(dry_run):
-    doc = json.loads(VIDEOS_PATH.read_text(encoding="utf-8"))
+    doc = videos_store.load_videos()
     changed = 0
     for v in doc["videos"]:
         # 自動分類（未確認）のみ対象。手動登録・確認済みは保護する。
@@ -38,16 +38,13 @@ def reclassify(dry_run):
         return 0
 
     if changed:
-        VIDEOS_PATH.write_text(
-            json.dumps(doc, ensure_ascii=False, indent=2) + "\n",
-            encoding="utf-8",
-        )
+        videos_store.save_videos(doc)
     print(f"{changed}件のタグを再計算しました。")
     return 0
 
 
 def main():
-    parser = argparse.ArgumentParser(description="videos.json のタグを再計算する")
+    parser = argparse.ArgumentParser(description="動画データのタグを再計算する")
     parser.add_argument("--dry-run", action="store_true",
                         help="書き込まず、変更予定のエントリを表示する")
     args = parser.parse_args()

@@ -12,6 +12,7 @@ import argparse
 import functools
 import json
 import os
+import re
 import webbrowser
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -28,10 +29,12 @@ ALLOWED_FILES = {
     "/tools/admin.html": "tools/admin.html",
     "/docs/index.html": "docs/index.html",
     "/docs/app.js": "docs/app.js",
-    "/docs/videos.json": "docs/videos.json",
+    "/docs/videos/index.json": "docs/videos/index.json",
     "/docs/tags.json": "docs/tags.json",
     "/data/channels.json": "data/channels.json",
 }
+# 年別の動画ファイル（docs/videos/2015.json など）。名前は4桁の年だけを許す。
+YEAR_FILE_RE = re.compile(r"/docs/videos/(\d{4})\.json")
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -57,7 +60,10 @@ class Handler(SimpleHTTPRequestHandler):
         return parts.path if not parts.scheme and not parts.netloc else ""
 
     def send_head(self):
-        relative = ALLOWED_FILES.get(self.request_path())
+        path = self.request_path()
+        relative = ALLOWED_FILES.get(path)
+        if relative is None and YEAR_FILE_RE.fullmatch(path):
+            relative = path.lstrip("/")
         if relative is None:
             self.send_error(404, "Not found")
             return None

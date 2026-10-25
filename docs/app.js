@@ -24,9 +24,9 @@ function tagColor(name) {
   return `hsl(${h} 45% 62%)`;
 }
 
-/* videos.json が読めない環境（プレビュー等）用のフォールバック */
+/* 動画データが読めない環境（プレビュー等）用のフォールバック */
 const FALLBACK = {updated:"", videos:[
-  {videoId:"SAMPLE00001",title:"【サンプル】videos.json を読み込めなかったため内蔵サンプルを表示しています",channel:"（フォールバック表示）",description:"GitHub Pages 上では docs/videos.json が自動的に読み込まれます。",publishedAt:"2026-07-18T21:00:00+09:00",registeredAt:"2026-07-20T00:00:00+09:00",source:"manual",tags:["スコア大会(週末)"],status:"確認済み",note:""},
+  {videoId:"SAMPLE00001",title:"【サンプル】動画データを読み込めなかったため内蔵サンプルを表示しています",channel:"（フォールバック表示）",description:"GitHub Pages 上では docs/videos/ の動画データが自動的に読み込まれます。",publishedAt:"2026-07-18T21:00:00+09:00",registeredAt:"2026-07-20T00:00:00+09:00",source:"manual",tags:["スコア大会(週末)"],status:"確認済み",note:""},
   {videoId:"SAMPLE00002",title:"【サンプル】エーテルスコア大会の例",channel:"（フォールバック表示）",description:"",publishedAt:"2026-07-15T12:00:00+09:00",registeredAt:"2026-07-20T00:00:00+09:00",source:"auto",tags:["エーテルスコア大会"],status:"自動分類",note:""},
   {videoId:"SAMPLE00003",title:"【サンプル】複数タグの例（ギルドバトル＋アリーナ）",channel:"（フォールバック表示）",description:"",publishedAt:"2026-07-10T19:30:00+09:00",registeredAt:"2026-07-20T00:00:00+09:00",source:"auto",tags:["ギルドバトル","アリーナ"],status:"自動分類",note:""},
 ]};
@@ -71,11 +71,18 @@ async function loadTags() {
   return DEFAULT_TAGS;
 }
 
+async function fetchJson(path) {
+  const res = await fetch(path, {cache:"no-cache"});
+  if (!res.ok) throw new Error(`${path}: HTTP ${res.status}`);
+  return res.json();
+}
+
+/* 動画データは公開年ごとのファイル（videos/2015.json など）。目次の index.json から全部を並行して読む */
 async function loadData() {
   try {
-    const res = await fetch("videos.json", {cache:"no-cache"});
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.json();
+    const index = await fetchJson("videos/index.json");
+    const parts = await Promise.all((index.files || []).map(name => fetchJson(`videos/${name}`)));
+    return {updated: index.updated || "", videos: parts.flatMap(p => p.videos || [])};
   } catch (e) {
     const box = document.createElement("div");
     box.className = "error-box";

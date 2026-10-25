@@ -309,8 +309,10 @@ let apiKey = "";
 let videosDoc = null, channelsDoc = null, tagsDoc = null;
 const dirty = { videos:false, channels:false, tags:false };
 
+/* 動画データは公開年ごとのファイル（docs/videos/2015.json など）と目次 index.json。
+   保存バーには、読み込んだときから中身が変わった年のファイルと目次だけを出す（videosFiles 参照） */
+let videosBase = {};   // ファイル名 → 読み込んだときの serialize 結果
 const FILES = {
-  videos:   { label:"docs/videos.json",   name:"videos.json",   get:()=>videosDoc },
   channels: { label:"data/channels.json", name:"channels.json", get:()=>channelsDoc },
   tags:     { label:"docs/tags.json",     name:"tags.json",     get:()=>tagsDoc },
 };
@@ -320,6 +322,20 @@ function el(tag, cls, text){ const e=document.createElement(tag); if(cls)e.class
 
 /* Python の json.dumps(ensure_ascii=False, indent=2)+改行 と一致させ、git差分を最小化する */
 function serialize(doc){ return JSON.stringify(doc, null, 2) + "\n"; }
+
+/* 公開年（publishedAt の先頭4文字。scripts/videos_store.py と同じ）ごとのファイル内容を返す */
+function videosFiles(){
+  const byYear = {};
+  for(const v of videosDoc.videos){
+    const y = String(v.publishedAt||"").slice(0,4);
+    (byYear[y] ||= []).push(v);
+  }
+  const years = Object.keys(byYear).sort();
+  const files = {};
+  for(const y of years) files[`${y}.json`] = { year:y, videos:byYear[y] };
+  files["index.json"] = { updated:videosDoc.updated||"", files:years.map(y=>`${y}.json`) };
+  return files;
+}
 
 /* JST の ISO 文字列（例 2026-07-20T14:30:00+09:00） */
 function nowJstIso(){
@@ -528,7 +544,7 @@ function reviewCard(v){
   };
   syncStatus();
   const del = el("button","btn danger small","一覧から削除");
-  del.title="videos.json からこの動画を消します（YouTube側には手を加えません）";
+  del.title="動画データからこの動画を消します（YouTube側には手を加えません）";
   del.onclick=()=>{
     if(del.dataset.armed!=="1"){ del.dataset.armed="1"; del.textContent="もう一度クリックで削除"; return; }
     removeVideos([v]);
@@ -559,7 +575,7 @@ $("bulk-confirm").onclick=()=>{
   msg.className="msg ok"; msg.textContent=`${targets.length} 件を確認済みにしました。`;
 };
 
-/* ===== 削除（YouTube側は触らない。videos.json から消すだけ） ===== */
+/* ===== 削除（YouTube側は触らない。動画データから消すだけ） ===== */
 function removeVideos(list){
   const ids = new Set(list.map(v=>v.videoId));
   videosDoc.videos = videosDoc.videos.filter(v=>!ids.has(v.videoId));
@@ -582,14 +598,14 @@ async function findMissing(vids, onProgress){
   return missing;
 }
 
-const DEL_LABEL = "選択した動画を videos.json から削除する";
+const DEL_LABEL = "選択した動画を動画データから削除する";
 
 function renderMissing(missing){
   const box = $("rv-check-result"); box.innerHTML="";
   if(!missing.length) return;
   const panel = el("div","preview");
   panel.appendChild(el("h3",null,`YouTubeで見つからない動画（${missing.length}件）`));
-  panel.appendChild(el("div","kv","削除・非公開・アカウント削除のいずれか（APIでは区別できません）。チェックした動画を videos.json から削除します。"));
+  panel.appendChild(el("div","kv","削除・非公開・アカウント削除のいずれか（APIでは区別できません）。チェックした動画を動画データから削除します。"));
 
   const rows = [];
   for(const v of missing){
@@ -626,7 +642,7 @@ function renderMissing(missing){
     renderReview();
     const done=$("bulk-msg");
     done.className="msg ok";
-    done.textContent=`${sel.length} 件を削除しました。保存バーから videos.json を保存してください。`;
+    done.textContent=`${sel.length} 件を削除しました。保存バーから動画データ（docs/videos/ の変わった年のファイル）を保存してください。`;
   };
   actions.append(del, msg);
   panel.appendChild(actions);
@@ -747,7 +763,7 @@ function showVideoPreview(id, snip){
     videosDoc.videos.push(entry);
     markDirty("videos");
     renderChannelOptions(); renderReview();  // ①タブの絞り込み候補と一覧に反映
-    add.disabled=true; done.textContent="登録しました。保存バーから videos.json を保存してください。";
+    add.disabled=true; done.textContent="登録しました。保存バーから動画データ（docs/videos/ の変わった年のファイル）を保存してください。";
     $("video-url").value="";
   };
   actions.append(add, done);
@@ -860,29 +876,43 @@ $("new-tag-add").onclick=()=>{
 };
 
 /* ===== 保存バー ===== */
+function saveItem(label, name, text){
+  const item = el("div","save-item");
+  const code = el("code", null, label);
+  const copy = el("button","mini","コピー");
+  copy.onclick=async ()=>{
+    try{ await navigator.clipboard.writeText(text); copy.textContent="コピー済"; setTimeout(()=>copy.textContent="コピー",1200); }
+    catch(e){ copy.textContent="失敗"; }
+  };
+  const dl = el("button","mini","ダウンロード");
+  dl.onclick=()=>{
+    const blob=new Blob([text],{type:"application/json"});
+    const url=URL.createObjectURL(blob);
+    const a=el("a"); a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+  };
+  item.append(code, copy, dl);
+  return item;
+}
+
 function renderSaveBar(){
   const anyDirty = dirty.videos || dirty.channels || dirty.tags;
   $("save-empty").hidden = anyDirty;
   const box = $("save-items"); box.innerHTML="";
-  for(const kind of ["videos","channels","tags"]){
+  if(dirty.videos){
+    const files = videosFiles();
+    for(const [name, doc] of Object.entries(files)){
+      const text = serialize(doc);
+      if(text !== videosBase[name]) box.appendChild(saveItem(`docs/videos/${name}`, name, text));
+    }
+    for(const name of Object.keys(videosBase)){
+      if(!(name in files)) box.appendChild(el("div","save-item",`docs/videos/${name} … 動画が無くなったので削除してください`));
+    }
+  }
+  for(const kind of ["channels","tags"]){
     if(!dirty[kind]) continue;
     const f = FILES[kind];
-    const item = el("div","save-item");
-    const code = el("code", null, f.label);
-    const copy = el("button","mini","コピー");
-    copy.onclick=async ()=>{
-      try{ await navigator.clipboard.writeText(serialize(f.get())); copy.textContent="コピー済"; setTimeout(()=>copy.textContent="コピー",1200); }
-      catch(e){ copy.textContent="失敗"; }
-    };
-    const dl = el("button","mini","ダウンロード");
-    dl.onclick=()=>{
-      const blob=new Blob([serialize(f.get())],{type:"application/json"});
-      const url=URL.createObjectURL(blob);
-      const a=el("a"); a.href=url; a.download=f.name; document.body.appendChild(a); a.click(); a.remove();
-      URL.revokeObjectURL(url);
-    };
-    item.append(code, copy, dl);
-    box.appendChild(item);
+    box.appendChild(saveItem(f.label, f.name, serialize(f.get())));
   }
 }
 
@@ -930,11 +960,15 @@ async function loadJson(path){
 
 (async function init(){
   try{
-    [videosDoc, channelsDoc, tagsDoc] = await Promise.all([
-      loadJson("../docs/videos.json"),
+    const index = await loadJson("../docs/videos/index.json");
+    const parts = await Promise.all((index.files||[]).map(name=>loadJson(`../docs/videos/${name}`)));
+    [channelsDoc, tagsDoc] = await Promise.all([
       loadJson("../data/channels.json"),
       loadJson("../docs/tags.json"),
     ]);
+    videosBase = {"index.json": serialize(index)};
+    (index.files||[]).forEach((name,i)=>{ videosBase[name] = serialize(parts[i]); });
+    videosDoc = { updated:index.updated||"", videos:parts.flatMap(p=>p.videos||[]) };
   }catch(e){
     const box=el("div","load-err",`データファイルを読み込めませんでした（${e.message}）。` +
       `「管理ツールを開く.bat」で起動し、表示された /tools/admin.html を開いてください` +

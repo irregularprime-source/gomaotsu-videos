@@ -12,6 +12,7 @@ from unittest import mock
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import collect
+import videos_store
 
 TARGET = "UC" + "a" * 22
 OTHER = "UC" + "b" * 22
@@ -29,12 +30,12 @@ class CollectOptionTests(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         tmp = Path(self.tmp.name)
         self.channels_path = tmp / "channels.json"
-        self.videos_path = tmp / "videos.json"
+        self.videos_dir = tmp / "videos"
         self.channels_path.write_text(json.dumps({"channels": [
             {"channelId": TARGET, "name": "対象", "gomaOnly": False},
             {"channelId": OTHER, "name": "ほか", "gomaOnly": False},
         ]}), encoding="utf-8")
-        self.videos_path.write_text(json.dumps({"videos": []}), encoding="utf-8")
+        videos_store.save_videos({"updated": "", "videos": []}, self.videos_dir)
         self.uploads = {
             TARGET: [upload("v_old_plain", "身内用 ブレイク", "2016-05-01T00:00:00Z"),
                      upload("v_old_goma", "ゴ魔乙 第50回スコア大会", "2016-05-02T00:00:00Z"),
@@ -54,12 +55,12 @@ class CollectOptionTests(unittest.TestCase):
 
         with mock.patch.dict(os.environ, {"YOUTUBE_API_KEY": "AUDIT_DUMMY_KEY_DO_NOT_USE"}), \
                 mock.patch.object(collect, "CHANNELS_PATH", self.channels_path), \
-                mock.patch.object(collect, "VIDEOS_PATH", self.videos_path), \
+                mock.patch.object(videos_store, "VIDEOS_DIR", self.videos_dir), \
                 mock.patch.object(collect, "fetch_uploads", side_effect=fake_fetch), \
                 mock.patch("sys.stdout", new_callable=io.StringIO), \
                 mock.patch("sys.stderr", new_callable=io.StringIO):
             code = collect.collect(False, backfill=True, **kwargs)
-        ids = [v["videoId"] for v in json.loads(self.videos_path.read_text(encoding="utf-8"))["videos"]]
+        ids = [v["videoId"] for v in videos_store.load_videos(self.videos_dir)["videos"]]
         return code, fetched, ids
 
     def test_channel_all_and_period(self):

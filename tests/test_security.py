@@ -35,7 +35,7 @@ class ServerSecurityTests(unittest.TestCase):
     def setUpClass(cls):
         cls.temp = tempfile.TemporaryDirectory()
         cls.root = Path(cls.temp.name).resolve()
-        for name in serve_admin.ALLOWED_FILES.values():
+        for name in [*serve_admin.ALLOWED_FILES.values(), "docs/videos/2019.json"]:
             path = cls.root / name
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text("fixture", encoding="utf-8")
@@ -66,7 +66,7 @@ class ServerSecurityTests(unittest.TestCase):
             conn.close()
 
     def test_allowed_files_get_and_head(self):
-        for path in serve_admin.ALLOWED_FILES:
+        for path in [*serve_admin.ALLOWED_FILES, "/docs/videos/2019.json"]:
             for method in ["GET", "HEAD"]:
                 with self.subTest(path=path, method=method):
                     status, headers, body = self.request(path, method)
@@ -80,7 +80,9 @@ class ServerSecurityTests(unittest.TestCase):
     def test_directories_unlisted_and_traversal_denied(self):
         paths = ["/", "/docs/", "/.git/config", "/_local/private.txt", "/docs/unlisted.html",
                  "/docs/../.git/config", "/docs/%2e%2e/.git/config", "/%2egit/config",
-                 "/docs%2f..%2f.git/config", "/docs/index.html/", "/data/event_tags.json"]
+                 "/docs%2f..%2f.git/config", "/docs/index.html/", "/data/event_tags.json",
+                 "/docs/videos/2020.json", "/docs/videos/../../.git/config", "/docs/videos/20190.json",
+                 "/docs/videos/x2019.json"]
         for path in paths:
             for method in ["GET", "HEAD"]:
                 with self.subTest(path=path, method=method):
@@ -185,14 +187,14 @@ class GitSecurityTests(unittest.TestCase):
                     "GIT_COMMITTER_EMAIL": "test@example.invalid"}
         self.git("init", "-b", "main")
         (self.repo / "scripts").mkdir()
-        for name in ["check_staged.py", "build_static.py"]:
+        for name in ["check_staged.py", "build_static.py", "videos_store.py"]:
             shutil.copy2(ROOT / "scripts" / name, self.repo / "scripts" / name)
         for name in ["変更を保存する.bat", "管理ツールを開く.bat"]:
             shutil.copy2(ROOT / name, self.repo / name)
         (self.repo / ".gitignore").write_text(".venv/\n__pycache__/\n", encoding="utf-8")
         (self.repo / "docs").mkdir()
         (self.repo / "data").mkdir()
-        (self.repo / "docs/videos.json").write_text('{"updated":"2026-10-07T00:00:00+09:00","videos":[]}', encoding="utf-8")
+        self.write_videos("2026-10-07T00:00:00+09:00")
         (self.repo / "docs/tags.json").write_text('{"tags":[]}', encoding="utf-8")
         (self.repo / "data/channels.json").write_text('{"channels":[]}', encoding="utf-8")
         (self.repo / "docs/index.html").write_text('<!-- BUILD:STATIC:START -->\n<!-- BUILD:STATIC:END -->\n', encoding="utf-8")
@@ -201,6 +203,13 @@ class GitSecurityTests(unittest.TestCase):
         self.git("add", ".")
         self.git("commit", "-m", "fixture")
         self.initial = self.git("rev-parse", "HEAD").stdout.strip()
+
+    def write_videos(self, updated):
+        (self.repo / "docs/videos").mkdir(exist_ok=True)
+        (self.repo / "docs/videos/index.json").write_text(json.dumps({"updated": updated, "files": ["2019.json"]}), encoding="utf-8")
+        (self.repo / "docs/videos/2019.json").write_text(json.dumps({"year": "2019", "videos": [
+            {"videoId": "v" * 11, "title": "fixture", "channel": "c", "publishedAt": "2019-01-01T00:00:00Z",
+             "tags": [], "status": "自動分類", "note": updated}]}), encoding="utf-8")
 
     def git(self, *args, check=True):
         return subprocess.run(["git", *args], cwd=self.repo, env=self.env, capture_output=True, check=check)
@@ -232,6 +241,14 @@ class GitSecurityTests(unittest.TestCase):
         self.git("add", "docs/tags.json")
         self.assertEqual(self.check_staged().returncode, 0)
 
+    def test_year_files_accepted_and_other_files_in_videos_dir_rejected(self):
+        (self.repo / "docs/videos/2020.json").write_text('{"year":"2020","videos":[]}', encoding="utf-8")
+        self.git("add", "docs/videos/2020.json")
+        self.assertEqual(self.check_staged().returncode, 0)
+        (self.repo / "docs/videos/notes.json").write_text("{}", encoding="utf-8")
+        self.git("add", "docs/videos/notes.json")
+        self.assertEqual(self.check_staged().returncode, 1)
+
     def commit_tracked_note(self):
         (self.repo / "notes.txt").write_text("fixture", encoding="utf-8")
         self.git("add", "notes.txt")
@@ -241,7 +258,7 @@ class GitSecurityTests(unittest.TestCase):
     def test_unstaged_change_to_unlisted_tracked_file_is_rejected_without_changing_it(self):
         head = self.commit_tracked_note()
         (self.repo / "notes.txt").write_text("WORK_IN_PROGRESS", encoding="utf-8")
-        (self.repo / "docs/videos.json").write_text('{"updated":"2026-10-08T00:00:00+09:00","videos":[]}', encoding="utf-8")
+        self.write_videos("2026-10-08T00:00:00+09:00")
         result = self.check_staged()
         self.assertEqual(result.returncode, 1)
         self.assertIn(b"notes.txt", result.stderr)
@@ -251,7 +268,7 @@ class GitSecurityTests(unittest.TestCase):
 
     def test_untracked_file_does_not_block_save(self):
         (self.repo / "memo.txt").write_text("untracked", encoding="utf-8")
-        (self.repo / "docs/videos.json").write_text('{"updated":"2026-10-08T00:00:00+09:00","videos":[]}', encoding="utf-8")
+        self.write_videos("2026-10-08T00:00:00+09:00")
         self.assertEqual(self.check_staged().returncode, 0)
 
     def batch(self, name):
@@ -277,11 +294,11 @@ class GitSecurityTests(unittest.TestCase):
         subprocess.run(["git", "init", "--bare", str(remote)], env=self.env, check=True, capture_output=True)
         self.git("remote", "add", "origin", str(remote))
         self.git("push", "-u", "origin", "main")
-        (self.repo / "docs/videos.json").write_text('{"updated":"2026-10-08T00:00:00+09:00","videos":[]}', encoding="utf-8")
+        self.write_videos("2026-10-08T00:00:00+09:00")
         result = self.batch("変更を保存する.bat")
         self.assertEqual(result.returncode, 0, result.stdout.decode("cp932", errors="replace"))
         changed = set(self.git("diff", "--name-only", self.initial, "HEAD").stdout.splitlines())
-        self.assertEqual(changed, {b"docs/videos.json", b"docs/index.html", b"docs/sitemap.xml"})
+        self.assertEqual(changed, {b"docs/videos/index.json", b"docs/videos/2019.json", b"docs/index.html", b"docs/sitemap.xml"})
         self.assertEqual(self.git("rev-parse", "HEAD").stdout, self.git("rev-parse", "origin/main").stdout)
 
     @unittest.skipUnless(os.name == "nt", "Windows batch regression")
@@ -292,7 +309,7 @@ class GitSecurityTests(unittest.TestCase):
         head = self.commit_tracked_note()
         self.git("push", "-u", "origin", "main")
         (self.repo / "notes.txt").write_text("WORK_IN_PROGRESS", encoding="utf-8")
-        (self.repo / "docs/videos.json").write_text('{"updated":"2026-10-08T00:00:00+09:00","videos":[]}', encoding="utf-8")
+        self.write_videos("2026-10-08T00:00:00+09:00")
         before = (self.repo / "docs/index.html").read_bytes()
         result = self.batch("変更を保存する.bat")
         self.assertNotEqual(result.returncode, 0)
