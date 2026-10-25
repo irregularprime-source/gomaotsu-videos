@@ -3,6 +3,12 @@
 
 data/channels.json の各チャンネルのアップロード動画から、docs/videos.json に
 未登録のゴ魔乙動画を抽出・自動分類して追記する。
+
+  python scripts/collect.py              # 各チャンネルの最新50件（6hごとcron）
+  python scripts/collect.py --backfill   # 各チャンネルのアップロードを全件辿る（ローカル1回実行）
+  python scripts/collect.py --backfill --channel UC… --all --after 2015-04-01 --before 2018-09-16
+                                         # 1チャンネルだけ、その期間を判定語なしで全件（違う動画は後から除外）
+  python scripts/collect.py --dry-run    # 書き込まず追加予定を表示（上のどれにも付けられる）
 """
 import argparse
 import json
