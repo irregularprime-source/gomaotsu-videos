@@ -4,7 +4,7 @@
 data/event_tags.json（イベント名辞書）を定期的に見直すときに使う。既定は表示だけで何も書き換えない。
 
   python scripts/event_name_report.py           # 集計を表示（辞書の一致数・名前の無いイベント動画・候補）
-  python scripts/event_name_report.py --apply   # イベント動画に辞書の名前タグを追加して videos.json に書き込む
+  python scripts/event_name_report.py --apply   # イベント動画に辞書の名前タグを追加して動画データ（docs/videos/）に書き込む
 
 --apply は確認済みも含むスコア大会(イベント)の動画に、辞書に一致した名前タグと「○○限定スコアタ」
 （『○○限定』の○○。表記ゆれは辞書の limited_aliases で寄せる）を「追加だけ」する。
@@ -12,12 +12,12 @@ data/event_tags.json（イベント名辞書）を定期的に見直すときに
 分類そのものの変更は reclassify.py（未確認だけが対象）で行う。
 """
 import argparse
-import json
 import re
 import sys
 from collections import Counter
 
-from collect import VIDEOS_PATH, EVENT_RE, EVENT_TAGS, event_name_tags, norm
+import videos_store
+from collect import EVENT_RE, EVENT_TAGS, event_name_tags, norm
 
 EVENT = "スコア大会(イベント)"
 DICT_TAGS = {tag for tag, _ in EVENT_TAGS}
@@ -74,7 +74,7 @@ def apply(doc):
             v["tags"].extend(missing)
             changed += 1
     if changed:
-        VIDEOS_PATH.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        videos_store.save_videos(doc)
     print(f"{changed}件のイベント動画に名前タグを追加しました。")
 
 
@@ -84,7 +84,7 @@ def main():
                         help="イベント動画に名前タグ（辞書・○○限定スコアタ）を追加して書き込む（追加だけ。削除・分類変更はしない）")
     parser.add_argument("--limit", type=int, default=40, help="一覧に出す件数（既定40）")
     args = parser.parse_args()
-    doc = json.loads(VIDEOS_PATH.read_text(encoding="utf-8"))
+    doc = videos_store.load_videos()
     if args.apply:
         apply(doc)
     else:

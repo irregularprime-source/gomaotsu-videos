@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ゴ魔乙動画の検索収集スクリプト（登録チャンネル収集とは別経路）。
 
-YouTube search.list でキーワード横断検索し、docs/videos.json に未登録の動画を
+YouTube search.list でキーワード横断検索し、docs/videos/（年別ファイル）に未登録の動画を
 source:"search" / status:"自動分類" で追記する。登録チャンネル収集(collect.py)が
 拾えない未登録投稿者の動画を拾うのが目的。全件が未確認で入り、管理ツールの
 レビューを経て取捨選択する。
@@ -15,16 +15,17 @@ source:"search" / status:"自動分類" で追記する。登録チャンネル�
 区切って少しずつ回す運用（README「過去動画の一括登録」参照）。
 """
 import argparse
-import json
 import os
 import sys
 from datetime import date, datetime, timezone, timedelta
 
 import requests
 
+import videos_store
+
 # collect.py と同じ scripts/ にあるため直接 import できる（reclassify.py と同じパターン）。
 from collect import (
-    VIDEOS_PATH, JST, GOMA_KEYWORDS,
+    JST, GOMA_KEYWORDS,
     norm, is_gomaotsu, make_tags, load_videos, request_error_summary,
 )
 
@@ -148,10 +149,7 @@ def collect_search(dry_run, published_after, published_before):
 
     videos_doc["videos"].extend(new_entries)
     videos_doc["updated"] = now_iso
-    VIDEOS_PATH.write_text(
-        json.dumps(videos_doc, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    videos_store.save_videos(videos_doc)
     print(f"動画{len(new_entries)}件を追加しました。")
     return 0
 
@@ -170,7 +168,7 @@ def date_arg(text):
 def main():
     parser = argparse.ArgumentParser(description="ゴ魔乙動画の検索収集")
     parser.add_argument("--dry-run", action="store_true",
-                        help="videos.json を書き換えず、追加予定の動画一覧を表示する")
+                        help="動画データを書き換えず、追加予定の動画一覧を表示する")
     # 既定12h: cron は1hごとだが GitHub 側の遅延で実行間隔が最大8.7h空いた実績がある（2026-09〜10）。
     # 間隔が窓を超えるとその差の時間に公開された動画を取りこぼすため、検索反映の遅れも見込んで広めに取る。
     # Why not 24h: 24h内の公開が最大43本あり、50件/ページを超えて2ページ（200ユニット）になり得る。

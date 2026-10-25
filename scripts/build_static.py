@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""docs/videos.json から検索エンジン・AIクローラー向けの静的な成果物を生成する。
+"""動画データ（docs/videos/ の年別ファイル）から検索エンジン・AIクローラー向けの静的な成果物を生成する。
 
 生成するもの:
   1. docs/index.html の BUILD:STATIC マーカー間に、全動画の静的な一覧 + JSON-LD を差し込む
@@ -24,9 +24,10 @@ import re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+import videos_store
+
 ROOT = Path(__file__).resolve().parent.parent
 DOCS = ROOT / "docs"
-VIDEOS_JSON = DOCS / "videos.json"
 INDEX_HTML = DOCS / "index.html"
 SITEMAP_XML = DOCS / "sitemap.xml"
 
@@ -233,7 +234,7 @@ def build_sitemap(updated: str) -> bool:
 
 
 def main() -> None:
-    data = json.loads(VIDEOS_JSON.read_text(encoding="utf-8"))
+    data = videos_store.load_videos(DOCS / "videos")
     videos = sorted(data.get("videos") or [], key=published_sort_key, reverse=True)
     updated = data.get("updated") or ""
 

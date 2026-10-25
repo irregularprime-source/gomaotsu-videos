@@ -19,14 +19,14 @@ if exist ".venv\Scripts\python.exe" set PYCMD=".venv\Scripts\python.exe"
 %PYCMD% -B "scripts/check_staged.py"
 if errorlevel 1 goto :stagefail
 
-echo 対象ファイル: docs/videos.json, docs/tags.json, data/channels.json
+echo 対象ファイル: docs/videos/（年別）, docs/tags.json, data/channels.json
 echo 　　（あわせて docs/index.html と docs/sitemap.xml を自動で作り直します）
 echo.
 echo 検索・AI向けの索引を作り直しています...
 %PYCMD% -B "scripts/build_static.py"
 if errorlevel 1 goto :buildfail
 
-git add -- "docs/videos.json" "docs/tags.json" "data/channels.json" "docs/index.html" "docs/sitemap.xml"
+git add -A -- "docs/videos" "docs/tags.json" "data/channels.json" "docs/index.html" "docs/sitemap.xml"
 if errorlevel 1 goto :gitfail
 %PYCMD% -B "scripts/check_staged.py"
 if errorlevel 1 goto :stagefail

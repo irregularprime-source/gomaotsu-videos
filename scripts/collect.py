@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ゴ魔乙動画の定期収集スクリプト。
 
-data/channels.json の各チャンネルのアップロード動画から、docs/videos.json に
+data/channels.json の各チャンネルのアップロード動画から、docs/videos/（年別ファイル）に
 未登録のゴ魔乙動画を抽出・自動分類して追記する。
 
   python scripts/collect.py              # 各チャンネルの最新50件（6hごとcron）
@@ -21,9 +21,10 @@ from pathlib import Path
 
 import requests
 
+import videos_store
+
 ROOT = Path(__file__).resolve().parent.parent
 CHANNELS_PATH = ROOT / "data" / "channels.json"
-VIDEOS_PATH = ROOT / "docs" / "videos.json"
 EVENT_TAGS_PATH = ROOT / "data" / "event_tags.json"
 
 API_URL = "https://www.googleapis.com/youtube/v3/playlistItems"
@@ -293,7 +294,7 @@ def load_channels():
 
 
 def load_videos():
-    return json.loads(VIDEOS_PATH.read_text(encoding="utf-8"))
+    return videos_store.load_videos()
 
 
 def fetch_uploads(channel_id, api_key, all_pages=False):
@@ -417,10 +418,7 @@ def collect(dry_run, backfill=False, channel_id=None, take_all=False, after=None
 
     videos_doc["videos"].extend(new_entries)
     videos_doc["updated"] = now_iso
-    VIDEOS_PATH.write_text(
-        json.dumps(videos_doc, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    videos_store.save_videos(videos_doc)
     print(f"動画{len(new_entries)}件を追加しました。")
     return 0
 
@@ -451,7 +449,7 @@ def channel_arg(text):
 def main():
     parser = argparse.ArgumentParser(description="ゴ魔乙動画の定期収集")
     parser.add_argument("--dry-run", action="store_true",
-                        help="videos.json を書き換えず、追加予定の動画一覧を表示する")
+                        help="動画データを書き換えず、追加予定の動画一覧を表示する")
     parser.add_argument("--backfill", action="store_true",
                         help="各チャンネルのアップロードを全件辿る（Phase3 過去動画一括登録・ローカル1回実行用）")
     parser.add_argument("--channel", type=channel_arg,

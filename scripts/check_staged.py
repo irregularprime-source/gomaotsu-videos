@@ -5,14 +5,21 @@
   失敗し、コミット済み・未反映のまま止まる。
 どちらもユーザーの作業中の変更なので、中断するだけでステージ状態や内容は変えない。
 """
+import re
 import subprocess
 import sys
 
 
 ALLOWED_FILES = {
-    b"docs/videos.json", b"docs/tags.json", b"data/channels.json",
+    b"docs/videos/index.json", b"docs/tags.json", b"data/channels.json",
     b"docs/index.html", b"docs/sitemap.xml",
 }
+# 年別の動画ファイル（docs/videos/2015.json など）
+YEAR_FILE_RE = re.compile(rb"docs/videos/\d{4}\.json")
+
+
+def allowed(name):
+    return name in ALLOWED_FILES or YEAR_FILE_RE.fullmatch(name) is not None
 
 
 def unexpected_files(*diff_args):
@@ -23,7 +30,7 @@ def unexpected_files(*diff_args):
     )
     if result.returncode:
         return None
-    return [name for name in result.stdout.split(b"\0") if name and name not in ALLOWED_FILES]
+    return [name for name in result.stdout.split(b"\0") if name and not allowed(name)]
 
 
 def print_names(names):

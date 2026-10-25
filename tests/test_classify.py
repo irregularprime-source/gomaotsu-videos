@@ -503,19 +503,19 @@ class EventNameApplyTests(unittest.TestCase):
         import tempfile
         from unittest import mock
         import event_name_report
+        import videos_store
 
         doc = {"updated": "", "videos": [
             {"videoId": "a" * 11, "title": "アリスギアコラボ記念スコアタ 11.97億", "status": "確認済み",
-             "tags": ["スコア大会", "スコア大会(イベント)", "手動タグ"]},
+             "publishedAt": "2025-05-01T00:00:00Z", "tags": ["スコア大会", "スコア大会(イベント)", "手動タグ"]},
             {"videoId": "b" * 11, "title": "第580回スコア大会 HYCレーザーA", "status": "確認済み",
-             "tags": ["スコア大会", "スコア大会(週末)", "第580回"]},
+             "publishedAt": "2025-05-02T00:00:00Z", "tags": ["スコア大会", "スコア大会(週末)", "第580回"]},
         ]}
         with tempfile.TemporaryDirectory() as temp:
-            path = Path(temp) / "videos.json"
-            with mock.patch.object(event_name_report, "VIDEOS_PATH", path), \
+            with mock.patch.object(videos_store, "VIDEOS_DIR", Path(temp)), \
                     mock.patch("sys.stdout"):
                 event_name_report.apply(doc)
-            saved = json.loads(path.read_text(encoding="utf-8"))
+            saved = json.loads((Path(temp) / "2025.json").read_text(encoding="utf-8"))
         event, weekend = saved["videos"]
         self.assertEqual(event["tags"], ["スコア大会", "スコア大会(イベント)", "手動タグ", "アリスギアコラボ"])
         self.assertEqual(event["status"], "確認済み")
