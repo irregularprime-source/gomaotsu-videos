@@ -6,7 +6,7 @@
   2. docs/sitemap.xml
 
 なぜ必要か:
-  index.html は videos.json を fetch して JS で描画するため、HTML そのものには
+  index.html は動画データ（docs/videos/）を fetch して JS で描画するため、HTML そのものには
   動画が 1 件も書かれていない。Googlebot は JS を実行するので一応読めるが、
   GPTBot / ClaudeBot / PerplexityBot などの AI クローラーは基本的に JS を実行せず、
   空のページとして扱ってしまう。そこで同じ内容を HTML に直接書き出しておく。
