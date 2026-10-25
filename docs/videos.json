@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-25T14:47:44+09:00",
+  "updated": "2026-10-25T19:23:11+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -569859,6 +569859,35 @@
       "source": "search",
       "tags": [
         "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "yWTKRMlh9VA",
+      "title": "【ゴ魔乙プレイ動画】ｶﾄﾚｱｽﾃｰｼﾞ(後半)",
+      "channel": "安満沢ライナー",
+      "description": "2回目\n#ゴシックは魔法乙女 #ゴ魔乙 #ごまおつ",
+      "publishedAt": "2026-10-25T10:12:46Z",
+      "registeredAt": "2026-10-25T19:23:11+09:00",
+      "source": "auto",
+      "tags": [
+        "未分類"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "pwAIjugLkug",
+      "title": "【#ゴ魔乙】 今週のドヨアタ反省会【ゴシックは魔法乙女】",
+      "channel": "魔剣ルシエド_影森狼木",
+      "description": "今週の感想：594回 hardアタ　めちゃLOVE禁止ルール　コンボは適度に稼いで箱を炙りましょう\n「わんコメ」https://onecomme.com",
+      "publishedAt": "2026-10-25T09:53:04Z",
+      "registeredAt": "2026-10-25T19:23:11+09:00",
+      "source": "auto",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)"
       ],
       "status": "自動分類",
       "note": ""
