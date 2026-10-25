@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-25T19:23:11+09:00",
+  "updated": "2026-10-25T19:53:06+09:00",
   "videos": [
     {
       "videoId": "JRmP7NZvn-g",
@@ -569888,6 +569888,36 @@
       "tags": [
         "スコア大会",
         "スコア大会(週末)"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "SdBkBIDmljg",
+      "title": "【ゴ魔乙プレイ動画】第594回スコア大会(復習)",
+      "channel": "安満沢ライナー",
+      "description": "#ゴシックは魔法乙女 #ゴ魔乙 #ごまおつ",
+      "publishedAt": "2026-10-25T10:49:23Z",
+      "registeredAt": "2026-10-25T19:53:06+09:00",
+      "source": "search",
+      "tags": [
+        "スコア大会",
+        "スコア大会(週末)",
+        "第594回"
+      ],
+      "status": "自動分類",
+      "note": ""
+    },
+    {
+      "videoId": "w9DidBVKJqI",
+      "title": "【ゴ魔乙プレイ動画】ｽﾌﾚｽﾃｰｼﾞ(後半)",
+      "channel": "安満沢ライナー",
+      "description": "2回目\n#ゴシックは魔法乙女 #ゴ魔乙 #ごまおつ",
+      "publishedAt": "2026-10-25T10:39:57Z",
+      "registeredAt": "2026-10-25T19:53:06+09:00",
+      "source": "search",
+      "tags": [
+        "未分類"
       ],
       "status": "自動分類",
       "note": ""
