@@ -14,6 +14,8 @@
   - 1回目: SHINTOBA gomaotsu 1,613件・Takuma Oga 926件・七瀬九鷹 818件の計3,357件（38,225→41,582件、既存の変化なし）。videos.json 27.7MB、index.html 10.8MB。dry-run の集計表で SHINTOBA を1,178件と伝えたのは、題名の「<」で集計が崩れたため（正しくは1,613件）。
   - 2回目: KGR 804件・leviれゔぃ 702件・Kanade Channel 577件・安満沢ライナー 531件（ユーザー指示で含める。通常ステージ動画は未分類のままでよい 10-14 判断）の計2,614件（41,582→44,196件、既存の変化なし）。videos.json 29.3MB、index.html 11.4MB。
   - 3回目: めかぶっかー 528件・sinmoon gmo2 521件・御陵 樹 493件・運営爆氏39 414件・M.C 407件の計2,363件（44,196→46,559件、既存の変化なし）。videos.json 30.9MB、index.html 12.1MB。
+  - 4回目: 残りの39チャンネルを `--backfill`（全チャンネル・判定語あり）1回で3,697件（46,559→50,256件、既存の変化なし。koshi yomogi 298件ほか）。videos.json 33.4MB、index.html 13.1MB。合計 3,357+2,614+2,363+3,697＝12,031件。
+  - 確認: 全59チャンネルで `--backfill --dry-run` を回して残り0件（Takuma Oga は1回目に ConnectionError、単独で再実行して0件）。
 - **Ubuntu 26**: ubuntu-latest が Ubuntu 26.04 に切り替わり、10-25 以降の定時の収集・毎時の検索とも成功していることを確認（10-26）。
 - **文書（ユーザー承認）**: PROJECT_STATE のスナップショット・検証・保守・収集の方針と、collect.py の先頭の使い方を更新。手元の古いリモートブランチ名を `git fetch --prune` で整理。
 
