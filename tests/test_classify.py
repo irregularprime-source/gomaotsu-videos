@@ -515,6 +515,13 @@ class RoundPatternTests(unittest.TestCase):
         self.assert_round("ゴ魔乙 100万DL記念", None)
         self.assert_round("ゴ魔乙 492m 風シャインフレア", None)
         self.assert_round("第100億点チャレンジ", None)
+        # 日付・点数（2026-10-26）
+        self.assert_round("ドヨアタ 2026.09.19", None)
+        self.assert_round("【ゴ魔乙 プレイ動画】 どよあた 2019/11/16 19M", None)
+        self.assert_round("20200627ドヨアタ", None)
+        self.assert_round("20200418 ドヨアタ 45178522", None)
+        self.assert_round("ドヨアタ594 2026.10.24", 594)
+        self.assert_round("149スコアタ78.6mインフル", 149)
 
 
 class ChannelFilterTests(unittest.TestCase):
