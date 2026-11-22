@@ -127,7 +127,8 @@ function renderChips() {
 }
 
 function filtered() {
-  const q = norm(state.query);
+  // フリーワードはスペース（全角・半角）か「＋」「+」で区切り、すべての語を含む動画だけを残す（AND）
+  const words = norm(state.query).split(/[\s+]+/).filter(Boolean);
   return state.videos.filter(v => {
     if (state.selectedTags.size &&
         !(v.tags || []).some(t => state.selectedTags.has(t))) return false;
@@ -138,9 +139,10 @@ function filtered() {
       if (state.dateFrom && d < state.dateFrom) return false;
       if (state.dateToEnd && d >= state.dateToEnd) return false;
     }
-    if (q) {
-      const hay = norm(`${v.title} ${v.channel} ${v.description} ${v.note}`);
-      if (!hay.includes(q)) return false;
+    if (words.length) {
+      // タグ（第○回・イベント名など）も検索の対象にする
+      const hay = norm(`${v.title} ${v.channel} ${v.description} ${v.note} ${(v.tags || []).join(" ")}`);
+      if (!words.every(w => hay.includes(w))) return false;
     }
     return true;
   }).sort((a, b) => {
