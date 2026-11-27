@@ -3,10 +3,10 @@ on:
   schedule:
     - cron: "0 * * * *"   # 1時間ごと（直近分の常時スイープ）
   workflow_dispatch:
-    # 手動実行で公開期間を区切って過去分を取り込む（README「過去動画の一括登録」）。空なら定時と同じ直近12時間。
+    # 手動実行で公開期間を区切って過去分を取り込む（README「過去動画の一括登録」）。空なら定時と同じ直近18時間。
     inputs:
       after:
-        description: "この日以降に公開された動画（YYYY-MM-DD、UTC）。空なら直近12時間"
+        description: "この日以降に公開された動画（YYYY-MM-DD、UTC）。空なら直近18時間"
         required: false
         default: ""
       before:
